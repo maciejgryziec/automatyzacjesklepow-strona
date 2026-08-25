@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bezpłatne sprawdzenie sklepu internetowego: GPSR, Omnibus, EAN — Automatyzacje Sklepów</title>
+<meta name="description" content="Bezpłatne sprawdzenie sklepu internetowego. Bez logowania i bez dostępów.">
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="var(--blekit)"/>
+        <path d="M7 13.2l3.4 3.4L19 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Bezpłatne narzędzie</p>
+      <h1>Sprawdź swój sklep</h1>
+      <p class="slaby" style="font-size:1.1rem">Bez logowania, bez podawania haseł. Sprawdzam wyłącznie to,
+         co widzi każdy odwiedzający — te same strony, które ogląda Twój klient i Google.</p>
+    </div>
+
+    <!-- PRZY WDROŻENIU: podmień action na publiczny adres sprawdzarki -->
+    <form class="formularz-prosty wjazd" action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post">
+      <label for="sklep">Adres sklepu</label>
+      <input id="sklep" name="sklep" placeholder="mojsklep.pl" required>
+      <button class="przycisk" type="submit">Sprawdź sklep
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <p class="slaby" style="font-size:.9rem;margin-top:.8rem">Sprawdzenie trwa do dwóch minut.
+         W narzędziu możesz też podać adres pliku dla porównywarek i e-mail do raportu.</p>
+    </form>
+
+    <div class="wjazd">
+      <h2>Co sprawdzam</h2>
+      <div class="kafelki">
+        <div class="kafelek">
+          <h3>Dane producenta (GPSR)</h3>
+          <p>Obowiązek od grudnia 2024. Sprawdzam, przy ilu produktach brakuje nazwy, adresu albo kontaktu.</p>
+        </div>
+        <div class="kafelek">
+          <h3>Najniższa cena z 30 dni</h3>
+          <p>Przy każdej przecenie. Brak to podstawa do kary od UOKiK.</p>
+        </div>
+        <div class="kafelek">
+          <h3>Numery EAN i marki</h3>
+          <p>Bez nich Ceneo i Google Zakupy gorzej łączą Twoją ofertę z ofertami konkurencji.</p>
+        </div>
+        <div class="kafelek">
+          <h3>Martwe odnośniki</h3>
+          <p>Adresy w mapie strony, które prowadzą donikąd. Google traci na nie czas zamiast na produkty.</p>
+        </div>
+        <div class="kafelek">
+          <h3>Zgodność z porównywarką</h3>
+          <p>Czy cena i dostępność w Ceneo zgadzają się z tym, co widzi klient w sklepie.</p>
+        </div>
+        <div class="kafelek">
+          <h3>Certyfikat i dane dla Google</h3>
+          <p>Czy certyfikat nie wygasa i czy Google odczyta cenę oraz dostępność produktu.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Czego nie robię</h2>
+      <p>Nie sprawdzam sklepu bez Twojej wiedzy — wyłącznie ten adres, który sam wpiszesz.
+         Nie zapisuję treści Twojego sklepu, tylko wynik sprawdzenia. Nie potrzebuję
+         żadnych haseł ani dostępów.</p>
+      <p>Jeśli czegoś nie da się sprawdzić z zewnątrz, raport mówi o tym wprost — zamiast
+         zgadywać albo dopisywać Ci braki, których z zewnątrz nie widać.</p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+
+  document.documentElement.classList.add("ruch");
+
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+
+  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
+  // po sekundzie pokazujemy wszystko.
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
+      e.classList.add("widac");
+    });
+  }, 1000);
+})();
+</script>
+</body>
+</html>

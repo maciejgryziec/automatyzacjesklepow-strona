@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integracja sklepu z księgowością, magazynem i Allegro — Automatyzacje Sklepów</title>
+<meta name="description" content="Automatyczne faktury, synchronizacja stanów magazynowych, integracja sklepu z księgowością i Allegro — dla sklepów na Shoperze, IdoSell, Sky-Shopie i WooCommerce. Jedna osoba, jawne ceny. Zacznij od bezpłatnego sprawdzenia sklepu.">
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="#">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="var(--blekit)"/>
+        <path d="M7 13.2l3.4 3.4L19 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="#">Start</a>
+      <a href="#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="wstep wjazd" style="max-width:44rem">
+      <p class="etykieta">Automatyzacje · integracje · narzędzia</p>
+      <h1>Sklep internetowy, który sam robi papierkową robotę</h1>
+      <p style="font-size:1.12rem;color:var(--slaby)">Zamówienia trafiają do faktur bez przepisywania,
+         stany aktualizują się same — w sklepach na Shoperze, IdoSell, Sky-Shopie i WooCommerce,
+         także sprzedających przez BaseLinkera. Kiedy gotowej integracji nie ma, piszę własną.
+         A potem pilnuję, żeby wszystko działało.</p>
+      <a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="wjazd">
+      <p class="przewin">↔ przesuń w bok, żeby zobaczyć całość</p>
+      <div class="schemat">
+<svg viewBox="0 0 1120 800" width="100%" role="img"
+     aria-label="Schemat: w środku system firmy, wokół sklep, Allegro, marketplace'y, porównywarki, magazyn, faktury, kadry, maile i analizy. Każde połączenie to most, który buduję, łączę i automatyzuję. Wszystkiego pilnuje strażnik połączeń."
+     font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <marker id="grot" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+      <path d="M0 0l6.5 4L0 8z" fill="var(--blekit)"/>
+    </marker>
+    <marker id="grot-w" markerWidth="8" markerHeight="8" refX="1.5" refY="4" orient="auto">
+      <path d="M8 0L1.5 4 8 8z" fill="var(--blekit)"/>
+    </marker>
+  </defs>
+
+  <!-- obwodka straznika -->
+  <rect x="8" y="8" width="1104" height="736" rx="20" fill="none"
+        stroke="var(--blekit)" stroke-width="2" stroke-dasharray="9 7" opacity=".55"/>
+  <g>
+    <rect x="350" y="722" width="420" height="44" rx="12"
+          fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="1.5"/>
+    <circle cx="374" cy="744" r="5" fill="#22b573"/>
+    <text x="390" y="740" font-size="12" font-weight="800" fill="var(--tekst)">Strażnik połączeń</text>
+    <text x="390" y="755" font-size="10.5" fill="var(--slaby)">codziennie sprawdza każdy most z osobna</text>
+  </g>
+
+  <line x1="185" y1="158" x2="448" y2="314" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="226" y1="364" x2="444" y2="374" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="195" y1="560" x2="445" y2="437" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="435" y1="105" x2="529" y2="311" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="781" y1="104" x2="615" y2="312" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="895" y1="270" x2="676" y2="342" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="894" y1="441" x2="676" y2="401" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="777" y1="614" x2="623" y2="448" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/><line x1="438" y1="613" x2="524" y2="449" stroke="var(--blekit)" stroke-width="2.2" opacity=".8" marker-start="url(#grot-w)" marker-end="url(#grot)"/>
+  <g>
+      <rect x="40" y="96" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="55" y="121" font-size="13" font-weight="700" fill="var(--tekst)">Twój sklep</text>
+      <text x="55" y="139" font-size="10.5" fill="var(--slaby)">Shoper / IdoSell / Sky-Shop</text>
+    </g><g>
+      <rect x="40" y="330" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="55" y="355" font-size="13" font-weight="700" fill="var(--tekst)">Allegro</text>
+      <text x="55" y="373" font-size="10.5" fill="var(--slaby)">oferty, zamówienia</text>
+    </g><g>
+      <rect x="40" y="564" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="55" y="589" font-size="13" font-weight="700" fill="var(--tekst)">Amazon / eBay</text>
+      <text x="55" y="607" font-size="10.5" fill="var(--slaby)">sprzedaż zagraniczna</text>
+    </g><g>
+      <rect x="330" y="40" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="345" y="65" font-size="13" font-weight="700" fill="var(--tekst)">Ceneo / Google</text>
+      <text x="345" y="83" font-size="10.5" fill="var(--slaby)">porównywarki</text>
+    </g><g>
+      <rect x="720" y="40" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="735" y="65" font-size="13" font-weight="700" fill="var(--tekst)">Maile</text>
+      <text x="735" y="83" font-size="10.5" fill="var(--slaby)">powiadomienia</text>
+    </g><g>
+      <rect x="902" y="210" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="917" y="235" font-size="13" font-weight="700" fill="var(--tekst)">Magazyn</text>
+      <text x="917" y="253" font-size="10.5" fill="var(--slaby)">stany, rezerwacje</text>
+    </g><g>
+      <rect x="902" y="430" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="917" y="455" font-size="13" font-weight="700" fill="var(--tekst)">Faktury</text>
+      <text x="917" y="473" font-size="10.5" fill="var(--slaby)">KSeF, JPK</text>
+    </g><g>
+      <rect x="720" y="620" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="735" y="645" font-size="13" font-weight="700" fill="var(--tekst)">Analizy</text>
+      <text x="735" y="663" font-size="10.5" fill="var(--slaby)">marże, raporty</text>
+    </g><g>
+      <rect x="330" y="620" width="178" height="58" rx="10" fill="var(--karta)"
+            stroke="var(--kreska)" stroke-width="1.5"/>
+      <text x="345" y="645" font-size="13" font-weight="700" fill="var(--tekst)">Kadry</text>
+      <text x="345" y="663" font-size="10.5" fill="var(--slaby)">grafiki, umowy</text>
+    </g>
+
+  <!-- srodek -->
+  <rect x="452" y="318" width="216" height="124" rx="14" fill="var(--blekit)"/>
+  <text x="560" y="358" text-anchor="middle" font-size="12" font-weight="700"
+        letter-spacing="1.6" fill="#cddcff">SYSTEM FIRMY</text>
+  <text x="560" y="386" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">CRM</text>
+  <text x="560" y="410" text-anchor="middle" font-size="10.5" fill="#cddcff">albo Twój magazyn, albo panel</text>
+  <text x="560" y="426" text-anchor="middle" font-size="10.5" fill="#cddcff">— to, co u Ciebie jest sercem</text>
+
+  <g>
+      <rect x="248" y="224" width="138" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="317" y="240" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">zamówienia i klienci</text>
+    </g><g>
+      <rect x="284" y="357" width="103" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="335" y="373" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">oferty i stany</text>
+    </g><g>
+      <rect x="245" y="487" width="150" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="320" y="503" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">zamówienia zagraniczne</text>
+    </g><g>
+      <rect x="422" y="196" width="120" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="482" y="212" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">plik ofert i ceny</text>
+    </g><g>
+      <rect x="626" y="196" width="144" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="698" y="212" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">wiadomości do klienta</text>
+    </g><g>
+      <rect x="722" y="294" width="126" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="785" y="310" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">stany i rezerwacje</text>
+    </g><g>
+      <rect x="734" y="409" width="103" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="785" y="425" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">faktury i KSeF</text>
+    </g><g>
+      <rect x="643" y="519" width="114" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="700" y="535" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">dane do raportów</text>
+    </g><g>
+      <rect x="427" y="519" width="108" height="24" rx="12"
+            fill="var(--papier)" stroke="var(--blekit)" stroke-width="1.2" opacity=".97"/>
+      <text x="481" y="535" text-anchor="middle" font-size="10.5"
+            font-weight="600" fill="var(--blekit)">godziny i umowy</text>
+    </g>
+
+  <!-- legenda -->
+  <g>
+    <line x1="36" y1="26" x2="76" y2="26" stroke="var(--blekit)" stroke-width="2.2"
+          marker-start="url(#grot-w)" marker-end="url(#grot)"/>
+    <text x="86" y="30" font-size="11.5" font-weight="600" fill="var(--tekst)">most, który buduję: łączę, koryguję, automatyzuję</text>
+  </g>
+</svg>
+      </div>
+      <p class="schemat-podpis">Każdy most buduję osobno, pod Twoje programy. Potem pilnuję, żeby wszystkie działały.</p>
+    </div>
+  </div>
+</section>
+
+<section id="jak">
+  <div class="srodek">
+    <div class="wjazd">
+      <p class="etykieta">01 — Cztery kroki</p>
+      <h2>Od przeglądu do stałej opieki</h2>
+      <p class="slaby" style="max-width:44rem">Zawsze w tej kolejności. Każdy krok da się kupić osobno
+         i każdy ma sens sam z siebie — nie musisz brać całości, żeby cokolwiek zyskać.</p>
+    </div>
+
+    <div class="etapy">
+      <div class="etap wjazd">
+        <span class="numer">01</span>
+        <h3>Przegląd sklepu</h3>
+        <p>Rozrysowuję, którędy naprawdę płyną dane i gdzie się gubią. Dostajesz mapę
+           z listą rzeczy do naprawienia — także takich, które zrobisz sam, beze mnie.</p>
+        <span class="cena">1 200 zł · 3–5 dni</span>
+      </div>
+      <div class="etap wjazd">
+        <span class="numer">02</span>
+        <h3>Integracja</h3>
+        <p>Buduję mosty między programami, które dziś się nie znają: sklep z programem do faktur, Allegro z magazynem, faktury z KSeF. Każdy most powstaje pod Twój zestaw programów.</p>
+        <span class="cena">od 2 900 zł · 10 dni roboczych</span>
+      </div>
+      <div class="etap wjazd">
+        <span class="numer">03</span>
+        <h3>System na zamówienie</h3>
+        <p>Kiedy czegoś nie da się kupić z półki: system CRM pod Twój sposób pracy, kalkulator
+           albo konfigurator dla klientów, narzędzie marketingowe, panel z raportami.</p>
+        <span class="cena">wycena po rozmowie</span>
+      </div>
+      <div class="etap wjazd">
+        <span class="numer">04</span>
+        <h3>Opieka miesięczna</h3>
+        <p>Rzeczy zbudowane psują się po cichu. Codziennie sprawdzam każde połączenie
+           i o awarii dowiadujesz się ode mnie, nie od klienta.</p>
+        <span class="cena">od 349 zł miesięcznie</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pas-jasny" id="problemy">
+  <div class="srodek">
+    <div class="wjazd">
+      <p class="etykieta">02 — Problemy</p>
+      <h2>Co Cię boli?</h2>
+      <p class="slaby">Kliknij to, co brzmi znajomo.</p>
+    </div>
+    <div class="kafelki">
+
+      <a class="kafelek wjazd" href="problemy.html#faktury">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect x="3" y="5" width="20" height="26" rx="3" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2"/>
+          <path d="M8 13h10M8 19h10M8 25h6" stroke="var(--blekit)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M26 22h11m-4-4l4 4-4 4" stroke="var(--slaby)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="24" y="30" width="17" height="11" rx="2.5" fill="var(--karta)" stroke="var(--slaby)" stroke-width="2"/>
+        </svg>
+        <h3>Przepisuję zamówienia do faktur ręcznie</h3>
+        <p>Codziennie to samo: sklep, arkusz, program do faktur. Godzina dziennie, która nic nie wnosi.</p>
+        <span class="cena">od 2 900 zł · 10 dni roboczych</span>
+      </a>
+
+      <a class="kafelek wjazd" href="problemy.html#stany">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M4 14l9-5 9 5v11l-9 5-9-5z" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M22 19l9-5 9 5v11l-9 5-9-5z" fill="none" stroke="var(--slaby)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M13 34v6M31 35v5" stroke="var(--bursztyn)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3>Stany rozjeżdżają się między sklepem a Allegro</h3>
+        <p>Sprzedajesz coś, czego nie ma. Klient czeka, potem anuluje, potem zostawia ocenę.</p>
+        <span class="cena">od 2 900 zł · 10 dni roboczych</span>
+      </a>
+
+      <a class="kafelek wjazd" href="problemy.html#ciche-awarie">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M4 22h9M31 22h9" stroke="var(--slaby)" stroke-width="2" stroke-linecap="round"/>
+          <rect x="13" y="14" width="7" height="16" rx="2" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2"/>
+          <rect x="24" y="14" width="7" height="16" rx="2" fill="var(--karta)" stroke="var(--slaby)" stroke-width="2"/>
+          <path d="M22 6v5M18 8l2 3M26 8l-2 3" stroke="var(--bursztyn)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3>Integracja przestała działać i nikt nie zauważył</h3>
+        <p>Token wygasł w czwartek. Dowiedziałeś się w poniedziałek, po telefonie klienta.</p>
+        <span class="cena">od 349 zł miesięcznie</span>
+      </a>
+
+      <a class="kafelek wjazd" href="problemy.html#raporty">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M22 4l15 5v11c0 9-6.5 16-15 20C13.5 36 7 29 7 20V9z" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M15 21l5 5 10-10" stroke="var(--blekit)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Raporty składam ręcznie z kilku plików</h3>
+        <p>Co miesiąc to samo: eksport tu, eksport tam, sklejanie w arkuszu. Wynik i tak jest po czasie.</p>
+        <span class="cena">wycena po rozmowie</span>
+      </a>
+
+      <a class="kafelek wjazd" href="problemy.html#wyceny">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M5 21V7h14l16 16-14 14z" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="13" cy="15" r="2.6" fill="var(--blekit)"/>
+          <path d="M28 30l9-9" stroke="var(--bursztyn)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M24 34l-4 4M20 34l4 4" stroke="var(--bursztyn)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3>Wyceny i oferty robimy ręcznie w Wordzie</h3>
+        <p>Klient czeka dwa dni na liczbę, którą program policzyłby sam. Część klientów nie doczeka.</p>
+        <span class="cena">wycena po rozmowie</span>
+      </a>
+
+      <a class="kafelek wjazd" href="sprawdzarka.html">
+        <svg class="ikona" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <circle cx="19" cy="19" r="13" fill="var(--blekit-jasny)" stroke="var(--blekit)" stroke-width="2"/>
+          <path d="M29 29l10 10" stroke="var(--blekit)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M15.5 15a3.8 3.8 0 117 2c-.9 1.4-3 1.6-3 3.6" stroke="var(--blekit)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="19.4" cy="25.4" r="1.5" fill="var(--blekit)"/>
+        </svg>
+        <h3>Nie wiem, co jest nie tak — po prostu coś nie gra</h3>
+        <p>Zacznij od bezpłatnego sprawdzenia sklepu. Dostaniesz listę konkretów, bez zobowiązań.</p>
+        <span class="cena">bezpłatnie</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="pas-ciemny" id="sprawdzarka">
+  <div class="srodek ciemny-uklad">
+    <div class="wjazd">
+      <p class="etykieta">03 — Zacznij tutaj</p>
+      <h2>Zacznij od sprawdzenia, nie od rozmowy</h2>
+      <p class="slaby">Wpisujesz adres sklepu, dostajesz listę problemów widocznych z zewnątrz —
+        bez logowania, bez podawania haseł, bez rozmowy z handlowcem.</p>
+      <button class="przycisk jasny" type="submit" form="szybka-sprawdzarka">Sprawdź sklep
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="okno wjazd">
+      <div class="okno-gora">
+        <span class="kropka"></span><span class="kropka"></span><span class="kropka"></span>
+        <span style="margin-left:.5rem">sprawdzarka sklepu</span>
+      </div>
+      <div class="okno-tresc">
+        <!-- PRZY WDROŻENIU: podmień action na publiczny adres sprawdzarki -->
+        <form id="szybka-sprawdzarka" action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post">
+          <input class="pole" name="sklep" placeholder="https://mojsklep.pl" required
+                 aria-label="Adres Twojego sklepu">
+        </form>
+        <div class="wiersz"><span class="znacznik blad">BŁĄD</span>
+          <span>98 × adres z mapy strony nie działa</span></div>
+        <div class="wiersz"><span class="znacznik blad">BŁĄD</span>
+          <span>12 × promocja bez najniższej ceny z 30 dni</span></div>
+        <div class="wiersz"><span class="znacznik uwaga">UWAGA</span>
+          <span>41 × brak numeru EAN przy produkcie</span></div>
+        <div class="wiersz"><span class="znacznik ok">OK</span>
+          <span>certyfikat ważny jeszcze 214 dni</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pas-jasny" id="realizacje">
+  <div class="srodek">
+    <div class="wjazd">
+      <p class="etykieta">04 — Realizacje</p>
+      <h2>Systemy na zamówienie: CRM, konfiguratory, panele raportowe</h2>
+      <p class="slaby" style="max-width:44rem">To krok trzeci: rzeczy, których nie da się kupić z półki,
+         bo żadna inna firma nie pracuje dokładnie tak jak Ty.</p>
+    </div>
+
+    <ul class="uslugi wjazd">
+      <li>Systemy CRM na miarę</li>
+      <li>Aplikacje internetowe</li>
+      <li>Narzędzia marketingowe</li>
+      <li>Konfiguratory i kalkulatory</li>
+      <li>Panele raportowe</li>
+      <li>Integracje na zamówienie</li>
+    </ul>
+
+    <div class="projekty">
+      <a class="projekt wjazd" href="realizacje.html#photonroof">
+        <p class="rodzaj">Przykładowy projekt na zamówienie</p>
+        <h3>Photonroof — konfigurator dachówek fotowoltaicznych</h3>
+        <p><strong>Jak było:</strong> wycena dachu powstawała ręcznie. Klient dzwonił,
+           handlowiec liczył w arkuszu, odpowiedź wracała po kilku dniach.</p>
+        <p><strong>Co zbudowałem:</strong> konfigurator, w którym klient sam podaje wymiary
+           i parametry dachu, a wycena liczy się od razu, w przeglądarce.</p>
+        <p><strong>Co się zmieniło:</strong> wycena bez telefonu i bez czekania,
+           a handlowiec dostaje gotowe zapytanie zamiast pustego telefonu.</p>
+        <p class="stan">Zobacz pełne studium przypadku ze zrzutami ekranu →</p>
+      </a>
+
+      <a class="projekt wjazd" href="realizacje.html#wypozyczalnia">
+        <p class="rodzaj">System na miarę — pokaz możliwości</p>
+        <h3>Panel wypożyczalni samochodowej</h3>
+        <p><strong>Jak bywa:</strong> rezerwacje w zeszycie, terminy przeglądów w głowie,
+           faktury w arkuszu — i dwa auta wynajęte na ten sam weekend.</p>
+        <p><strong>Co zbudowałem:</strong> panel z kalendarzem obłożenia, który nie pozwala
+           na kolizje, sam wystawia faktury i pilnuje terminów OC.</p>
+        <p><strong>Po co:</strong> to pokaz, jak wygląda system uszyty pod jedną branżę —
+           taki sam mogę zbudować pod Twoją.</p>
+        <p class="stan">Zobacz zrzuty ekranu ze środka →</p>
+      </a>
+
+      <a class="projekt wjazd" href="sprawdzarka.html">
+        <p class="rodzaj">Narzędzie bezpłatne</p>
+        <h3>Sprawdzarka sklepu</h3>
+        <p>Wpisujesz adres sklepu, a narzędzie sprawdza kilkaset podstron i pokazuje, czego brakuje:
+           danych producenta wymaganych przez GPSR, numerów EAN, najniższych cen z 30 dni,
+           martwych odnośników w mapie strony.</p>
+        <p>Wszystko widoczne z zewnątrz — bez logowania i bez dostępu do sklepu.</p>
+        <p class="stan">Działa — sprawdź swój sklep →</p>
+      </a>
+
+      <a class="projekt wjazd" href="cennik.html#straznik">
+        <p class="rodzaj">Produkt z abonamentem</p>
+        <h3>Strażnik połączeń</h3>
+        <p>Codzienne sprawdzanie, czy połączenia między sklepem, magazynem i księgowością
+           nadal działają — czy zamówienia schodzą, czy stany się aktualizują,
+           czy faktury wychodzą do KSeF.</p>
+        <p>Jeśli coś przestaje działać, dostajesz jednego maila tego samego dnia.</p>
+        <p class="stan">Na zamówienie — zobacz, jak działa opieka miesięczna →</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="srodek">
+    <div class="wjazd">
+      <p class="etykieta">05 — Zasady</p>
+      <h2>Jak pracuję</h2>
+    </div>
+    <div class="kroki">
+      <div class="krok wjazd">
+        <span class="numer">01</span>
+        <h3>Jeden klocek naraz</h3>
+        <p>Nie sprzedaję przebudowy całej firmy. Bierzemy jedną rzecz, która najbardziej boli,
+           i doprowadzam ją do końca.</p>
+      </div>
+      <div class="krok wjazd">
+        <span class="numer">02</span>
+        <h3>Stała cena, ustalona przed startem</h3>
+        <p>Nie rozliczam się z godzin. Wiesz, ile zapłacisz, zanim zaczniemy.</p>
+      </div>
+      <div class="krok wjazd">
+        <span class="numer">03</span>
+        <h3>Cennik mam jawny</h3>
+        <p>Jest na stronie — możesz go porównać, zanim do mnie napiszesz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+
+  document.documentElement.classList.add("ruch");
+
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+
+  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
+  // po sekundzie pokazujemy wszystko.
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
+      e.classList.add("widac");
+    });
+  }, 1000);
+})();
+</script>
+</body>
+</html>

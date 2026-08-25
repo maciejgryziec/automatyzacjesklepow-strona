@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Realizacje — Automatyzacje Sklepów</title>
+<meta name="description" content="Konfigurator 3D dachówek fotowoltaicznych Photonroof dla ML System, panel do prowadzenia wypożyczalni samochodowej, bezpłatna sprawdzarka sklepu i strażnik połączeń — narzędzia, które zbudowałem.">
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="var(--blekit)"/>
+        <path d="M7 13.2l3.4 3.4L19 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Realizacje</p>
+      <h1>Konkretne projekty, nie obietnice</h1>
+      <p class="slaby" style="font-size:1.1rem">Krok trzeci: to, czego nie da się kupić z półki,
+         bo gotowe programy zakładają, że każdy sklep pracuje tak samo. Twój nie.</p>
+    </div>
+
+    <ul class="uslugi wjazd">
+      <li>Systemy CRM na miarę</li>
+      <li>Aplikacje internetowe</li>
+      <li>Narzędzia marketingowe</li>
+      <li>Konfiguratory i kalkulatory</li>
+      <li>Panele raportowe</li>
+      <li>Integracje na zamówienie</li>
+    </ul>
+
+    <div class="projekty">
+      <div class="projekt wjazd">
+        <p class="rodzaj">Projekt na zamówienie</p>
+        <h3>Photonroof — konfigurator dachówek fotowoltaicznych</h3>
+        <p>Konfigurator dla marki <strong>Photonroof</strong>, należącej do <strong>ML System</strong> —
+           producenta szkła i dachówek fotowoltaicznych.</p>
+        <p>Klient sam projektuje dach, a system liczy powierzchnię, moc i liczbę dachówek.</p>
+        <p class="stan"><a href="#photonroof">Zobacz, jak to działa ↓</a></p>
+      </div>
+      <a class="projekt wjazd" href="#wypozyczalnia">
+        <p class="rodzaj">System na miarę — pokaz możliwości</p>
+        <h3>Panel wypożyczalni samochodowej</h3>
+        <p>Kompletny panel do prowadzenia wypożyczalni: pulpit z zadaniami na dziś,
+           kalendarz obłożenia aut, faktury, raporty i pilnowanie terminów OC i przeglądów.</p>
+        <p>Przykład systemu szytego pod jedną branżę — taki sam mogę zbudować pod Twoją.</p>
+        <p class="stan">Zobacz, jak wygląda w środku ↓</p>
+      </a>
+      <a class="projekt wjazd" href="sprawdzarka.html">
+        <p class="rodzaj">Narzędzie bezpłatne</p>
+        <h3>Sprawdzarka sklepu</h3>
+        <p>Wpisujesz adres sklepu, a narzędzie sprawdza kilkaset podstron i pokazuje, czego brakuje:
+           danych producenta wymaganych przez GPSR, numerów EAN, najniższych cen z 30 dni,
+           martwych odnośników w mapie strony.</p>
+        <p>Wszystko widoczne z zewnątrz — bez logowania i bez dostępu do sklepu.</p>
+        <p class="stan">Działa — sprawdź swój sklep →</p>
+      </a>
+
+      <a class="projekt wjazd" href="cennik.html#straznik">
+        <p class="rodzaj">Produkt z abonamentem</p>
+        <h3>Strażnik połączeń</h3>
+        <p>Codzienne sprawdzanie, czy mosty między sklepem, magazynem i księgowością nadal działają
+           — czy zamówienia schodzą, czy stany się aktualizują, czy faktury wychodzą do KSeF.</p>
+        <p>Jeśli coś przestaje działać, dostajesz jednego maila tego samego dnia.</p>
+        <p class="stan">Na zamówienie — zobacz, jak działa opieka miesięczna →</p>
+      </a>
+    </div>
+
+    <div class="studium wjazd" id="photonroof" style="margin-top:4rem">
+      <p class="etykieta">Studium przypadku</p>
+      <h2>Photonroof — konfigurator dachówek fotowoltaicznych</h2>
+      <ul class="metryka">
+        <li>Klient: ML System</li>
+        <li>Marka: Photonroof</li>
+        <li>Rola: autor</li>
+        <li>Aplikacja internetowa</li>
+      </ul>
+
+      <h3>Problem</h3>
+      <p>Dachówka fotowoltaiczna to produkt, którego nie da się wycenić z cennika.
+         Cena zależy od kształtu dachu, kąta nachylenia, stron świata, zacienienia
+         i tego, ile dachówek faktycznie wyprodukuje prąd, a ile jest tylko pokryciem.</p>
+      <p>Każde zapytanie oznaczało więc telefon do handlowca, ręczne liczenie w arkuszu
+         i odpowiedź po kilku dniach. Klient, który chciał tylko wiedzieć „ile to mniej więcej
+         kosztuje”, musiał czekać — a część nie czekała.</p>
+
+      <h3>Jak to rozwiązałem</h3>
+      <p>Przeniosłem całe liczenie do przeglądarki i dałem je klientowi do ręki.
+         Aplikacja pozwala zaprojektować dach na trzy sposoby, a potem sama wylicza geometrię,
+         moc i zapotrzebowanie na materiał.</p>
+
+      <figure>
+        <img src="zdjecia/photonroof-tryby.png" alt="Ekran startowy konfiguratora Photonroof z wyborem trybu pracy">
+        <figcaption>Trzy drogi do tego samego wyniku: wskazanie budynku na mapie satelitarnej,
+          zbudowanie dachu od zera w kreatorze 3D albo wgranie rzutu dachu do rozpoznania.</figcaption>
+      </figure>
+
+      <h3>Mapa satelitarna — dla tych, którzy nie chcą nic wypełniać</h3>
+      <p>Klient obrysowuje swój dach na zdjęciu satelitarnym. System sam wylicza powierzchnię,
+         nachylenie połaci, ekspozycję względem słońca i moc możliwej instalacji —
+         korzystając z wysokościowego modelu dachu.</p>
+
+      <figure>
+        <img src="zdjecia/photonroof-mapa.jpg" alt="Tryb mapy satelitarnej: obrysowany dach budynku, wyliczona powierzchnia, moc instalacji i liczba dachówek">
+        <figcaption>Klient wpisuje adres, obrysowuje swój dach na zdjęciu satelitarnym i wybiera kolor dachówki.
+          Wynik pojawia się od razu: 186,40 m² dachu, 12,30 kWp mocy oraz rozpiska dachówek —
+          561 z modułem PV i 86 krawędziowych. Cała wycena bez jednego pola do wypełnienia.</figcaption>
+      </figure>
+
+      <h3>Kreator 3D — najmocniejsza część</h3>
+      <p>Klient wybiera typ dachu — dwuspadowy, kopertowy, namiotowy, jednospadowy, naczółkowy
+         albo półszczytowy — podaje wymiary budynku, kąt nachylenia i orientację względem stron świata.
+         Model przebudowuje się na żywo, a na dachu od razu widać ułożone dachówki w wybranym kolorze.</p>
+      <p>Do tego dochodzą elementy, które w prawdziwym dachu psują każde wyliczenie:
+         okna dachowe, kominy i dodatkowe skrzydła budynku. Suwak pory dnia pokazuje, jak w ciągu doby
+         przesuwa się cień — bo to on decyduje, które połacie mają sens.</p>
+      <p>Model nanosi też wymiary i kąty, tak jak na rysunku technicznym, więc dekarz dostaje
+         coś, co da się zabrać na budowę.</p>
+
+      <figure>
+        <img src="zdjecia/photonroof-kreator3d.jpg" alt="Kreator 3D: model domu z dachem dwuspadowym, oknem dachowym i naniesionymi wymiarami">
+        <figcaption>Kreator 3D. Dom z dobudówką i oknem dachowym, wymiary połaci naniesione wprost na model,
+          a obok panel, w którym zmienia się typ dachu, kąt, wymiary, orientację względem stron świata i porę dnia.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="zdjecia/photonroof-kopertowy.jpg" alt="Kreator 3D: dach kopertowy w kolorze czerwonym z widocznym układem dachówek">
+        <figcaption>Ten sam dom, inny typ dachu i inny kolor pokrycia. Zmiana jednego pola przebudowuje
+          cały model razem z ułożeniem dachówek, więc klient od razu widzi, na co się decyduje.</figcaption>
+      </figure>
+
+      <h3>Wynik, który da się zanieść do handlowca</h3>
+      <p>Aplikacja nie kończy się na ładnym obrazku. Dla każdej połaci osobno liczy powierzchnię,
+         kąt, kierunek świata, moc w kilowatach, procent pokrycia i liczbę dachówek —
+         z rozbiciem na aktywne, pasywne i docinki. Całość da się pobrać jako gotową ofertę PDF
+         albo zapisać projekt i wrócić do niego później.</p>
+
+      <figure>
+        <img src="zdjecia/photonroof-wymiary.jpg" alt="Kreator 3D: dach z wykuszem, naniesione wymiary połaci i podsumowanie mocy instalacji">
+        <figcaption>Dach z wykuszem, każdy odcinek opisany wymiarem prosto na modelu — okap, skos, kalenica, ściana.
+          Obok wynik na bieżąco: 123,5 m² powierzchni dachu, z tego 54,6 m² pracujące na prąd, razem 2,78 kWp.</figcaption>
+      </figure>
+
+      <h3>Co się zmieniło</h3>
+      <p>Wycena, która zajmowała kilka dni, powstaje w kilka minut i robi ją sam zainteresowany.
+         Handlowiec przestaje liczyć, a zaczyna rozmawiać z kimś, kto już wie, czego chce.</p>
+
+      <p class="przypis">Nazwa, logotyp i zrzuty ekranu wykorzystane za zgodą właściciela.
+         Dane widoczne na zrzutach są przykładowe.</p>
+    </div>
+
+    <div class="studium wjazd" id="wypozyczalnia" style="margin-top:4rem">
+      <p class="etykieta">Pokaz możliwości</p>
+      <h2>Panel wypożyczalni samochodowej</h2>
+      <ul class="metryka">
+        <li>System na miarę</li>
+        <li>Rola: autor</li>
+        <li>Aplikacja internetowa</li>
+        <li>Projekt pokazowy</li>
+      </ul>
+
+      <h3>Po co powstał</h3>
+      <p>Gotowe programy do wypożyczalni zakładają, że każda firma pracuje tak samo —
+         a potem właściciel i tak prowadzi połowę rzeczy w zeszycie, bo „w programie się nie da”.
+         Ten panel zbudowałem jako przykład drogi odwrotnej: system uszyty pod jedną branżę,
+         w którym na pierwszym ekranie jest dokładnie to, od czego zaczyna się dzień w wypożyczalni.</p>
+
+      <figure>
+        <img src="zdjecia/wypozyczalnia-pulpit.png" alt="Pulpit panelu wypożyczalni: lista zadań na dziś, przychód miesiąca i stan floty">
+        <figcaption>Pulpit: zwroty i wydania na dziś, przychód miesiąca, stan floty.</figcaption>
+      </figure>
+
+      <h3>Kalendarz, który widzi kolizje</h3>
+      <p>Serce systemu to kalendarz obłożenia: każdy wiersz to auto, każdy pasek to najem albo
+         rezerwacja. System sam pilnuje, żeby nie dało się wynająć tego samego auta dwa razy
+         w te same dni — i żeby auto z wygasłym OC nie wyjechało z placu.</p>
+
+      <figure>
+        <img src="zdjecia/wypozyczalnia-kalendarz.png" alt="Kalendarz obłożenia: paski najmów i rezerwacji na osi miesiąca, osobny wiersz dla każdego auta">
+      </figure>
+
+      <h3>Flota i papiery w jednym miejscu</h3>
+      <p>Każde auto ma swoją kartę: zdjęcie, stawkę, przebieg, terminy OC i przeglądu oraz
+         pełną historię najmów. Faktury wystawiają się same na podstawie najmów, więc kwoty
+         zawsze zgadzają się z kalendarzem — a te po terminie od razu widać na czerwono.</p>
+
+      <figure>
+        <img src="zdjecia/wypozyczalnia-flota.png" alt="Karty aut we flocie ze zdjęciami, stawkami i plakietkami statusów">
+        <figcaption>Flota — statusy, stawki i terminy przeglądów na jednej karcie.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="zdjecia/wypozyczalnia-faktury.png" alt="Lista faktur z numeracją, terminami płatności i statusami opłacona, oczekuje, po terminie">
+        <figcaption>Faktury liczone wprost z najmów, z podziałem na opłacone, oczekujące i przeterminowane.</figcaption>
+      </figure>
+
+      <h3>Co z tego wynika dla Ciebie</h3>
+      <p>To nie jest program na sprzedaż z półki — to pokaz tego, jak wygląda system
+         zbudowany pod konkretny sposób pracy. Prowadzisz wypożyczalnię, serwis, produkcję
+         na zamówienie albo cokolwiek, czego nie ogarnia żaden gotowy program?
+         Taki panel mogę zbudować pod Twoją firmę — wycena po rozmowie, pozycja
+         „System na zamówienie” w <a href="cennik.html">cenniku</a>.</p>
+
+      <p class="przypis">Projekt pokazowy. Wszystkie dane na zrzutach — nazwiska, telefony,
+         numery rejestracyjne i kwoty — są wymyślone.</p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+
+  document.documentElement.classList.add("ruch");
+
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+
+  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
+  // po sekundzie pokazujemy wszystko.
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
+      e.classList.add("widac");
+    });
+  }, 1000);
+})();
+</script>
+</body>
+</html>

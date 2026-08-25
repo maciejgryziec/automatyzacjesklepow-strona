@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automatyczne faktury Allegro, synchronizacja stanów, GPSR — co naprawiam</title>
+<meta name="description" content="Ręczne przepisywanie zamówień do faktur, rozjazd stanów między sklepem a Allegro, ciche awarie integracji, GPSR i Omnibus — co dokładnie robię z każdym z tych problemów.">
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="var(--blekit)"/>
+        <path d="M7 13.2l3.4 3.4L19 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Co naprawiam</p>
+      <h1>Co najczęściej psuje się w sklepach internetowych</h1>
+      <p class="slaby" style="font-size:1.1rem">Każdy z tych problemów da się rozwiązać osobno.
+         Poniżej, co dokładnie robię w każdym przypadku.</p>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2 id="faktury" class="kotwica">Automatyczne faktury do zamówień ze sklepu i z Allegro</h2>
+      <p>Zamówienia przychodzą do sklepu i na Allegro, a faktury wystawiasz ręcznie w osobnym
+         programie. Przy trzydziestu zamówieniach dziennie to godzina pracy i kilka pomyłek w miesiącu.</p>
+      <p><strong>Co robię:</strong> zamówienia wpadają do programu do faktur same, z poprawnymi
+         stawkami podatku, danymi klienta i numerem zamówienia. Ty sprawdzasz, zamiast przepisywać. A jeśli Twoje faktury mają trafiać do KSeF, ten sam most załatwia i to.</p>
+
+      <h2 id="stany" class="kotwica">Synchronizacja stanów magazynowych między sklepem a Allegro</h2>
+      <p>Sprzedajesz ten sam towar w dwóch miejscach. Połączenie gubi się po aktualizacji wtyczki albo cichym zerwaniu — ostatnia sztuka schodzi na Allegro,
+         a w sklepie dalej widnieje jako dostępna. Klient płaci za coś, czego nie ma.</p>
+      <p><strong>Co robię:</strong> jeden stan magazynowy, z którego korzystają wszystkie kanały sprzedaży. Coś schodzi w jednym miejscu — chwilę później wiedzą o tym pozostałe.</p>
+
+      <h2 id="ciche-awarie" class="kotwica">Ciche awarie integracji</h2>
+      <p>Najgorsze awarie to te, które nie robią hałasu. Token wygasa w czwartek, zamówienia
+         przestają schodzić, a Ty dowiadujesz się w poniedziałek — od klienta, który pyta o paczkę.</p>
+      <p><strong>Co robię:</strong> codziennie sprawdzam, czy każde połączenie żyje. Jeśli coś
+         przestaje działać, dostajesz jednego maila tego samego dnia.</p>
+
+      <h2 id="raporty" class="kotwica">Raporty składane ręcznie z kilku plików</h2>
+      <p>Co miesiąc to samo: eksport tu, eksport tam, sklejanie w arkuszu. Wynik jest po czasie
+         i nikt nie ma pewności, czy liczby się zgadzają.</p>
+      <p><strong>Co robię:</strong> panel, który zbiera dane sam i pokazuje je na bieżąco.
+         Zamiast składać raport, otwierasz go.</p>
+
+      <h2 id="wyceny" class="kotwica">Wyceny i oferty robione ręcznie</h2>
+      <p>Klient czeka dwa dni na liczbę, którą program policzyłby w sekundę. Część klientów
+         nie doczeka i kupi gdzie indziej.</p>
+      <p><strong>Co robię:</strong> kalkulator albo konfigurator, w którym klient sam podaje
+         parametry i od razu widzi wycenę. Do Ciebie trafia zapytanie z kompletem parametrów — rozmowę zaczynasz od konkretu.</p>
+
+      <h2 id="przepisy" class="kotwica">GPSR i Omnibus</h2>
+      <p>Od grudnia 2024 przy każdym produkcie muszą być dane producenta: nazwa, adres i kontakt.
+         Przy każdej obniżce — najniższa cena z ostatnich 30 dni. Jedno i drugie widać z zewnątrz,
+         także dla kogoś, kto szuka powodu do skargi.</p>
+      <p><strong>Co robię:</strong> sprawdzam, których produktów to dotyczy, i pokazuję listę
+         do poprawienia. Jeśli danych jest dużo, uzupełniam je hurtem.</p>
+
+      <h2 id="nie-wiem" class="kotwica">Nie wiem, co jest nie tak</h2>
+      <p>Najczęstszy przypadek. Coś nie gra, ale trudno wskazać palcem co.</p>
+      <p><strong>Zacznij stąd:</strong> bezpłatne sprawdzenie sklepu. Wpisujesz adres,
+         dostajesz listę konkretów. Bez rozmowy i bez zobowiązań.</p>
+      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg></a></p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+
+  document.documentElement.classList.add("ruch");
+
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+
+  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
+  // po sekundzie pokazujemy wszystko.
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
+      e.classList.add("widac");
+    });
+  }, 1000);
+})();
+</script>
+</body>
+</html>
