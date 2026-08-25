@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1550D0"/>
+  <g transform="translate(256 256) scale(0.42) translate(-1366.5 -767.5)">
+    <g stroke="#ffffff" stroke-width="40" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M999 482 L1124 466 L1199 621"/>
+      <path d="M1199 621 L1734 621"/>
+      <path d="M1199 621 L1284 897"/>
+      <path d="M1734 621 L1648 897"/>
+      <path d="M1284 897 L1648 897"/>
+      <path d="M1284 897 L1333 1053"/>
+      <path d="M1333 1053 L1600 1053"/>
+    </g>
+    <g fill="#ffffff">
+      <circle cx="999" cy="482" r="62"/>
+      <circle cx="1199" cy="621" r="62"/>
+      <circle cx="1734" cy="621" r="62"/>
+      <circle cx="1284" cy="897" r="62"/>
+      <circle cx="1648" cy="897" r="62"/>
+      <circle cx="1333" cy="1053" r="62"/>
+      <circle cx="1600" cy="1053" r="62"/>
+    </g>
+  </g>
+</svg>
