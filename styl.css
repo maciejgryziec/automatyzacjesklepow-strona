@@ -222,3 +222,28 @@ figure img{width:100%;height:auto;display:block;border-radius:12px;
 figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
 .przypis{font-size:.82rem;color:var(--slaby);font-style:italic;margin-top:2rem;
   padding-top:1rem;border-top:1px solid var(--kreska)}
+
+/* ── Przewijana tasma platform ─────────────────── */
+.tasma{overflow:hidden;border-top:1px solid var(--kreska);border-bottom:1px solid var(--kreska);
+  padding:.9rem 0;background:var(--karta)}
+.tasma-tor{display:flex;width:max-content;animation:tasma-przesuw 36s linear infinite}
+.tasma-tor > span{display:flex;align-items:center;gap:2.6rem;padding-right:2.6rem;
+  font-family:var(--maszyna);font-size:.82rem;letter-spacing:.1em;color:var(--slaby);white-space:nowrap}
+.tasma-tor b{color:var(--blekit);font-weight:600}
+@keyframes tasma-przesuw{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.tasma-tor{animation:none}}
+
+/* ── Pytania i odpowiedzi (podstrony integracji) ─ */
+.pytania{margin-top:1.2rem}
+.pytania details{border:1px solid var(--kreska);border-radius:11px;background:var(--karta);
+  padding:0 1.15rem;margin-bottom:.7rem}
+.pytania summary{cursor:pointer;font-weight:600;padding:.95rem 0 .95rem;list-style:none;
+  position:relative;padding-right:2.2rem}
+.pytania summary::-webkit-details-marker{display:none}
+.pytania summary::after{content:"+";position:absolute;right:.25rem;top:50%;
+  transform:translateY(-50%);color:var(--blekit);font-size:1.3rem;font-weight:600}
+.pytania details[open] summary::after{content:"–"}
+.pytania details > p{padding:0 0 1.05rem;color:var(--slaby)}
+.stopka-linki{margin-top:.6rem}
+.stopka-linki a{color:inherit}
+.pytania summary::marker{content:""}
