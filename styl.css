@@ -224,12 +224,12 @@ figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
   padding-top:1rem;border-top:1px solid var(--kreska)}
 
 /* ── Przewijana tasma platform ─────────────────── */
-.tasma{overflow:hidden;border-top:1px solid var(--kreska);border-bottom:1px solid var(--kreska);
-  padding:.9rem 0;background:var(--karta)}
-.tasma-tor{display:flex;width:max-content;animation:tasma-przesuw 36s linear infinite}
-.tasma-tor > span{display:flex;align-items:center;gap:2.6rem;padding-right:2.6rem;
-  font-family:var(--maszyna);font-size:.82rem;letter-spacing:.1em;color:var(--slaby);white-space:nowrap}
-.tasma-tor b{color:var(--blekit);font-weight:600}
+.tasma{max-width:64rem;margin:.5rem auto;padding:1.4rem 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.tasma-tor{display:flex;width:max-content;animation:tasma-przesuw 32s linear infinite}
+.tasma-tor > span{display:flex;align-items:center;gap:3.4rem;padding-right:3.4rem}
+.tasma-tor img{width:auto;filter:grayscale(1) opacity(.5)}
 @keyframes tasma-przesuw{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion: reduce){.tasma-tor{animation:none}}
 
