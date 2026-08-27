@@ -247,3 +247,35 @@ figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
 .stopka-linki{margin-top:.6rem}
 .stopka-linki a{color:inherit}
 .pytania summary::marker{content:""}
+
+/* ── Lifting: hero, ruch, wizytowka ────────────── */
+.czolo{position:relative;overflow:hidden}
+.czolo::before{content:"";position:absolute;pointer-events:none;z-index:-1;
+  top:-14rem;right:-16rem;width:52rem;height:40rem;
+  background:radial-gradient(closest-side,
+    color-mix(in srgb,var(--blekit) 13%,transparent),transparent 72%)}
+.czolo .wstep{padding-top:1.6rem}
+.podkreslony{color:var(--blekit)}
+.rzad-przyciskow{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.przycisk.drugi{background:transparent;color:var(--tekst);
+  border:1.5px solid var(--kreska);box-shadow:none}
+.przycisk.drugi:hover{border-color:var(--blekit);color:var(--blekit)}
+
+.ruch .schemat line[marker-end]{stroke-dasharray:7 8;animation:plyniecie 1.5s linear infinite}
+@keyframes plyniecie{to{stroke-dashoffset:-15}}
+.ruch .tetno{animation:tetno 2s ease-out infinite;transform-origin:374px 744px}
+@keyframes tetno{0%{opacity:1}50%{opacity:.35}100%{opacity:1}}
+@media (prefers-reduced-motion: reduce){
+  .schemat line[marker-end]{animation:none}
+  .tetno{animation:none}
+}
+
+.wizytowka{display:flex;gap:2rem;align-items:flex-start;padding:3.4rem 0}
+.wizytowka .awatar{flex:0 0 auto;width:5.4rem;height:5.4rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--blekit),var(--blekit-ciemny));
+  box-shadow:0 0 0 4px color-mix(in srgb,#fff 14%,transparent)}
+.wizytowka .awatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.wizytowka a{color:#cfe0ff}
+@media (max-width:40rem){.wizytowka{flex-direction:column;gap:1.2rem}}
