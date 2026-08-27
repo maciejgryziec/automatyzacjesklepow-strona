@@ -66,8 +66,13 @@
       </div>
     </div>
 
-    <div class="wjazd">
+    <div class="wjazd plansza-mostu">
       <p class="przewin">↔ przesuń w bok, żeby zobaczyć całość</p>
+      <div class="dowody" aria-hidden="true">
+        <span class="dowod"><i class="kropka niebieska"></i>FV/08/141 wystawiona <em>12:04</em></span>
+        <span class="dowod"><i class="kropka niebieska"></i>Allegro → magazyn: stan zgodny <em>12:04</em></span>
+        <span class="dowod"><i class="kropka zielona"></i>12 mostów sprawdzonych — wszystkie działają</span>
+      </div>
       <div class="schemat">
 <svg viewBox="0 0 1120 800" width="100%" role="img"
      aria-label="Schemat: w środku system firmy, wokół sklep, Allegro, marketplace'y, porównywarki, magazyn, faktury, kadry, maile i analizy. Każde połączenie to most, który buduję, łączę i automatyzuję. Wszystkiego pilnuje strażnik połączeń."
@@ -569,6 +574,29 @@
       e.classList.add("widac");
     });
   }, 1000);
+})();
+
+(function () {
+  // schemat rysuje sie sam przy wejsciu, potem strzalki zaczynaja plynac
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var schemat = document.querySelector(".czolo .schemat");
+  var dowody = document.querySelector(".dowody");
+  if (spokoj) return;
+  if (!schemat) { if (dowody) dowody.classList.add("pokaz"); return; }
+
+  var linie = schemat.querySelectorAll("line[marker-end]");
+  var grupy = schemat.querySelectorAll("svg > g");
+  linie.forEach(function (l, i) { l.style.animationDelay = (i * 0.06) + "s"; });
+  grupy.forEach(function (g, i) { g.style.animationDelay = (i * 0.035) + "s"; });
+  schemat.classList.add("rysuj");
+
+  setTimeout(function () {
+    schemat.classList.remove("rysuj");
+    schemat.classList.add("narysowany");
+    linie.forEach(function (l) { l.style.animationDelay = ""; });
+    grupy.forEach(function (g) { g.style.animationDelay = ""; });
+    if (dowody) dowody.classList.add("pokaz");
+  }, 1500);
 })();
 </script>
 </body>
