@@ -279,3 +279,22 @@ figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
 .wizytowka .awatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 .wizytowka a{color:#cfe0ff}
 @media (max-width:40rem){.wizytowka{flex-direction:column;gap:1.2rem}}
+
+/* ── Karty problemow (Co naprawiam) ────────────── */
+.siatka-problemow{display:grid;gap:1.2rem;margin:2.4rem 0 1.2rem;
+  grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))}
+.problem{background:var(--karta);border:1px solid var(--kreska);border-radius:14px;
+  padding:1.7rem 1.6rem 1.5rem;box-shadow:var(--cien);position:relative}
+.problem-ikona{display:inline-flex;align-items:center;justify-content:center;
+  width:2.9rem;height:2.9rem;border-radius:11px;margin-bottom:1rem;
+  background:var(--blekit-jasny);color:var(--blekit)}
+.problem-ikona svg{width:1.5rem;height:1.5rem}
+.problem h2{font-size:1.16rem;line-height:1.28;letter-spacing:-.015em;margin:0 0 .7rem}
+.problem .objaw{color:var(--slaby);font-size:.97rem;margin:0}
+.naprawa{margin-top:1.1rem;padding:.95rem 1.1rem;border-radius:10px;
+  background:var(--pas);border-left:3px solid var(--blekit)}
+.naprawa-etykieta{display:block;font-family:var(--maszyna);font-size:.7rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--blekit);margin-bottom:.35rem}
+.naprawa p{margin:0;font-size:.97rem}
+.problem.szeroki{margin-bottom:1.5rem}
+.problem.szeroki h2{font-size:1.4rem}
