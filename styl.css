@@ -249,12 +249,20 @@ figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
 .pytania summary::marker{content:""}
 
 /* ── Lifting: hero, ruch, wizytowka ────────────── */
-.czolo{position:relative;overflow:hidden}
-.czolo::before{content:"";position:absolute;pointer-events:none;z-index:-1;
-  top:-14rem;right:-16rem;width:52rem;height:40rem;
-  background:radial-gradient(closest-side,
-    color-mix(in srgb,var(--blekit) 13%,transparent),transparent 72%)}
+.czolo{position:relative;overflow:hidden;
+  --papier:#0c1726; --tekst:#eef2f7; --slaby:#9aa8b8; --karta:#152436;
+  --kreska:#25324a; --pas:#152436; --blekit:#6aa4ff; --blekit-jasny:#17263e;
+  color:#eef2f7; padding-bottom:4.5rem; border-bottom:1px solid #1d2b40;
+  background:
+    radial-gradient(60rem 34rem at 78% -6rem, rgba(80,140,255,.30), transparent 70%),
+    linear-gradient(180deg,#0a1421 0%, #0c1726 62%, #101d30 100%)}
 .czolo .wstep{padding-top:1.6rem}
+.czolo .przycisk{background:#2f7bff;color:#fff}
+.czolo .przycisk.drugi{background:rgba(255,255,255,.06);color:#eef2f7;border-color:#31405a}
+.czolo .przycisk.drugi:hover{border-color:#6aa4ff;color:#9ec5ff}
+.czolo .schemat{background:#101d30;border-color:#25324a}
+.czolo .schemat-podpis,.czolo .przewin{color:#8fa0b4}
+.czolo .przewin{margin-top:1.6rem}
 .podkreslony{color:var(--blekit)}
 .rzad-przyciskow{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
 .przycisk.drugi{background:transparent;color:var(--tekst);
