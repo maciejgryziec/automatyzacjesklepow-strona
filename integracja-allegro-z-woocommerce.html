@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integracja Allegro z WooCommerce — wspólne stany, zamówienia i faktury</title>
+<meta name="description" content="Łączę WooCommerce z Allegro: jeden stan magazynowy, zamówienia w jednym panelu, faktury bez przepisywania. Także wtedy, gdy masz kilka kont Allegro albo wtyczka przestała nadążać.">
+<link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-allegro-z-woocommerce.html">
+<link rel="stylesheet" href="styl.css?w=2">
+<link rel="icon" type="image/svg+xml" href="ikona.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
+<link rel="apple-touch-icon" href="ikona-180.png">
+<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
+        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
+          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
+          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
+          <path d="M1333 1053 L1600 1053"/>
+        </g>
+        <g fill="var(--blekit)">
+          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
+          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
+          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
+          <circle cx="1600" cy="1053" r="72"/>
+        </g>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Integracja</p>
+      <h1>Integracja Allegro z WooCommerce</h1>
+      <p class="slaby" style="font-size:1.1rem">Sklep na WooCommerce i sprzedaż na Allegro przestają
+         być dwoma osobnymi światami: jeden stan magazynowy, zamówienia w jednym miejscu,
+         faktury wystawiane same.</p>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Gdzie zwykle boli</h2>
+      <p>WooCommerce jest elastyczny i tani w utrzymaniu, ale sam z siebie nie wie nic o Allegro.
+         Gotowe wtyczki potrafią wystawiać oferty i pobierać zamówienia — do momentu, w którym
+         zaczyna się prawdziwe życie: warianty produktów, zestawy, kilka kont sprzedażowych,
+         zwroty, faktury dla firm i sprzedaż zagraniczna.</p>
+      <p>Najczęstszy scenariusz, z którym do mnie trafiają: wtyczka działa, ale trzeba ją nadzorować.
+         Codziennie ktoś sprawdza, czy stany się zgadzają, i ręcznie poprawia to, co się rozjechało.
+         To nie jest automatyzacja, to etat.</p>
+    </div>
+
+    <div class="siatka-problemow">
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 16l9 4 9-4"/></svg>
+        </span>
+        <h2>Jeden stan dla obu kanałów</h2>
+        <p class="objaw">Ostatnia sztuka schodzi na Allegro, a w WooCommerce dalej jest dostępna.
+           Albo odwrotnie — i klient Allegro dostaje anulowanie zamówienia.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Po połączeniu</span>
+          <p>Sprzedaż w jednym kanale natychmiast zmniejsza dostępność w drugim, także przy
+             wariantach i zestawach.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16l-2.5-1.6L13 21l-2.5-1.6L8 21z"/><path d="M10 8h4M10 12h4"/></svg>
+        </span>
+        <h2>Faktury z obu źródeł, jedna numeracja</h2>
+        <p class="objaw">Zamówienia z Allegro trafiają do księgowości osobno, często ręcznie,
+           i zdarza się podwójne fakturowanie tego samego klienta.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Po połączeniu</span>
+          <p>Wszystko idzie do jednego programu księgowego w jednej numeracji, z wysyłką do
+             <a href="ksef-dla-sklepu-internetowego.html">KSeF</a>.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h9a5 5 0 0 1 0 10h-3"/></svg>
+        </span>
+        <h2>Zwroty i korekty</h2>
+        <p class="objaw">Allegro ma własne zasady zwrotów, WooCommerce swoje, a księgowość
+           trzecie. Zwykle spina to ktoś ręcznie na koniec miesiąca.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Po połączeniu</span>
+          <p>Zwrot z dowolnego kanału tworzy korektę powiązaną z właściwą fakturą i oddaje
+             towar na stan.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M17 5a3 3 0 0 1 0 6"/></svg>
+        </span>
+        <h2>Kilka kont Allegro</h2>
+        <p class="objaw">Dwa czy trzy konta to najczęstszy powód, dla którego gotowa wtyczka
+           przestaje wystarczać — bo zwykle obsługuje jedno.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Po połączeniu</span>
+          <p>Każde konto ma własne reguły, wspólny magazyn i wspólne raporty. Widzisz jedną
+             sprzedaż, nie trzy.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Ile to kosztuje</h2>
+      <p><strong>Połączenie WooCommerce z Allegro</strong> — <strong>od 2900 zł</strong>
+         za konkretną automatyzację, <strong>4500–6000 zł</strong> za pełny most obejmujący
+         też księgowość. Stała cena przed startem.<br>
+         <strong>Opieka</strong> — <strong>od 349 zł miesięcznie</strong>.</p>
+      <p class="slaby">Zanim cokolwiek zbuduję, sprawdzam, czy nie da się tego załatwić taniej
+         gotowym narzędziem — patrz <a href="wtyczka-czy-integracja.html">wtyczka czy integracja</a>.</p>
+    </div>
+
+    <div class="wjazd">
+      <h2>Najczęstsze pytania</h2>
+      <div class="pytania">
+        <details><summary>Mam już wtyczkę do Allegro. Trzeba ją wyrzucać?</summary><p>Zwykle nie. Częściej dopisuję brakujący fragment obok istniejącej wtyczki — to tańsze i mniej ryzykowne niż wymiana czegoś, co w większości działa.</p></details>
+        <details><summary>Czy oferty na Allegro też będą wystawiane automatycznie?</summary><p>Tak, jeśli tego chcesz — z opisami, zdjęciami i parametrami z WooCommerce. Wielu sprzedawców woli jednak wystawiać ręcznie, a automatyzować tylko stany, ceny i zamówienia. To też jest dobra decyzja.</p></details>
+        <details><summary>Co ze sprzedażą zagraniczną przez Allegro?</summary><p>Da się obsłużyć, ale wymaga uwagi przy stawkach podatku i danych do faktury. To jedna z tych rzeczy, których gotowe wtyczki zwykle nie robią dobrze.</p></details>
+        <details><summary>Czy WooCommerce wytrzyma większy ruch po połączeniu?</summary><p>Przy kilku tysiącach produktów i regularnych aktualizacjach stanów warto zajrzeć w wydajność sklepu. Sprawdzam to przy przeglądzie i mówię wprost, jeśli wąskim gardłem jest hosting, a nie integracja.</p></details>
+      </div>
+    </div>
+
+    <div class="tresc wjazd">
+      <div class="pudlo">
+        <h3>Zacznij od sprawdzenia, co się rozjeżdża</h3>
+        <p>Napisz: <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>,
+           telefon <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a>.</p>
+      </div>
+      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg></a></p>
+      <p class="slaby" style="margin-top:1.4rem">Zobacz też: <a href="automatyzacja-allegro.html">automatyzacja Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-sklepu-z-ksiegowoscia.html">integracja z księgowością</a></p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+    <p class="slaby stopka-linki">Integracje:
+      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
+      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
+      <a href="automatyzacja-allegro.html">Allegro</a> ·
+      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
+      <a href="integracja-baselinker.html">BaseLinker</a> ·
+      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
+      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+      Platformy:
+      <a href="integracje-shoper.html">Shoper</a> ·
+      <a href="integracje-idosell.html">IdoSell</a> ·
+      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+      Poradniki:
+      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
+      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("ruch");
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) { e.classList.add("widac"); });
+  }, 1000);
+})();
+</script>
+</body>
+</html>

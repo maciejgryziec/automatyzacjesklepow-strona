@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automatyczne wystawianie faktur do zamówień z Allegro — bez przepisywania</title>
+<meta name="description" content="Faktury do zamówień z Allegro wystawiane same: kilka kont, zwroty i korekty, netto czy brutto, wysyłka do KSeF. Rozwiązuję przypadki, na których zwykłe wtyczki się poddają.">
+<link rel="canonical" href="https://automatyzacjesklepow.pl/automatyczne-faktury-allegro.html">
+<link rel="stylesheet" href="styl.css?w=2">
+<link rel="icon" type="image/svg+xml" href="ikona.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
+<link rel="apple-touch-icon" href="ikona-180.png">
+<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
+        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
+          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
+          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
+          <path d="M1333 1053 L1600 1053"/>
+        </g>
+        <g fill="var(--blekit)">
+          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
+          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
+          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
+          <circle cx="1600" cy="1053" r="72"/>
+        </g>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Automatyzacja</p>
+      <h1>Automatyczne faktury do zamówień z Allegro</h1>
+      <p class="slaby" style="font-size:1.1rem">Nie chodzi o to, żeby faktura się „jakoś” wystawiła.
+         Chodzi o to, żeby wystawiła się <strong>poprawnie</strong> — z właściwą stawką, właściwymi
+         danymi i w jednej numeracji ze sklepem.</p>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Proste przypadki obsłuży wtyczka. Te nie</h2>
+      <p>Jeśli sprzedajesz z jednego konta, tylko w Polsce, jedną stawką podatku i bez zwrotów —
+         zwykła wtyczka wystarczy i tak Ci powiem. Poniżej cztery sytuacje, w których każda znana
+         mi gotowa wtyczka prędzej czy później zawodzi, a klienci trafiają do mnie właśnie z nimi.</p>
+    </div>
+
+    <div class="siatka-problemow">
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M17 5a3 3 0 0 1 0 6"/></svg>
+        </span>
+        <h2>Kilka kont sprzedażowych</h2>
+        <p class="objaw">Dwa konta Allegro, a wtyczka obsługuje jedno. Drugie jedzie ręcznie
+           i to właśnie tam gubią się faktury.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Rozwiązanie</span>
+          <p>Wszystkie konta wpadają do jednego programu księgowego, we wspólnej numeracji,
+             z oznaczeniem źródła na potrzeby raportów.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h9a5 5 0 0 1 0 10h-3"/></svg>
+        </span>
+        <h2>Zwroty i korekty</h2>
+        <p class="objaw">Klient zwraca jedną rzecz z trzech. Korekta robiona ręcznie potrafi
+           rozjechać numerację i podatek za cały miesiąc.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Rozwiązanie</span>
+          <p>Zwrot tworzy korektę powiązaną z fakturą pierwotną, na właściwe pozycje —
+             bez szukania, która to była.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6"/></svg>
+        </span>
+        <h2>Netto czy brutto</h2>
+        <p class="objaw">Allegro pokazuje ceny brutto, księgowość liczy w netto. Groszowe różnice
+           przy zaokrągleniach potrafią rozjechać sumy na dokumentach.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Rozwiązanie</span>
+          <p>Przeliczenia ustawione raz, zgodnie z tym, jak liczy Twoja księgowa —
+             a nie zgodnie z tym, co wygodniej zaprogramować.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <h2>Wysyłka do KSeF</h2>
+        <p class="objaw">Program księgowy wysyła do KSeF tylko to, co do niego dotarło.
+           Faktura z Allegro, która utknęła po drodze, po prostu nie istnieje.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Rozwiązanie</span>
+          <p>Sprawdzam cały łańcuch na prawdziwych fakturach — szczegóły:
+             <a href="ksef-dla-sklepu-internetowego.html">KSeF w sklepie internetowym</a>.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Jak to wygląda w praktyce</h2>
+      <p>Zamówienie z Allegro trafia do programu księgowego w kilka minut po opłaceniu.
+         Jeśli kupujący podał dane firmy — powstaje faktura, jeśli nie — paragon albo faktura
+         imienna, zależnie od Twoich zasad. Dokument idzie do KSeF, jeśli powinien.
+         Ty widzisz to samo, co zawsze, tylko nikt tego nie przepisywał.</p>
+      <p>Łączę Allegro z wFirmą, Fakturownią, ifirmą i Comarchem, także przez
+         <a href="integracja-baselinker.html">BaseLinkera</a>, jeśli już go używasz.</p>
+
+      <h2>Ile to kosztuje</h2>
+      <p><strong>Jedna automatyzacja</strong> (Allegro → księgowość) — <strong>od 2900 zł</strong>.<br>
+         <strong>Pełny most</strong> (sklep + Allegro + księgowość + KSeF) — <strong>4500–6000 zł</strong>.<br>
+         <strong>Opieka</strong> — <strong>od 349 zł miesięcznie</strong>.</p>
+    </div>
+
+    <div class="wjazd">
+      <h2>Najczęstsze pytania</h2>
+      <div class="pytania">
+        <details><summary>Allegro samo wystawia faktury. Po co mi cokolwiek?</summary><p>Faktura wystawiona po stronie Allegro nadal musi trafić do Twojej księgowości i do KSeF, w Twojej numeracji. Automatyzacja dotyczy właśnie tego odcinka — i tego, żeby nic nie zostało po drodze.</p></details>
+        <details><summary>Sprzedaję głównie osobom prywatnym. To mnie nie dotyczy?</summary><p>Faktury dla konsumentów nie idą przez KSeF, ale nadal muszą znaleźć się w księgowości. A wystarczy jeden zakup na firmę w miesiącu, żeby temat wrócił.</p></details>
+        <details><summary>Czy dane klientów są bezpieczne?</summary><p>Most przenosi tylko to, co jest potrzebne do wystawienia dokumentu, i działa na Twoich dostępach. Nie kopiuję baz klientów i nie przechowuję ich u siebie.</p></details>
+        <details><summary>Ile trwa wdrożenie?</summary><p>Pojedyncza automatyzacja zwykle 10 dni roboczych, pełny most 2–3 tygodnie, w tym testy na prawdziwych zamówieniach.</p></details>
+      </div>
+    </div>
+
+    <div class="tresc wjazd">
+      <div class="pudlo">
+        <h3>Powiedz, co dziś klikasz ręcznie</h3>
+        <p>Napisz: <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>,
+           telefon <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a>.
+           Jeśli wystarczy gotowa wtyczka, powiem to wprost.</p>
+      </div>
+      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg></a></p>
+      <p class="slaby" style="margin-top:1.4rem">Zobacz też: <a href="automatyzacja-allegro.html">automatyzacja Allegro</a> · <a href="integracja-allegro-z-woocommerce.html">Allegro i WooCommerce</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a></p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+    <p class="slaby stopka-linki">Integracje:
+      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
+      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
+      <a href="automatyzacja-allegro.html">Allegro</a> ·
+      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
+      <a href="integracja-baselinker.html">BaseLinker</a> ·
+      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
+      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+      Platformy:
+      <a href="integracje-shoper.html">Shoper</a> ·
+      <a href="integracje-idosell.html">IdoSell</a> ·
+      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+      Poradniki:
+      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
+      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("ruch");
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) { e.classList.add("widac"); });
+  }, 1000);
+})();
+</script>
+</body>
+</html>

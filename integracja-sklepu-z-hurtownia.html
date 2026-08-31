@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integracja sklepu internetowego z hurtownią — stany, ceny i dostępność</title>
+<meta name="description" content="Podłączam hurtownię do sklepu: stany i ceny aktualizują się same, produkty schodzą z półki, gdy zabraknie ich u dostawcy. Plik XML, CSV, API — także gdy hurtownia daje tylko byle jaki eksport.">
+<link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html">
+<link rel="stylesheet" href="styl.css?w=2">
+<link rel="icon" type="image/svg+xml" href="ikona.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
+<link rel="apple-touch-icon" href="ikona-180.png">
+<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
+</head>
+<body>
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
+        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
+          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
+          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
+          <path d="M1333 1053 L1600 1053"/>
+        </g>
+        <g fill="var(--blekit)">
+          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
+          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
+          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
+          <circle cx="1600" cy="1053" r="72"/>
+        </g>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Integracja</p>
+      <h1>Integracja sklepu z hurtownią</h1>
+      <p class="slaby" style="font-size:1.1rem">Stany i ceny od dostawcy wchodzą do sklepu same,
+         kilka razy dziennie. Nie sprzedajesz tego, czego hurtownia nie ma — i nie sprzedajesz
+         poniżej marży, bo cena zakupu wzrosła w nocy.</p>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Dlaczego to jest trudniejsze, niż wygląda</h2>
+      <p>Hurtownie rzadko dają porządne narzędzia. Zwykle dostajesz plik: XML, CSV albo arkusz
+         przez FTP, aktualizowany raz na dobę o dziwnej porze. Nazwy kategorii nie pasują do Twoich,
+         ceny są netto, jeden producent nazywa się na cztery sposoby, a numery EAN bywają puste.
+         Do tego plik potrafi urwać się w połowie i wtedy naiwny import kasuje pół sklepu.</p>
+      <p>Cała robota polega na tym, żeby zbudować most, który to wszystko przewiduje: sprawdza,
+         czy plik jest kompletny, przelicza ceny według Twoich narzutów, mapuje kategorie
+         i <strong>nigdy nie zeruje asortymentu tylko dlatego, że dostawca miał awarię</strong>.</p>
+    </div>
+
+    <div class="siatka-problemow">
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 16l9 4 9-4"/></svg>
+        </span>
+        <h2>Stany, które nadążają</h2>
+        <p class="objaw">Klient kupuje ostatnią sztukę, której hurtownia już nie ma.
+           Zwrot pieniędzy, przeprosiny i ocena, której nikt nie usunie.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Co robię</span>
+          <p>Aktualizacja kilka razy dziennie, a przy towarach schodzących szybko — bufor
+             bezpieczeństwa, żeby ostatnia sztuka nie była tą sporną.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M17 7H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6"/></svg>
+        </span>
+        <h2>Ceny liczone Twoimi regułami</h2>
+        <p class="objaw">Hurtownia podnosi cenę zakupu, a Ty sprzedajesz po staremu.
+           Dowiadujesz się o tym przy rozliczeniu miesiąca.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Co robię</span>
+          <p>Narzuty ustawiane per kategoria, producent albo produkt. Cena w sklepie przelicza się
+             sama, a Ty dostajesz sygnał, gdy marża spada poniżej progu.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/><path d="M20.5 18.5L23 21"/></svg>
+        </span>
+        <h2>Wiele hurtowni naraz</h2>
+        <p class="objaw">Ten sam produkt u trzech dostawców, każdy z inną ceną, dostępnością
+           i inną nazwą. Ręczne pilnowanie tego jest nie do utrzymania.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Co robię</span>
+          <p>Łączę oferty po numerze EAN lub kodzie producenta i ustawiam kolejność: bierz z tej
+             hurtowni, a gdy nie ma — z następnej.</p>
+        </div>
+      </article>
+
+      <article class="problem wjazd">
+        <span class="problem-ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <h2>Zabezpieczenie przed awarią dostawcy</h2>
+        <p class="objaw">Hurtownia wysyła pusty albo obcięty plik. Import bez zabezpieczeń
+           kasuje wtedy cały asortyment ze sklepu.</p>
+        <div class="naprawa">
+          <span class="naprawa-etykieta">Co robię</span>
+          <p>Most sprawdza plik przed użyciem. Jeśli zmiana jest podejrzanie duża, wstrzymuje się
+             i przysyła pytanie zamiast robić szkodę.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Co dostajesz</h2>
+      <p>Most działa w tle na moim albo Twoim serwerze i nie wymaga niczego klikać. Do tego
+         dostajesz krótki raport: ile produktów wjechało, ile cen się zmieniło, czego zabrakło
+         i co wymagało decyzji.</p>
+      <p>Współpracuję z każdym sklepem, który daje dostęp do danych: <a href="integracje-shoper.html">Shoper</a>,
+         IdoSell, Sky-Shop, WooCommerce, PrestaShop. Jeśli korzystasz z
+         <a href="integracja-baselinker.html">BaseLinkera</a>, część tej pracy da się zrobić w nim —
+         powiem, kiedy tak jest, żebyś nie płacił za coś, co masz.</p>
+
+      <h2>Ile to kosztuje</h2>
+      <p><strong>Podłączenie jednej hurtowni</strong> — <strong>od 2900 zł</strong>,
+         stała cena ustalona po obejrzeniu pliku z danymi.<br>
+         <strong>Każda kolejna hurtownia</strong> — taniej, bo połowa pracy jest już zrobiona.<br>
+         <strong>Opieka</strong> — <strong>od 349 zł miesięcznie</strong>: pilnuję, czy import
+         chodzi i czy dostawca czegoś nie zmienił.</p>
+    </div>
+
+    <div class="wjazd">
+      <h2>Najczęstsze pytania</h2>
+      <div class="pytania">
+        <details><summary>Moja hurtownia nie ma żadnego API, tylko plik XML raz dziennie. Da się?</summary><p>Tak, i to najczęstszy przypadek. Plik XML czy CSV w zupełności wystarczy — częstotliwość aktualizacji jest wtedy ograniczona, ale i tak nieporównywalnie lepsza od ręcznego wpisywania.</p></details>
+        <details><summary>Czy zdjęcia i opisy też się zaciągną?</summary><p>Jeśli hurtownia je udostępnia — tak, przy pierwszym imporcie. Zwykle radzę jednak pisać własne opisy, bo dziesiątki sklepów z identycznym tekstem od producenta konkurują ze sobą w Google i wszystkie na tym tracą.</p></details>
+        <details><summary>Co z produktami, które mam własne, spoza hurtowni?</summary><p>Zostają nietknięte. Most rusza wyłącznie te produkty, które sam wprowadził — Twoje własne pozycje ma zapisane jako niepodlegające aktualizacji.</p></details>
+        <details><summary>Jak szybko widać efekt?</summary><p>Pierwszy import zwykle w ciągu tygodnia–dwóch od przekazania dostępów, a potem chodzi to samo. Największa zmiana jest odczuwalna od razu: przestajesz sprzedawać rzeczy, których nie ma.</p></details>
+      </div>
+    </div>
+
+    <div class="tresc wjazd">
+      <div class="pudlo">
+        <h3>Masz plik od hurtowni? To wystarczy na start</h3>
+        <p>Prześlij go na <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>,
+           a powiem, co da się z nim zrobić i ile to będzie kosztować. Telefon:
+           <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a>.</p>
+      </div>
+      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg></a></p>
+      <p class="slaby" style="margin-top:1.4rem">Zobacz też: <a href="integracja-sklepu-z-ksiegowoscia.html">integracja z księgowością</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+    </div>
+  </div>
+</section>
+
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+    <p class="slaby stopka-linki">Integracje:
+      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
+      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
+      <a href="automatyzacja-allegro.html">Allegro</a> ·
+      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
+      <a href="integracja-baselinker.html">BaseLinker</a> ·
+      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
+      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+      Platformy:
+      <a href="integracje-shoper.html">Shoper</a> ·
+      <a href="integracje-idosell.html">IdoSell</a> ·
+      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+      Poradniki:
+      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
+      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("ruch");
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) { e.classList.add("widac"); });
+  }, 1000);
+})();
+</script>
+</body>
+</html>
