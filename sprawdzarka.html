@@ -6,55 +6,19 @@
 <title>Bezpłatne sprawdzenie sklepu internetowego: GPSR, Omnibus, EAN — Automatyzacje Sklepów</title>
 <meta name="description" content="Bezpłatne sprawdzenie sklepu internetowego. Bez logowania i bez dostępów.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/sprawdzarka.html">
-<link rel="stylesheet" href="styl.css?w=2">
+<link rel="stylesheet" href="list.css?w=2">
+<link rel="stylesheet" href="paleta-c.css?w=1">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
 <link rel="apple-touch-icon" href="ikona-180.png">
 <script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
 </head>
 <body>
-
-<header class="gora">
-  <div class="srodek">
-    <a class="logo" href="index.html">
-      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
-        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
-          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
-          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
-          <path d="M1333 1053 L1600 1053"/>
-        </g>
-        <g fill="var(--blekit)">
-          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
-          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
-          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
-          <circle cx="1600" cy="1053" r="72"/>
-        </g>
-      </svg>
-      Automatyzacje Sklepów
-    </a>
-    <nav>
-      <a href="index.html">Start</a>
-      <a href="index.html#jak">Jak pracuję</a>
-      <a href="problemy.html">Co naprawiam</a>
-      <a href="cennik.html">Cennik</a>
-      <a href="realizacje.html">Realizacje</a>
-      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
-    </nav>
-  </div>
-</header>
-
-<section>
-  <div class="srodek">
-    <div class="tytul-strony wjazd">
-      <p class="etykieta">Bezpłatne narzędzie</p>
-      <h1>Sprawdź swój sklep</h1>
-      <p class="slaby" style="font-size:1.1rem">Bez logowania, bez podawania haseł. Sprawdzam wyłącznie to,
-         co widzi każdy odwiedzający — te same strony, które ogląda Twój klient i Google.</p>
-    </div>
-
-    <!-- PRZY WDROŻENIU: podmień action na publiczny adres sprawdzarki -->
-    <form class="formularz-prosty wjazd" action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post">
+<header class="gora"><div class="w">
+  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
+  <nav><a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></nav>
+</div></header>
+<section class="rozdzial czolo pod ziel skos-dol ciemny" data-ciemna><div class="w"><div class="tekst wjazd"><p class="etykieta">Bezpłatne narzędzie</p><h1>Sprawdź swój sklep</h1><p class="wstep">Bez logowania, bez podawania haseł. Sprawdzam wyłącznie to, co widzi każdy odwiedzający — te same strony, które ogląda Twój klient i Google.</p><form class="formularz-prosty wjazd" action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post">
       <label for="sklep">Adres sklepu</label>
       <input id="sklep" name="sklep" placeholder="mojsklep.pl" required>
       <button class="przycisk" type="submit" data-umami-event="wyslanie-sprawdzenia">Sprawdź sklep
@@ -62,9 +26,11 @@
           <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <p class="slaby" style="font-size:.9rem;margin-top:.8rem">Sprawdzenie trwa do dwóch minut.
+      <p class="slaby">Sprawdzenie trwa do dwóch minut.
          W narzędziu możesz też podać adres pliku dla porównywarek i e-mail do raportu.</p>
-    </form>
+    </form></div><div class="obraz"><div class="raport"><div class="adres"><span>sprawdzarka · mojsklep.pl</span><i>312 podstron</i></div><ul><li style="--o:0.00"><span class="b">BŁĄD</span> 98 adresów z mapy strony nie działa</li><li style="--o:0.07"><span class="b">BŁĄD</span> 12 promocji bez najniższej ceny z 30 dni</li><li style="--o:0.14"><span class="u">UWAGA</span> 41 produktów bez numeru EAN</li><li style="--o:0.21"><span class="u">UWAGA</span> brak danych producenta wymaganych przez GPSR</li><li style="--o:0.28"><span class="o">OK</span> certyfikat ważny jeszcze 214 dni</li><li style="--o:0.35"><span class="o">OK</span> cena w Ceneo zgodna ze sklepem</li></ul></div></div></div></section>
+<main class="tresc"><!-- PRZY WDROŻENIU: podmień action na publiczny adres sprawdzarki -->
+    
 
     <div class="wjazd">
       <h2>Co sprawdzam</h2>
@@ -96,7 +62,7 @@
       </div>
     </div>
 
-    <div class="tresc wjazd">
+    <div class="blok wjazd">
       <h2>Czego nie robię</h2>
       <p>Nie sprawdzam sklepu bez Twojej wiedzy — wyłącznie ten adres, który sam wpiszesz.
          Nie zapisuję treści Twojego sklepu, tylko wynik sprawdzenia. Nie potrzebuję
@@ -104,58 +70,20 @@
       <p>Jeśli czegoś nie da się sprawdzić z zewnątrz, raport mówi o tym wprost — zamiast
          zgadywać albo dopisywać Ci braki, których z zewnątrz nie widać.</p>
     </div>
-  </div>
-</section>
+  </main>
+<section class="rozdzial koniec "><div class="w"><div class="tekst wjazd">
+  <h2>To tyle. Co teraz?</h2>
+  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
+  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
+  <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
+</div></div></section>
 
-<div class="pasek-gorny"></div>
-<footer>
-  <div class="srodek">
-    <p><strong>Maciej Gryziec</strong><br>
-      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
-    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
-    <p class="slaby stopka-linki">Integracje:
-      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
-      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
-      <a href="automatyzacja-allegro.html">Allegro</a> ·
-      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
-      <a href="integracja-baselinker.html">BaseLinker</a> ·
-      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
-      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-      Platformy:
-      <a href="integracje-shoper.html">Shoper</a> ·
-      <a href="integracje-idosell.html">IdoSell</a> ·
-      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-      Poradniki:
-      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
-      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
-  </div>
-</footer>
-
-<script>
-(function () {
-  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (spokoj || !("IntersectionObserver" in window)) return;
-
-  document.documentElement.classList.add("ruch");
-
-  var obserwator = new IntersectionObserver(function (wpisy) {
-    wpisy.forEach(function (w, i) {
-      if (!w.isIntersecting) return;
-      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
-      obserwator.unobserve(w.target);
-    });
-  }, { rootMargin: "0px 0px -8% 0px" });
-
-  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
-
-  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
-  // po sekundzie pokazujemy wszystko.
-  setTimeout(function () {
-    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
-      e.classList.add("widac");
-    });
-  }, 1000);
-})();
-</script>
+<div class="stopka">
+  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
+  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
+</div>
+<script src="list.js?w=2"></script>
 </body>
 </html>

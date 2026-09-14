@@ -6,20 +6,55 @@
 <title>Integracja sklepu internetowego z hurtownią — stany, ceny i dostępność</title>
 <meta name="description" content="Podłączam hurtownię do sklepu: stany i ceny aktualizują się same, produkty schodzą z półki, gdy zabraknie ich u dostawcy. Plik XML, CSV, API — także gdy hurtownia daje tylko byle jaki eksport.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html">
-<link rel="stylesheet" href="list.css?w=2">
-<link rel="stylesheet" href="paleta-c.css?w=1">
+<link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
 <link rel="apple-touch-icon" href="ikona-180.png">
 <script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
 </head>
 <body>
-<header class="gora"><div class="w">
-  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <nav><a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></nav>
-</div></header>
-<section class="rozdzial czolo pod piasek skos-dol lewo"><div class="w"><div class="tekst wjazd"><p class="etykieta">Integracja</p><h1>Integracja sklepu z hurtownią</h1><p class="wstep">Stany i ceny od dostawcy wchodzą do sklepu same, kilka razy dziennie. Nie sprzedajesz tego, czego hurtownia nie ma — i nie sprzedajesz poniżej marży, bo cena zakupu wzrosła w nocy.</p></div><div class="obraz"><svg class="kartony" viewBox="0 0 760 560" aria-hidden="true"></svg></div></div></section>
-<main class="tresc"><div class="blok wjazd">
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
+        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
+          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
+          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
+          <path d="M1333 1053 L1600 1053"/>
+        </g>
+        <g fill="var(--blekit)">
+          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
+          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
+          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
+          <circle cx="1600" cy="1053" r="72"/>
+        </g>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Integracja</p>
+      <h1>Integracja sklepu z hurtownią</h1>
+      <p class="slaby" style="font-size:1.1rem">Stany i ceny od dostawcy wchodzą do sklepu same,
+         kilka razy dziennie. Nie sprzedajesz tego, czego hurtownia nie ma — i nie sprzedajesz
+         poniżej marży, bo cena zakupu wzrosła w nocy.</p>
+    </div>
+
+    <div class="tresc wjazd">
       <h2>Dlaczego to jest trudniejsze, niż wygląda</h2>
       <p>Hurtownie rzadko dają porządne narzędzia. Zwykle dostajesz plik: XML, CSV albo arkusz
          przez FTP, aktualizowany raz na dobę o dziwnej porze. Nazwy kategorii nie pasują do Twoich,
@@ -88,7 +123,7 @@
       </article>
     </div>
 
-    <div class="blok wjazd">
+    <div class="tresc wjazd">
       <h2>Co dostajesz</h2>
       <p>Most działa w tle na moim albo Twoim serwerze i nie wymaga niczego klikać. Do tego
          dostajesz krótki raport: ile produktów wjechało, ile cen się zmieniło, czego zabrakło
@@ -116,7 +151,7 @@
       </div>
     </div>
 
-    <div class="blok wjazd">
+    <div class="tresc wjazd">
       <div class="pudlo">
         <h3>Masz plik od hurtowni? To wystarczy na start</h3>
         <p>Prześlij go na <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>,
@@ -129,20 +164,50 @@
         </svg></a></p>
       <p class="slaby" style="margin-top:1.4rem">Zobacz też: <a href="integracja-sklepu-z-ksiegowoscia.html">integracja z księgowością</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
     </div>
-  </main>
-<section class="rozdzial koniec "><div class="w"><div class="tekst wjazd">
-  <h2>To tyle. Co teraz?</h2>
-  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
-  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
-  <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
-</div></div></section>
+  </div>
+</section>
 
-<div class="stopka">
-  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
-</div>
-<script src="list.js?w=2"></script>
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+    <p class="slaby stopka-linki">Integracje:
+      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
+      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
+      <a href="automatyzacja-allegro.html">Allegro</a> ·
+      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
+      <a href="integracja-baselinker.html">BaseLinker</a> ·
+      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
+      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+      Platformy:
+      <a href="integracje-shoper.html">Shoper</a> ·
+      <a href="integracje-idosell.html">IdoSell</a> ·
+      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+      Poradniki:
+      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
+      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("ruch");
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) { e.classList.add("widac"); });
+  }, 1000);
+})();
+</script>
 </body>
 </html>

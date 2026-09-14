@@ -1,5 +1,5 @@
 :root{
-  --papier:#f7f6f3; --pas:#eaeff6; --karta:#ffffff;
+  --papier:#eff4fa; --pas:#e8eef7; --karta:#ffffff;
   --ciemny:#0d1826; --ciemny-karta:#152436;
   --tekst:#0f1620; --slaby:#59636f; --kreska:#dcdfe4;
   --blekit:#1550d0; --blekit-jasny:#e7eefc; --blekit-ciemny:#0c37a0;
@@ -60,7 +60,7 @@ p{margin:0 0 1rem}
 
 /* PASY */
 section{padding:5rem 0}
-.pas-jasny{background:var(--pas)}
+.pas-jasny{background:transparent}
 .pas-ciemny{background:var(--ciemny);color:#e9edf2}
 .pas-ciemny .slaby{color:#93a1b2}
 .pas-ciemny h2{color:#fff}
@@ -337,3 +337,92 @@ figcaption{font-size:.87rem;color:var(--slaby);margin-top:.7rem}
 @keyframes dowod-plywa{50%{transform:translateY(-7px)}}
 @media(max-width:64rem){.dowody{display:none}}
 @media (prefers-reduced-motion: reduce){.dowod{opacity:1;transform:none;animation:none}}
+
+/* ── DROGA ZAMÓWIENIA: rysuje się przy przewijaniu ──────────────
+   Cała animacja jest sterowana jedną zmienną --postep, którą sekcja
+   dostaje od ruch.js. Nie ma tu ani linijki kodu — tylko CSS. */
+@property --postep{syntax:"<number>";inherits:true;initial-value:0}
+.droga{position:relative;
+  --papier:#0c1726; --tekst:#eef2f7; --slaby:#9aa8b8; --karta:#152436;
+  --kreska:#25324a; --blekit:#6aa4ff;
+  color:#eef2f7;
+  background:
+    radial-gradient(58rem 32rem at 50% 16%,rgba(80,140,255,.26),transparent 70%),
+    linear-gradient(180deg,#0a1421 0%,#0c1726 58%,#0a1421 100%)}
+.droga .ruch-ekran{padding:6.5rem 0 7rem}
+.ruch .droga.wjazd{opacity:0;transform:translateY(24px);
+  transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.ruch .droga.wjazd.widac{opacity:1;transform:none}
+.droga.widac{animation:droga-plynie 9s cubic-bezier(.45,0,.15,1) 0.5s infinite}
+@keyframes droga-plynie{
+  0%{--postep:0} 6%{--postep:0} 78%{--postep:1} 100%{--postep:1}}
+.droga h2{color:#fff;font-size:clamp(1.6rem,3.5vw,2.8rem);max-width:26ch;line-height:1.1}
+.etykieta-drogi{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:#6aa4ff;margin:0 0 1.1rem}
+
+.tor-drogi{margin:3.4rem 0 2.2rem}
+.szyna{position:relative;height:2px;background:#25324a;border-radius:2px;
+  margin:0 0 0 0}
+.szyna .wypelnienie{position:absolute;top:0;bottom:0;left:0;border-radius:2px;
+  width:calc(var(--postep,0) * 100%);
+  background:linear-gradient(90deg,#3f7fe0,#9cc6ff);
+  box-shadow:0 0 20px rgba(106,164,255,.55)}
+.szyna .paczka{position:absolute;top:50%;left:calc(var(--postep,0) * 100%);
+  width:15px;height:15px;margin:-7.5px 0 0 -7.5px;border-radius:5px;
+  background:#cfe2ff;box-shadow:0 0 26px rgba(180,214,255,.95)}
+
+.przystanki{list-style:none;margin:1.7rem 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.przystanki li{
+  --widok:clamp(0, calc((var(--postep,0) - var(--start)) * 9), 1);
+  opacity:var(--widok);
+  transform:translateY(calc((1 - var(--widok)) * 14px));
+  padding-right:.6rem}
+.przystanki .nr{display:inline-flex;align-items:center;justify-content:center;
+  width:1.7rem;height:1.7rem;border-radius:50%;margin-bottom:.7rem;
+  background:#17263e;border:1px solid #2e4166;
+  font-size:.78rem;font-weight:700;color:#9cc6ff}
+.przystanki b{display:block;font-size:.98rem;line-height:1.3;color:#eef2f7}
+.przystanki em{display:block;margin-top:.35rem;font-style:normal;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.72rem;letter-spacing:.06em;color:#7b8ca1}
+.pointa-drogi{color:#9aa8b8;max-width:46ch;margin:2.4rem 0 0}
+.pointa-drogi b{color:#eef2f7}
+
+@media(max-width:52rem){
+  .droga .ruch-ekran{padding:4.5rem 0 5rem}
+  .szyna{display:none}
+  .przystanki{grid-template-columns:1fr;gap:.9rem;margin-top:2rem}
+  .przystanki li{display:flex;align-items:baseline;gap:.8rem}
+  .przystanki .nr{margin-bottom:0;flex:0 0 auto}
+  .pointa-drogi{margin-top:1.8rem}
+}
+
+/* ── TŁA: pasy przestają być płaskim papierem ─────────────────── */
+.pas-jasny{position:relative;
+  background:radial-gradient(52rem 26rem at 14% 0%,rgba(21,80,208,.055),transparent 70%)}
+.pas-ciemny{position:relative;
+  background:
+    radial-gradient(50rem 26rem at 82% 8%,rgba(106,164,255,.16),transparent 70%),
+    var(--ciemny)}
+
+@media (prefers-reduced-motion: reduce){
+  .droga.widac{animation:none}
+  .przystanki li{opacity:1;transform:none}
+  .szyna .wypelnienie{width:100%}
+  .szyna .paczka{display:none}
+  .pakiet{display:none}
+}
+
+/* ── PAKIETY JADĄCE PO MOSTACH W SCHEMACIE ────────────────────── */
+.pakiet{fill:#bcd8ff;opacity:0;
+  filter:drop-shadow(0 0 6px rgba(150,200,255,.95));
+  offset-rotate:0deg;
+  animation-name:pakiet-jedzie;animation-timing-function:cubic-bezier(.5,0,.5,1);
+  animation-iteration-count:infinite}
+@keyframes pakiet-jedzie{
+  0%{offset-distance:0%;opacity:0}
+  12%{opacity:1}
+  82%{opacity:1}
+  100%{offset-distance:100%;opacity:0}}

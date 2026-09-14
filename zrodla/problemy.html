@@ -6,20 +6,54 @@
 <title>Automatyczne faktury Allegro, synchronizacja stanów, GPSR — co naprawiam</title>
 <meta name="description" content="Ręczne przepisywanie zamówień do faktur, rozjazd stanów między sklepem a Allegro, ciche awarie integracji, GPSR i Omnibus — co dokładnie robię z każdym z tych problemów.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/problemy.html">
-<link rel="stylesheet" href="list.css?w=2">
-<link rel="stylesheet" href="paleta-c.css?w=1">
+<link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png">
 <link rel="apple-touch-icon" href="ikona-180.png">
 <script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
 </head>
 <body>
-<header class="gora"><div class="w">
-  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <nav><a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></nav>
-</div></header>
-<section class="rozdzial czolo pod jasny skos-dol"><div class="w"><div class="tekst wjazd"><p class="etykieta">Co naprawiam</p><h1>Co najczęściej psuje się w sklepach internetowych</h1><p class="wstep">Każdy z tych problemów da się rozwiązać osobno. Poniżej, co dokładnie robię w każdym przypadku.</p></div><div class="obraz"><svg class="schody" viewBox="0 0 1000 560" aria-hidden="true"><defs><linearGradient id="zloty" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f6c94a"/><stop offset="1" stop-color="#f08a3c"/></linearGradient></defs><g class="stopien" style="--s:8px;--dx:-220px;--dy:70px;--o:0.0"><polygon points="150,520 480,437.5 480,383.5 150,466" fill="#8b9bff"/><polygon points="150,466 480,383.5 496,376.3 166,458.8" fill="#b9c3ff"/><polygon points="480,437.5 496,430.3 496,376.3 480,383.5" fill="#4a57c9"/><g transform="rotate(-14.04 190 488)"><text x="190" y="488" style="font-size:17px">sklep</text><text class="czas" x="190" y="503">12:04:11</text></g></g><g class="stopien" style="--s:13px;--dx:-190px;--dy:62px;--o:0.3"><polygon points="268,436 598,353.5 598,299.5 268,382" fill="#6f7ff0"/><polygon points="268,382 598,299.5 614,292.3 284,374.8" fill="#a3aefc"/><polygon points="598,353.5 614,346.3 614,292.3 598,299.5" fill="#3b47b3"/><g transform="rotate(-14.04 308 404)"><text x="308" y="404" style="font-size:17px">magazyn</text><text class="czas" x="308" y="419">12:04:12</text></g></g><g class="stopien" style="--s:18px;--dx:-160px;--dy:54px;--o:0.6"><polygon points="386,352 716,269.5 716,215.5 386,298" fill="#5461d6"/><polygon points="386,298 716,215.5 732,208.3 402,290.8" fill="#8b97f2"/><polygon points="716,269.5 732,262.3 732,208.3 716,215.5" fill="#2e3894"/><g transform="rotate(-14.04 426 320)"><text x="426" y="320" style="font-size:17px">faktura</text><text class="czas" x="426" y="335">12:04:14</text></g></g><g class="stopien" style="--s:23px;--dx:-130px;--dy:46px;--o:0.9"><polygon points="504,268 834,185.5 834,131.5 504,214" fill="#3f4bb8"/><polygon points="504,214 834,131.5 850,124.3 520,206.8" fill="#7380e8"/><polygon points="834,185.5 850,178.3 850,124.3 834,131.5" fill="#232b78"/><g transform="rotate(-14.04 544 236)"><text x="544" y="236" style="font-size:17px">księgowość</text><text class="czas" x="544" y="251">12:04:15</text></g></g><g class="stopien" style="--s:28px;--dx:-100px;--dy:38px;--o:1.2"><polygon points="622,184 952,101.5 952,47.5 622,130" fill="#2f377f"/><polygon points="622,130 952,47.5 968,40.3 638,122.8" fill="#5a63c7"/><polygon points="952,101.5 968,94.3 968,40.3 952,47.5" fill="#1a2058"/><g transform="rotate(-14.04 662 152)"><text x="662" y="152" style="font-size:17px">e-mail</text><text class="czas" x="662" y="167">12:04:16</text></g></g><g style="--s:6px"><path class="tor" d="M60 545 V500 q0 -16 16 -16 H150 q16 0 16 -16 V420 q0 -16 16 -16 H268 q16 0 16 -16 V336 q0 -16 16 -16 H386 q16 0 16 -16 V252 q0 -16 16 -16 H504 q16 0 16 -16 V168 q0 -16 16 -16 H622 q16 0 16 -16 V60"/><path class="grot" d="M622 80 L638 58 L654 80" fill="none" stroke="#f08a3c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div></div></section>
-<main class="tresc"><div class="siatka-problemow">
+
+<header class="gora">
+  <div class="srodek">
+    <a class="logo" href="index.html">
+      <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
+        <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
+          <path d="M1199 621 L1284 897"/><path d="M1734 621 L1648 897"/>
+          <path d="M1284 897 L1648 897"/><path d="M1284 897 L1333 1053"/>
+          <path d="M1333 1053 L1600 1053"/>
+        </g>
+        <g fill="var(--blekit)">
+          <circle cx="999" cy="482" r="72"/><circle cx="1199" cy="621" r="72"/>
+          <circle cx="1734" cy="621" r="72"/><circle cx="1284" cy="897" r="72"/>
+          <circle cx="1648" cy="897" r="72"/><circle cx="1333" cy="1053" r="72"/>
+          <circle cx="1600" cy="1053" r="72"/>
+        </g>
+      </svg>
+      Automatyzacje Sklepów
+    </a>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="index.html#jak">Jak pracuję</a>
+      <a href="problemy.html">Co naprawiam</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="sprawdzarka.html">Sprawdź swój sklep</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="srodek">
+    <div class="tytul-strony wjazd">
+      <p class="etykieta">Co naprawiam</p>
+      <h1>Co najczęściej psuje się w sklepach internetowych</h1>
+      <p class="slaby" style="font-size:1.1rem">Każdy z tych problemów da się rozwiązać osobno.
+         Poniżej, co dokładnie robię w każdym przypadku.</p>
+    </div>
+
+    <div class="siatka-problemow">
       <article class="problem kotwica wjazd" id="faktury">
         <span class="problem-ikona" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -111,20 +145,58 @@
           <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></a></p>
     </article>
-  </main>
-<section class="rozdzial koniec "><div class="w"><div class="tekst wjazd">
-  <h2>To tyle. Co teraz?</h2>
-  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
-  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
-  <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
-</div></div></section>
+  </div>
+</section>
 
-<div class="stopka">
-  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
-</div>
-<script src="list.js?w=2"></script>
+<div class="pasek-gorny"></div>
+<footer>
+  <div class="srodek">
+    <p><strong>Maciej Gryziec</strong><br>
+      <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    <p>Automatyzacje i integracje dla sklepów internetowych. Pracuję zdalnie, z całą Polską.</p>
+    <p class="slaby stopka-linki">Integracje:
+      <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> ·
+      <a href="integracja-sklepu-z-wfirma.html">wFirma</a> ·
+      <a href="automatyzacja-allegro.html">Allegro</a> ·
+      <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> ·
+      <a href="integracja-baselinker.html">BaseLinker</a> ·
+      <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> ·
+      <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+      Platformy:
+      <a href="integracje-shoper.html">Shoper</a> ·
+      <a href="integracje-idosell.html">IdoSell</a> ·
+      <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
+      Poradniki:
+      <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> ·
+      <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var spokoj = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (spokoj || !("IntersectionObserver" in window)) return;
+
+  document.documentElement.classList.add("ruch");
+
+  var obserwator = new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w, i) {
+      if (!w.isIntersecting) return;
+      setTimeout(function () { w.target.classList.add("widac"); }, i * 70);
+      obserwator.unobserve(w.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+
+  document.querySelectorAll(".wjazd").forEach(function (e) { obserwator.observe(e); });
+
+  // Bezpiecznik: gdyby obserwator z jakiegos powodu nie zadzialal,
+  // po sekundzie pokazujemy wszystko.
+  setTimeout(function () {
+    document.querySelectorAll(".wjazd:not(.widac)").forEach(function (e) {
+      e.classList.add("widac");
+    });
+  }, 1000);
+})();
+</script>
 </body>
 </html>

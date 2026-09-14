@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /zrodla/
+Disallow: /narzedzia/
 
 Sitemap: https://automatyzacjesklepow.pl/sitemap.xml
