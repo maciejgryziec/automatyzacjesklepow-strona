@@ -398,7 +398,9 @@ a.projekt:hover .stan{color:#0a2a8c}
 .formularz-prosty{display:flex;gap:0;max-width:460px;margin:1.4em 0}
 .formularz-prosty label{position:absolute;left:-9999px}
 .formularz-prosty input{flex:1;min-width:0;font:15px var(--sans);padding:11px 14px;border:1px solid #c9cbd6;border-radius:0}
-.formularz-prosty button{font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer}
+.formularz-prosty button{font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.czolo .formularz-prosty{max-width:520px;margin-bottom:.6em}
+.czolo .nota{font-size:14px;max-width:520px}
 .ciemny .formularz-prosty input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35);color:#fff}
 .ciemny .formularz-prosty button{background:#fff;color:#0f3d2e}
 .rzad-przyciskow{display:flex;flex-wrap:wrap;gap:.6em 1.4em}

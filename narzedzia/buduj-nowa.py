@@ -410,7 +410,9 @@ a.projekt:hover .stan{color:#0a2a8c}
 .formularz-prosty{display:flex;gap:0;max-width:460px;margin:1.4em 0}
 .formularz-prosty label{position:absolute;left:-9999px}
 .formularz-prosty input{flex:1;min-width:0;font:15px var(--sans);padding:11px 14px;border:1px solid #c9cbd6;border-radius:0}
-.formularz-prosty button{font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer}
+.formularz-prosty button{font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.czolo .formularz-prosty{max-width:520px;margin-bottom:.6em}
+.czolo .nota{font-size:14px;max-width:520px}
 .ciemny .formularz-prosty input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35);color:#fff}
 .ciemny .formularz-prosty button{background:#fff;color:#0f3d2e}
 .rzad-przyciskow{display:flex;flex-wrap:wrap;gap:.6em 1.4em}
@@ -776,7 +778,7 @@ def glowa(tytul, opis, kanon):
 <title>{tytul}</title>
 <meta name="description" content="{opis}">
 <link rel="canonical" href="{kanon}">
-<link rel="stylesheet" href="list.css?w=2">{PAL}
+<link rel="stylesheet" href="list.css?w=3">{PAL}
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=2">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png?w=2">
 <link rel="apple-touch-icon" href="ikona-180.png?w=2">
@@ -910,7 +912,13 @@ def podstrona(plik):
     czolo_extra = ""
     if nazwa == "sprawdzarka":
         f = re.search(r'<form class="formularz-prosty.*?</form>', body, re.S)
-        if f: czolo_extra = f.group(0); body = body.replace(f.group(0), "", 1)
+        if f:
+            frm = f.group(0); body = body.replace(frm, "", 1)
+            # dopisek wychodzi z formularza (inaczej jest trzecim elementem w wierszu i sciska pole)
+            m = re.search(r'\s*<p class="slaby">.*?</p>\s*', frm, re.S)
+            nota = ""
+            if m: nota = '<p class="slaby nota">' + re.sub(r'\s+', ' ', re.sub(r'</?p[^>]*>', '', m.group(0))).strip() + '</p>'; frm = frm.replace(m.group(0), "")
+            czolo_extra = frm + nota
     s = glowa(tytul, opis, kanon)
     tekst = f'<p class="etykieta">{ety}</p><h1>{h1}</h1>' + (f'<p class="wstep">{wst}</p>' if wst else "") + czolo_extra
     kl = f"czolo pod {swiat} skos-dol" + (" lewo" if swiat in ("piasek","szary") else "")
