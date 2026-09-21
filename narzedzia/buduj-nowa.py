@@ -779,9 +779,11 @@ def glowa(tytul, opis, kanon):
 <meta name="description" content="{opis}">
 <link rel="canonical" href="{kanon}">
 <link rel="stylesheet" href="list.css?w=3">{PAL}
-<link rel="icon" type="image/svg+xml" href="ikona.svg?w=2">
-<link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png?w=2">
-<link rel="apple-touch-icon" href="ikona-180.png?w=2">
+<link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
+<link rel="icon" href="favicon.ico?w=3" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="ikona-96.png?w=3">
+<link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png?w=3">
+<link rel="apple-touch-icon" href="ikona-180.png?w=3">
 <script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c" data-domains="automatyzacjesklepow.pl,www.automatyzacjesklepow.pl"></script>
 </head>
 <body>
@@ -793,7 +795,7 @@ def glowa(tytul, opis, kanon):
 STOPKA = '''
 <div class="stopka">
   <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
+  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
   Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
   Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
 </div>
@@ -831,7 +833,7 @@ def index():
     <p>Najczęstsza pomyłka w sklepie nie jest w magazynie, tylko na fakturze: zła stawka VAT, brak NIP-u, zamówienie z Allegro zafakturowane dwa razy. Każda taka pomyłka to korekta, telefon od księgowej i klient, który czeka.</p>
     <p>Numer, stawka, dane nabywcy, pozycje z zamówienia i wysyłka do KSeF wpisują się same. Ty widzisz gotowy dokument w wFirmie, iFirmie albo Fakturowni i tylko zerkasz, zamiast przepisywać.</p>
     <p class="cena">Od 2 900 zł. Most do księgowości ze sklepem i Allegro naraz: 4 500–6 000 zł, dwa do trzech tygodni.</p>
-    <p class="linki"><a href="integracja-sklepu-z-wfirma.html">Sklep z wFirmą</a><a href="automatyczne-faktury-allegro.html">Faktury z Allegro</a></p>''', stos())
+    <p class="linki"><a href="integracja-sklepu-z-fakturownia.html">Sklep z Fakturownią</a><a href="integracja-sklepu-z-wfirma.html">Sklep z wFirmą</a><a href="automatyczne-faktury-allegro.html">Faktury z Allegro</a></p>''', stos())
     s += rozdzial("zamowienie jasny skos-oba", '''
     <h2>Jedno zamówienie, pięć miejsc</h2>
     <p>Dziś zamówienie obsługujesz w kilku programach po kolei: sprawdzasz stan, wystawiasz fakturę, wysyłasz ją, poprawiasz magazyn, odpisujesz klientowi. Trzydzieści zamówień dziennie to godzina klikania, w której nic nie zarabiasz.</p>
@@ -873,7 +875,7 @@ def index():
 
 # ---------------------------------------------------------------- podstrony
 SWIATY = {
-  "integracja-sklepu-z-wfirma": ("jasny", stos), "automatyczne-faktury-allegro": ("jasny", stos),
+  "integracja-sklepu-z-wfirma": ("jasny", stos), "integracja-sklepu-z-fakturownia": ("jasny", stos), "automatyczne-faktury-allegro": ("jasny", stos),
   "integracja-sklepu-z-ksiegowoscia": ("jasny", schody), "integracja-baselinker": ("jasny", schody),
   "automatyzacja-allegro": ("piasek", kartony), "integracja-sklepu-z-hurtownia": ("piasek", kartony),
   "integracje-shoper": ("jasny", schody), "integracje-idosell": ("piasek", kartony), "integracja-allegro-z-woocommerce": ("piasek", kartony),
