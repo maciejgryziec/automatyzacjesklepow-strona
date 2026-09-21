@@ -782,7 +782,7 @@ def glowa(tytul, opis, kanon):
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=2">
 <link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png?w=2">
 <link rel="apple-touch-icon" href="ikona-180.png?w=2">
-<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c"></script>
+<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c" data-domains="automatyzacjesklepow.pl,www.automatyzacjesklepow.pl"></script>
 </head>
 <body>
 <header class="gora"><div class="w">
