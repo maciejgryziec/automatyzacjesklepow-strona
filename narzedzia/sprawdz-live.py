@@ -25,10 +25,10 @@ def request(url, method="GET", extra_headers=None):
     try:
         r = opener.open(req, timeout=12)
         body = r.read(300000)
-        return r.status, dict(r.headers), body
+        return r.status, r.headers, body
     except HTTPError as e:
         body = e.read(300000)
-        return e.code, dict(e.headers), body
+        return e.code, e.headers, body
     except URLError as e:
         failures.append(f"{url}: błąd połączenia: {e}")
         return 0, {}, b""
