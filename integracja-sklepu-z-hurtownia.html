@@ -1,27 +1,53 @@
 <!doctype html>
-<html lang="pl">
+<html class="no-js" lang="pl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Integracja sklepu internetowego z hurtownią — stany, ceny i dostępność</title>
-<meta name="description" content="Podłączam hurtownię do sklepu: stany i ceny aktualizują się same, produkty schodzą z półki, gdy zabraknie ich u dostawcy. Plik XML, CSV, API — także gdy hurtownia daje tylko byle jaki eksport.">
+<script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
+<meta name="theme-color" content="#194586">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<title>Integracja sklepu z hurtownią — stany i ceny</title>
+<meta name="description" content="Podłączam hurtownię do sklepu: automatyczna aktualizacja stanów, cen i dostępności z XML, CSV lub API, bez ręcznego pilnowania produktów.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Automatyzacje dla firm">
+<meta property="og:title" content="Integracja sklepu z hurtownią — stany i ceny">
+<meta property="og:description" content="Podłączam hurtownię do sklepu: automatyczna aktualizacja stanów, cen i dostępności z XML, CSV lub API, bez ręcznego pilnowania produktów.">
+<meta property="og:url" content="https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html">
+<meta property="og:image" content="https://automatyzacjesklepow.pl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Aplikacje, które pracują tak jak firma — Automatyzacje dla firm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Integracja sklepu z hurtownią — stany i ceny">
+<meta name="twitter:description" content="Podłączam hurtownię do sklepu: automatyczna aktualizacja stanów, cen i dostępności z XML, CSV lub API, bez ręcznego pilnowania produktów.">
+<meta name="twitter:image" content="https://automatyzacjesklepow.pl/og-image.png">
+<meta name="twitter:image:alt" content="Aplikacje, które pracują tak jak firma — Automatyzacje dla firm">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html">
-<link rel="stylesheet" href="list.css?w=3">
+<link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje dla firm" href="feed.xml">
+<link rel="stylesheet" href="list.css?v=ec16464680">
 <link rel="stylesheet" href="paleta-c.css?w=1">
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
 <link rel="icon" href="favicon.ico?w=3" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="ikona-96.png?w=3">
 <link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png?w=3">
 <link rel="apple-touch-icon" href="ikona-180.png?w=3">
-<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c" data-domains="automatyzacjesklepow.pl,www.automatyzacjesklepow.pl"></script>
+<link rel="mask-icon" href="znak.svg" color="#194586">
+<link rel="manifest" href="site.webmanifest">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html#webpage", "url": "https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html", "name": "Integracja sklepu z hurtownią — stany i ceny", "description": "Podłączam hurtownię do sklepu: automatyczna aktualizacja stanów, cen i dostępności z XML, CSV lub API, bez ręcznego pilnowania produktów.", "inLanguage": "pl-PL", "isPartOf": {"@id": "https://automatyzacjesklepow.pl/#website"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Start", "item": "https://automatyzacjesklepow.pl/"}, {"@type": "ListItem", "position": 2, "name": "Dla sklepów", "item": "https://automatyzacjesklepow.pl/sprawdzarka.html"}, {"@type": "ListItem", "position": 3, "name": "Integracja sklepu z hurtownią — stany i ceny", "item": "https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html"}]}, {"@type": "FAQPage", "@id": "https://automatyzacjesklepow.pl/integracja-sklepu-z-hurtownia.html#faq", "mainEntity": [{"@type": "Question", "name": "Moja hurtownia nie ma żadnego API, tylko plik XML raz dziennie. Da się?", "acceptedAnswer": {"@type": "Answer", "text": "Tak, i to najczęstszy przypadek. Plik XML czy CSV w zupełności wystarczy — częstotliwość aktualizacji jest wtedy ograniczona, ale i tak nieporównywalnie lepsza od ręcznego wpisywania."}}, {"@type": "Question", "name": "Czy zdjęcia i opisy też się zaciągną?", "acceptedAnswer": {"@type": "Answer", "text": "Jeśli hurtownia je udostępnia — tak, przy pierwszym imporcie. Zwykle radzę jednak pisać własne opisy, bo dziesiątki sklepów z identycznym tekstem od producenta konkurują ze sobą w Google i wszystkie na tym tracą."}}, {"@type": "Question", "name": "Co z produktami, które mam własne, spoza hurtowni?", "acceptedAnswer": {"@type": "Answer", "text": "Zostają nietknięte. Most rusza wyłącznie te produkty, które sam wprowadził — Twoje własne pozycje ma zapisane jako niepodlegające aktualizacji."}}, {"@type": "Question", "name": "Jak szybko widać efekt?", "acceptedAnswer": {"@type": "Answer", "text": "Pierwszy import zwykle w ciągu tygodnia–dwóch od przekazania dostępów, a potem chodzi to samo. Największa zmiana jest odczuwalna od razu: przestajesz sprzedawać rzeczy, których nie ma."}}]}]}</script>
 </head>
-<body>
+<body data-nav-active="sprawdzarka.html">
+<a class="skip-link" href="#main-content">Przejdź do treści</a>
 <header class="gora"><div class="w">
-  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <nav><a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></nav>
+  <a class="znak" href="/" aria-label="Maciej Gryziec — aplikacje i automatyzacje dla firm"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje dla firm</span></a>
+  <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-hurtownia-mobile">Opisz projekt</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
+  <nav id="nav-main" aria-label="Główna nawigacja"><a href="dedykowane-oprogramowanie-dla-firm.html">Dla firm</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a href="sprawdzarka.html">Dla sklepów</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-hurtownia-nav">Opisz projekt</a></nav>
 </div></header>
-<section class="rozdzial czolo pod piasek skos-dol lewo"><div class="w"><div class="tekst wjazd"><p class="etykieta">Integracja</p><h1>Integracja sklepu z hurtownią</h1><p class="wstep">Stany i ceny od dostawcy wchodzą do sklepu same, kilka razy dziennie. Nie sprzedajesz tego, czego hurtownia nie ma — i nie sprzedajesz poniżej marży, bo cena zakupu wzrosła w nocy.</p></div><div class="obraz"><svg class="kartony" viewBox="0 0 760 560" aria-hidden="true"></svg></div></div></section>
-<main class="tresc"><div class="blok wjazd">
+<main id="main-content" tabindex="-1">
+<section class="rozdzial czolo pod piasek skos-dol lewo" id="tresc"><div class="w"><div class="tekst wjazd"><nav class="okruszki" aria-label="Okruszki"><a href="/">Start</a><span aria-hidden="true">›</span><a href="sprawdzarka.html">Dla sklepów</a><span aria-hidden="true">›</span><span aria-current="page">Integracja sklepu z hurtownią</span></nav><p class="etykieta">Integracja</p><h1>Integracja sklepu z hurtownią</h1><p class="wstep">Stany i ceny od dostawcy wchodzą do sklepu same, kilka razy dziennie. Nie sprzedajesz tego, czego hurtownia nie ma — i nie sprzedajesz poniżej marży, bo cena zakupu wzrosła w nocy.</p></div><div class="obraz"><svg class="kartony" viewBox="0 0 760 560" aria-hidden="true"></svg></div></div></section>
+<div class="tresc"><div class="blok wjazd">
       <h2>Dlaczego to jest trudniejsze, niż wygląda</h2>
       <p>Hurtownie rzadko dają porządne narzędzia. Zwykle dostajesz plik: XML, CSV albo arkusz
          przez FTP, aktualizowany raz na dobę o dziwnej porze. Nazwy kategorii nie pasują do Twoich,
@@ -101,8 +127,8 @@
          powiem, kiedy tak jest, żebyś nie płacił za coś, co masz.</p>
 
       <h2>Ile to kosztuje</h2>
-      <p><strong>Podłączenie jednej hurtowni</strong> — <strong>od 2900 zł</strong>,
-         stała cena ustalona po obejrzeniu pliku z danymi.<br>
+      <p><strong>Podłączenie jednej hurtowni</strong> — <strong>od 2 900 zł</strong>,
+         stała cena uzgodnionego zakresu, ustalona po obejrzeniu pliku z danymi.<br>
          <strong>Każda kolejna hurtownia</strong> — taniej, bo połowa pracy jest już zrobiona.<br>
          <strong>Opieka</strong> — <strong>od 349 zł miesięcznie</strong>: pilnuję, czy import
          chodzi i czy dostawca czegoś nie zmienił.</p>
@@ -125,26 +151,61 @@
            a powiem, co da się z nim zrobić i ile to będzie kosztować. Telefon:
            <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a>.</p>
       </div>
-      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+      <p><a class="przycisk" data-umami-event="klik-sprawdzarka" href="sprawdzarka.html">Sprawdź swój sklep za darmo
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></a></p>
       <p class="slaby" style="margin-top:1.4rem">Zobacz też: <a href="integracja-sklepu-z-ksiegowoscia.html">integracja z księgowością</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
     </div>
-  </main>
+  </div>
 <section class="rozdzial koniec "><div class="w"><div class="tekst wjazd">
-  <h2>To tyle. Co teraz?</h2>
-  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
-  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
+  <h2>Masz proces, który dziś działa Excelem, mailem albo ręcznie?</h2>
+  <p><a data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-hurtownia-koniec">Opisz, jak dziś wygląda ta praca</a> — formularz pomoże ułożyć kilka najważniejszych informacji o procesie, narzędziach i problemie. Na tej podstawie łatwiej ustalić, czy lepsza będzie automatyzacja, integracja czy własna aplikacja.</p>
+  <p><a href="realizacje.html">Zobacz realizacje</a>, jeśli chcesz najpierw zobaczyć konkretne systemy i aplikacje. <a href="poradniki.html">Przejrzyj poradniki</a>, jeśli chcesz porównać rozwiązania. <a href="sprawdzarka.html">Prowadzisz sklep internetowy?</a> Możesz też zacząć od bezpłatnej sprawdzarki.</p>
   <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
 </div></div></section>
+</main>
 
-<div class="stopka">
-  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
-</div>
-<script src="list.js?w=2"></script>
+<footer class="stopka">
+  <div class="stopka-grid">
+    <div class="stopka-brand">
+      <strong>Maciej Gryziec</strong>
+      <p>Aplikacje, systemy i automatyzacje dla firm. Pracuję zdalnie z firmami w całej Polsce.</p>
+      <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-hurtownia-footer">Opisz projekt →</a></p>
+      <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a><br><a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    </div>
+    <div>
+      <strong>Rozwiązania</strong>
+      <a href="dedykowane-oprogramowanie-dla-firm.html">Oprogramowanie na zamówienie</a>
+      <a href="crm-na-zamowienie.html">CRM na zamówienie</a>
+      <a href="system-do-wycen-i-ofert.html">Wyceny i oferty</a>
+      <a href="system-do-obslugi-zlecen.html">Obsługa zleceń</a>
+      <a href="integracje-api-dla-firm.html">Integracje API</a>
+      <a href="aplikacje-webowe-dla-firm.html">Aplikacje webowe</a>
+    </div>
+    <div>
+      <strong>Zastosowania</strong>
+      <a href="system-zamiast-excela.html">System zamiast Excela</a>
+      <a href="panel-klienta-b2b.html">Panel klienta B2B</a>
+      <a href="system-rezerwacji-dla-firm.html">System rezerwacji</a>
+      <a href="automatyzacja-dokumentow-w-firmie.html">Automatyzacja dokumentów</a>
+      <a href="sprawdzarka.html">Automatyzacje e-commerce</a>
+    </div>
+    <div>
+      <strong>Firma i wiedza</strong>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
+      <a href="o-mnie.html">O mnie</a>
+      <a href="poradniki.html">Poradniki</a>
+    </div>
+  </div>
+  <div class="stopka-dol">
+    <span>© 2026 Maciej Gryziec</span>
+    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+    <a href=".well-known/security.txt">Zgłoszenia bezpieczeństwa</a>
+  </div>
+</footer>
+<script src="list.js?v=ec16464680"></script>
 </body>
 </html>

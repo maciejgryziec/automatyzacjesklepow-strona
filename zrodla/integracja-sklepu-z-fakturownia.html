@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Integracja sklepu internetowego z Fakturownią — faktury i KSeF bez przepisywania</title>
-<meta name="description" content="Łączę sklep internetowy i Allegro z Fakturownią: zamówienia same stają się fakturami z poprawnym VAT i trafiają do KSeF. Stała cena od 2 900 zł, wdrożenie w 2–3 tygodnie.">
+<title>Integracja sklepu z Fakturownią — faktury i KSeF</title>
+<meta name="description" content="Łączę sklep i Allegro z Fakturownią: zamówienia automatycznie stają się fakturami z poprawnym VAT i mogą trafiać dalej do KSeF.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-sklepu-z-fakturownia.html">
 <link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
@@ -16,7 +16,7 @@
 
 <header class="gora">
   <div class="srodek">
-    <a class="logo" href="index.html">
+    <a class="logo" href="/">
       <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
         <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
@@ -34,8 +34,8 @@
       Automatyzacje Sklepów
     </a>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="index.html#jak">Jak pracuję</a>
+      <a href="/">Start</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
       <a href="problemy.html">Co naprawiam</a>
       <a href="cennik.html">Cennik</a>
       <a href="realizacje.html">Realizacje</a>
@@ -53,19 +53,15 @@
     </div>
 
     <div class="tresc wjazd">
-      <h2>Jak to działa</h2>
-      <p>Buduję most między Twoim sklepem a Fakturownią. Gdy klient złoży zamówienie, w Fakturowni
-         po paru minutach jest gotowy dokument: właściwy nabywca, NIP, stawki VAT, pozycje i koszt wysyłki
-         dokładnie takie jak w zamówieniu. Numeracja idzie jednym ciągiem, także gdy sprzedajesz
-         w sklepie i na Allegro naraz.</p>
-      <p>Most pilnuje też tego, na czym wykładają się gotowe wtyczki: faktura czy paragon zależnie od tego,
-         czy klient podał NIP, korekta po zwrocie, zamówienie zmienione po opłaceniu, sprzedaż za granicę
-         i OSS, wysyłka faktury mailem do klienta dopiero po zapłacie. Ustawiamy to raz, potem dzieje się samo.</p>
-      <h2>Kiedy wystarczy gotowa wtyczka</h2>
-      <p>Fakturownia ma gotowe połączenia z większością platform i jeśli masz jeden sklep, jedną stawkę VAT
-         i kilka zamówień dziennie, to one zwykle wystarczą. Powiem Ci to wprost i nic nie zapłacisz.
-         Most ma sens, gdy wtyczka wystawia dokumenty podwójnie, gubi korekty, myli stawki albo gdy zamówienia
-         przychodzą z kilku miejsc. Więcej: <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a></p>
+      <h2>Fakturownia jako warstwa dokumentów</h2>
+      <p>W tym wariancie Fakturownia jest miejscem, w którym powstaje dokument, a sklep lub marketplace jest źródłem danych. Integracja przekazuje nabywcę, NIP, pozycje, stawki, koszt dostawy i identyfikator zamówienia, dzięki czemu dokument da się później jednoznacznie powiązać z konkretną sprzedażą.</p>
+      <p>Fakturownia udostępnia API oparte o token oraz operacje m.in. na fakturach, produktach i klientach. To pozwala nie tylko utworzyć dokument, ale również pobrać go po identyfikatorze zamówienia, pobrać PDF albo uruchomić wysyłkę e-mail w odpowiednim momencie procesu. Nie każdy sklep potrzebuje całego tego zakresu — dobieram tylko operacje potrzebne w Twoim przepływie.</p>
+      <h2>Kiedy własna integracja Fakturowni ma sens?</h2>
+      <p>Jeżeli jedno gotowe połączenie poprawnie obsługuje cały proces, nie ma sensu pisać własnego. Własna integracja zaczyna mieć wartość wtedy, gdy dokument zależy od niestandardowych reguł, sprzedaż wpada z kilku źródeł, trzeba kontrolować duplikaty albo kolejny krok ma zależeć od statusu dokumentu. Zanim cokolwiek buduję, sprawdzam więc <a href="wtyczka-czy-integracja.html">czy gotowa wtyczka rzeczywiście nie wystarcza</a>.</p>
+      <h2>Co daje API w praktyce?</h2>
+      <p>Najbardziej użyteczne jest to, że dokument może być częścią większego procesu zamiast końcowym „eksportem”. Przykład: zamówienie otrzymuje płatność → integracja tworzy fakturę → zapisuje jej identyfikator przy zamówieniu → pobiera PDF albo zleca wysyłkę → późniejszy zwrot może zostać powiązany z dokumentem źródłowym. Dzięki temu łatwiej prześledzić, co wydarzyło się z konkretną sprzedażą.</p>
+      <p class="slaby">Dokumentacja producenta: <a href="https://app.fakturownia.pl/api">API Fakturowni</a>.</p>
+
       <h2>Przenosisz się z innego programu</h2>
       <p>Coraz więcej sklepów przechodzi na Fakturownię z wFirmy, iFirmy albo z Excela. Przy przenosinach
          pilnuję trzech rzeczy: ciągłości numeracji, żeby księgowa nie dostała dwóch faktur o tym samym numerze,
@@ -74,8 +70,7 @@
       <h2>Co dostajesz</h2>
       <p>Jeden most, od początku do końca: rozpisanie tego, jak sprzedajesz, budowa połączenia,
          testy na prawdziwych zamówieniach, instrukcja. Cena stała z <a href="cennik.html">cennika</a> —
-         pozycja „Most do księgowości” (4 500–6 000 zł, 2–3 tygodnie). Prostsze przypadki to
-         zwykła integracja od 2 900 zł.</p>
+         integracja systemów od 2 900 zł; dokładna cena i termin zależą od API, liczby kanałów i obsługi wyjątków.</p>
     </div>
 
     <div class="wjazd">
@@ -86,21 +81,17 @@
         <details><summary>Co z KSeF?</summary><p>Fakturownia wysyła faktury do KSeF. Przy wdrożeniu sprawdzam, czy wysyłka faktycznie działa na Twoim koncie, czy numer KSeF wraca do dokumentu i czy żadna faktura nie zostaje po drodze. Terminy i ulgi opisałem w tekście <a href="ksef-dla-sklepu-internetowego.html">KSeF dla sklepu internetowego</a>.</p></details>
         <details><summary>Czy muszę podać Ci hasło do Fakturowni?</summary><p>Nie. Wystarcza klucz dostępu dla programów, który sam generujesz w ustawieniach konta i który w każdej chwili możesz wyłączyć. Hasło zostaje u Ciebie.</p></details>
         <details><summary>Używam BaseLinkera. Czy most jest mi potrzebny?</summary><p>Często nie — BaseLinker sam wystawia dokumenty w Fakturowni. Most przydaje się, gdy część sprzedaży idzie poza BaseLinkerem albo gdy dokumenty z niego wymagają ręcznych poprawek. Więcej: <a href="integracja-baselinker.html">integracja z BaseLinkerem</a>.</p></details>
-        <details><summary>Co jeśli coś się zepsuje za pół roku?</summary><p>Integracje psują się po cichu — wygasa klucz, platforma coś zmienia. Dlatego oferuję opiekę miesięczną: raz dziennie sprawdzam połączenie i o awarii dowiadujesz się ode mnie, nie od księgowej.</p></details>
-        <details><summary>Ile trwa wdrożenie?</summary><p>Typowo 2–3 tygodnie od pierwszej rozmowy do działającego mostu, z testami na prawdziwych zamówieniach.</p></details>
+        <details><summary>Co jeśli coś się zepsuje za pół roku?</summary><p>Integracje psują się po cichu — wygasa klucz, platforma coś zmienia. Dlatego oferuję opiekę miesięczną: integracja może być monitorowana cyklicznie, a po wykryciu problemu dostajesz alert. Częstotliwość monitoringu i zakres obsługi awarii zależą od wybranego pakietu.</p></details>
+        <details><summary>Ile trwa wdrożenie?</summary><p>Prostszy zakres zwykle można uruchomić od około 10 dni roboczych. Dokładny termin zależy od API, liczby kanałów i wyjątków; testy na prawdziwych zamówieniach są częścią wdrożenia.</p></details>
       </div>
     </div>
 
     <div class="tresc wjazd">
       <div class="pudlo">
-        <h3>Od czego zacząć</h3>
-        <p>Najprościej od bezpłatnego sprawdzenia sklepu — zobaczysz od razu, co u Ciebie
-           wymaga uwagi. Albo po prostu napisz: <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>.</p>
+        <h3>Co podać na start?</h3>
+        <p>Napisz, skąd przychodzą zamówienia, kiedy dokument ma powstać, które pola wymagają własnych reguł i co ma się wydarzyć po wystawieniu faktury. Hasła nie są potrzebne do pierwszej analizy.</p>
       </div>
-      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg></a></p>
+      <p><a class="przycisk" href="opisz-projekt.html?typ=Integracja%20kilku%20programów%20%2F%20API&zrodlo=fakturownia">Opisz integrację z Fakturownią →</a></p>
       <p class="slaby" style="margin-top:1.4rem">Inne integracje: <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="integracja-sklepu-z-ksiegowoscia.html">inne programy księgowe</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracje-shoper.html">Shoper</a></p>
     </div>
   </div>

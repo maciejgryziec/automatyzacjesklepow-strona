@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Automatyczne faktury Allegro, synchronizacja stanów, GPSR — co naprawiam</title>
-<meta name="description" content="Ręczne przepisywanie zamówień do faktur, rozjazd stanów między sklepem a Allegro, ciche awarie integracji, GPSR i Omnibus — co dokładnie robię z każdym z tych problemów.">
+<title>Automatyzacja firmy — problemy, które warto zamienić w system</title>
+<meta name="description" content="Excel, ręczne przepisywanie danych, chaos w zleceniach, wyceny, raporty i niespójne systemy — problemy w firmie, które można rozwiązać aplikacją lub automatyzacją.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/problemy.html">
 <link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
@@ -16,7 +16,7 @@
 
 <header class="gora">
   <div class="srodek">
-    <a class="logo" href="index.html">
+    <a class="logo" href="/">
       <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
         <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
@@ -34,8 +34,8 @@
       Automatyzacje Sklepów
     </a>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="index.html#jak">Jak pracuję</a>
+      <a href="/">Start</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
       <a href="problemy.html">Co naprawiam</a>
       <a href="cennik.html">Cennik</a>
       <a href="realizacje.html">Realizacje</a>
@@ -47,13 +47,50 @@
 <section>
   <div class="srodek">
     <div class="tytul-strony wjazd">
-      <p class="etykieta">Co naprawiam</p>
-      <h1>Co najczęściej psuje się w sklepach internetowych</h1>
-      <p class="slaby" style="font-size:1.1rem">Każdy z tych problemów da się rozwiązać osobno.
-         Poniżej, co dokładnie robię w każdym przypadku.</p>
+      <p class="etykieta">Co automatyzuję</p>
+      <h1>Gdzie w firmie najczęściej ginie czas i informacja</h1>
+      <p class="slaby" style="font-size:1.1rem">Nie każdy problem wymaga nowego systemu. Poniżej są sytuacje, w których najczęściej wystarcza uporządkowanie procesu, mała aplikacja albo integracja między programami.</p>
     </div>
 
     <div class="siatka-problemow">
+      <article class="problem kotwica wjazd" id="excel">
+        <h2>Firma działa na kilku Excelach i jednej osobie, która je rozumie</h2>
+        <p class="objaw">Klienci, zlecenia, terminy i rozliczenia są w arkuszach. Kiedy plik ma kilka wersji albo osoba prowadząca tabelę jest na urlopie, pojawia się chaos.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Przenoszę proces do prostej aplikacji z jednym źródłem danych, rolami użytkowników i historią zmian. Zobacz: <a href="system-zamiast-excela.html">system zamiast Excela</a>.</p></div>
+      </article>
+      <article class="problem kotwica wjazd" id="zlecenia">
+        <h2>Nikt nie widzi od razu, na jakim etapie jest zlecenie</h2>
+        <p class="objaw">Status trzeba ustalać przez telefon, mail albo wiadomość. Handlowiec pyta realizację, realizacja pyta magazyn, klient czeka.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Buduję jeden obieg sprawy: status, termin, odpowiedzialna osoba, dokumenty i historia w jednym miejscu. Zobacz: <a href="system-do-obslugi-zlecen.html">system do obsługi zleceń</a>.</p></div>
+      </article>
+      <article class="problem kotwica wjazd" id="przepisywanie">
+        <h2>Te same dane są wpisywane do kilku programów</h2>
+        <p class="objaw">Klient jest w formularzu, potem w CRM-ie, kalendarzu i programie do faktur. Każde przepisanie zabiera czas i może wprowadzić błąd.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Łączę istniejące narzędzia przez API lub buduję brakujący etap pomiędzy nimi. Zobacz: <a href="integracje-api-dla-firm.html">integracje API</a>.</p></div>
+      </article>
+      <article class="problem kotwica wjazd" id="crm">
+        <h2>CRM jest, ale proces i tak żyje poza nim</h2>
+        <p class="objaw">Handlowcy wpisują minimum, reszta jest w mailach i arkuszach, bo gotowy CRM nie odzwierciedla faktycznego sposobu pracy.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Upraszczam proces albo buduję <a href="crm-na-zamowienie.html">CRM na zamówienie</a>, który obejmuje tylko potrzebne etapy i może prowadzić sprawę także po sprzedaży.</p></div>
+      </article>
+      <article class="problem kotwica wjazd" id="status-klienta">
+        <h2>Klienci ciągle pytają o status, dokument albo termin</h2>
+        <p class="objaw">Informacja istnieje w firmie, ale klient jej nie widzi. Obsługa odpowiada na te same pytania mailowo i telefonicznie, zamiast zajmować się wyjątkami.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Udostępniam klientowi wybrany fragment procesu: status, historię, dokumenty albo możliwość złożenia kolejnej sprawy. Zobacz <a href="panel-klienta-b2b.html">panel klienta B2B</a>.</p></div>
+      </article>
+
+      <article class="problem kotwica wjazd" id="rezerwacje">
+        <h2>Rezerwacje są w telefonie, kalendarzu i wiadomościach</h2>
+        <p class="objaw">Termin wygląda na wolny, ale potrzebny samochód, pracownik albo urządzenie jest już zajęte. Ktoś musi ręcznie porównywać kilka źródeł.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Buduję jedną logikę dostępności, która uwzględnia potrzebne zasoby i blokuje kolizje. Zobacz <a href="system-rezerwacji-dla-firm.html">system rezerwacji dla firmy</a>.</p></div>
+      </article>
+
+      <article class="problem kotwica wjazd" id="dokumenty">
+        <h2>Oferta, umowa albo protokół powstają przez kopiuj–wklej</h2>
+        <p class="objaw">Dane klienta i zlecenia są już w systemie albo arkuszu, ale ktoś ponownie przepisuje je do Worda, poprawia numer, zapisuje PDF i wysyła mail.</p>
+        <div class="naprawa"><span class="naprawa-etykieta">Co robię</span><p>Dokument powstaje automatycznie z danych sprawy, z właściwą numeracją, sekcjami i załącznikami. Zobacz <a href="automatyzacja-dokumentow-w-firmie.html">automatyzację dokumentów</a>.</p></div>
+      </article>
+
       <article class="problem kotwica wjazd" id="faktury">
         <span class="problem-ikona" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -87,7 +124,7 @@
         <p class="objaw">Najgorsze awarie to te, które nie robią hałasu. Token wygasa w czwartek, zamówienia przestają schodzić, a Ty dowiadujesz się w poniedziałek — od klienta, który pyta o paczkę.</p>
         <div class="naprawa">
           <span class="naprawa-etykieta">Co robię</span>
-          <p>Codziennie sprawdzam, czy każde połączenie żyje. Jeśli coś przestaje działać, dostajesz jednego maila tego samego dnia.</p>
+          <p>Codziennie sprawdzam, czy każde połączenie żyje. Jeżeli monitoring wykryje problem, dostajesz alert zamiast dowiadywać się o awarii od klienta lub księgowości.</p>
         </div>
       </article>
       <article class="problem kotwica wjazd" id="raporty">
@@ -111,7 +148,7 @@
         <p class="objaw">Klient czeka dwa dni na liczbę, którą program policzyłby w sekundę. Część klientów nie doczeka i kupi gdzie indziej.</p>
         <div class="naprawa">
           <span class="naprawa-etykieta">Co robię</span>
-          <p>Kalkulator albo konfigurator, w którym klient sam podaje parametry i od razu widzi wycenę. Do Ciebie trafia zapytanie z kompletem parametrów — rozmowę zaczynasz od konkretu.</p>
+          <p>Jeżeli wycenę przygotowuje handlowiec, buduję <a href="system-do-wycen-i-ofert.html">system do wycen i ofert</a>, który liczy według ustalonych reguł, pilnuje marży i tworzy właściwy PDF. Jeżeli część parametrów może podać sam klient przed rozmową, sprawdzi się <a href="kalkulator-konfigurator-dla-klientow.html">kalkulator lub konfigurator online</a>.</p>
         </div>
       </article>
       <article class="problem kotwica wjazd" id="przepisy">
@@ -133,14 +170,13 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
              stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M9.2 9a2 2 0 1 1 2.8 2c-.6.4-1 .9-1 1.6"/><path d="M11 15.5h.01"/></svg>
       </span>
-      <h2>Nie wiem, co jest nie tak</h2>
-      <p class="objaw">Najczęstszy przypadek. Coś nie gra, ale trudno wskazać palcem co.</p>
+      <h2>Nie wiem jeszcze, co powinno być systemem</h2>
+      <p class="objaw">To normalny punkt startu. Najpierw rozpisujemy jeden proces i oddzielamy to, co warto automatyzować, od tego, czego nie ma sensu komplikować.</p>
       <div class="naprawa">
         <span class="naprawa-etykieta">Zacznij stąd</span>
-        <p>Bezpłatne sprawdzenie sklepu. Wpisujesz adres, dostajesz listę konkretów.
-           Bez rozmowy i bez zobowiązań.</p>
+        <p>Dla firmy usługowej lub B2B zacznij od krótkiego opisu procesu. Jeśli prowadzisz sklep internetowy, możesz dodatkowo użyć bezpłatnej sprawdzarki.</p>
       </div>
-      <p style="margin:1.4rem 0 0"><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep
+      <p style="margin:1.4rem 0 0"><a class="przycisk" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz, co dziś robicie ręcznie
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></a></p>

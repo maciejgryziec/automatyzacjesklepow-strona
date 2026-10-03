@@ -1,79 +1,136 @@
 <!doctype html>
-<html lang="pl">
+<html class="no-js" lang="pl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Integracja sklepu internetowego z wFirmą — faktury bez przepisywania</title>
-<meta name="description" content="Łączę sklep internetowy i Allegro z wFirmą: zamówienia same stają się fakturami z poprawnym VAT, z wysyłką do KSeF. Stała cena, wdrożenie w 10 dni roboczych.">
+<script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
+<meta name="theme-color" content="#194586">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<title>Integracja sklepu z wFirmą — faktury i KSeF</title>
+<meta name="description" content="Łączę sklep i Allegro z wFirmą: zamówienia automatycznie stają się fakturami z poprawnym VAT i mogą być dalej obsługiwane w KSeF.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Automatyzacje dla firm">
+<meta property="og:title" content="Integracja sklepu z wFirmą — faktury i KSeF">
+<meta property="og:description" content="Łączę sklep i Allegro z wFirmą: zamówienia automatycznie stają się fakturami z poprawnym VAT i mogą być dalej obsługiwane w KSeF.">
+<meta property="og:url" content="https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html">
+<meta property="og:image" content="https://automatyzacjesklepow.pl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Aplikacje, które pracują tak jak firma — Automatyzacje dla firm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Integracja sklepu z wFirmą — faktury i KSeF">
+<meta name="twitter:description" content="Łączę sklep i Allegro z wFirmą: zamówienia automatycznie stają się fakturami z poprawnym VAT i mogą być dalej obsługiwane w KSeF.">
+<meta name="twitter:image" content="https://automatyzacjesklepow.pl/og-image.png">
+<meta name="twitter:image:alt" content="Aplikacje, które pracują tak jak firma — Automatyzacje dla firm">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html">
-<link rel="stylesheet" href="list.css?w=3">
+<link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje dla firm" href="feed.xml">
+<link rel="stylesheet" href="list.css?v=ec16464680">
 <link rel="stylesheet" href="paleta-c.css?w=1">
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
 <link rel="icon" href="favicon.ico?w=3" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="ikona-96.png?w=3">
 <link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png?w=3">
 <link rel="apple-touch-icon" href="ikona-180.png?w=3">
-<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c" data-domains="automatyzacjesklepow.pl,www.automatyzacjesklepow.pl"></script>
+<link rel="mask-icon" href="znak.svg" color="#194586">
+<link rel="manifest" href="site.webmanifest">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html#webpage", "url": "https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html", "name": "Integracja sklepu z wFirmą — faktury i KSeF", "description": "Łączę sklep i Allegro z wFirmą: zamówienia automatycznie stają się fakturami z poprawnym VAT i mogą być dalej obsługiwane w KSeF.", "inLanguage": "pl-PL", "isPartOf": {"@id": "https://automatyzacjesklepow.pl/#website"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Start", "item": "https://automatyzacjesklepow.pl/"}, {"@type": "ListItem", "position": 2, "name": "Dla sklepów", "item": "https://automatyzacjesklepow.pl/sprawdzarka.html"}, {"@type": "ListItem", "position": 3, "name": "Integracja sklepu z wFirmą — faktury i KSeF", "item": "https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html"}]}, {"@type": "FAQPage", "@id": "https://automatyzacjesklepow.pl/integracja-sklepu-z-wfirma.html#faq", "mainEntity": [{"@type": "Question", "name": "Co trzeba przygotować po stronie wFirma?", "acceptedAnswer": {"@type": "Answer", "text": "Na pierwszym etapie wystarczy informacja, jakie dokumenty mają powstawać i kto w firmie odpowiada za księgowość. Dostęp API i użytkownika technicznego konfigurujemy dopiero wtedy, gdy znamy zakres; przy KSeF dodatkowo sprawdzamy wymagane uprawnienia i certyfikaty."}}, {"@type": "Question", "name": "Sprzedaję też na Allegro. Czy te zamówienia też trafią do wFirmy?", "acceptedAnswer": {"@type": "Answer", "text": "Tak — to najczęstszy wariant. Zamówienia z Allegro i ze sklepu wpadają do jednej numeracji, bez podwójnego fakturowania tego samego klienta."}}, {"@type": "Question", "name": "Czy numer KSeF może wrócić do procesu sklepu?", "acceptedAnswer": {"@type": "Answer", "text": "Jeżeli potrzebujesz takiej kontroli, integracja może sprawdzać wynik operacji i zapisywać identyfikator lub status przy powiązanym zamówieniu. Zakres zależy od tego, gdzie Twój zespół później szuka informacji o dokumencie."}}, {"@type": "Question", "name": "Co jeśli coś się zepsuje za pół roku?", "acceptedAnswer": {"@type": "Answer", "text": "Integracje psują się po cichu — wygasa token, dostawca coś zmienia. Dlatego oferuję opiekę miesięczną: integracja może być monitorowana cyklicznie, a po wykryciu problemu dostajesz alert. Częstotliwość monitoringu i zakres obsługi awarii zależą od wybranego pakietu."}}, {"@type": "Question", "name": "Ile trwa wdrożenie?", "acceptedAnswer": {"@type": "Answer", "text": "Prostszy zakres zwykle można uruchomić od około 10 dni roboczych. Dokładny termin zależy od API, liczby kanałów i wyjątków; testy na prawdziwych zamówieniach są częścią wdrożenia."}}]}]}</script>
 </head>
-<body>
+<body data-nav-active="sprawdzarka.html">
+<a class="skip-link" href="#main-content">Przejdź do treści</a>
 <header class="gora"><div class="w">
-  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <nav><a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></nav>
+  <a class="znak" href="/" aria-label="Maciej Gryziec — aplikacje i automatyzacje dla firm"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje dla firm</span></a>
+  <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-wfirma-mobile">Opisz projekt</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
+  <nav id="nav-main" aria-label="Główna nawigacja"><a href="dedykowane-oprogramowanie-dla-firm.html">Dla firm</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a href="sprawdzarka.html">Dla sklepów</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-wfirma-nav">Opisz projekt</a></nav>
 </div></header>
-<section class="rozdzial czolo pod jasny skos-dol"><div class="w"><div class="tekst wjazd"><p class="etykieta">Integracja</p><h1>Integracja sklepu z wFirmą</h1><p class="wstep">Zamówienia ze sklepu i z Allegro same stają się fakturami w wFirmie — z poprawnymi stawkami VAT, bez przepisywania i bez pomyłek o 23:00.</p></div><div class="obraz"><div class="stos"><div class="kartka dok" style="--i:0"><div class="naglowek">Zamówienie #4821 <small>sklep · 12:04:11</small></div><div class="strony"><div><b>Klient</b><span>Anna Kowalska</span><span>anna.k@poczta.pl</span></div><div><b>Dostawa</b><span>Kurier InPost, 14,99 zł</span><span>płatność: BLIK, opłacone</span></div></div><table><tr><th>Nazwa</th><th class="l">Ilość</th><th class="l">Cena</th><th class="l">Wartość</th></tr><tr style="--o:0.20"><td>Kurtka przeciwdeszczowa Nordal, r. M</td><td class="l">1</td><td class="l">329,00</td><td class="l">329,00</td></tr><tr style="--o:0.26"><td>Sweter wełniany Bergen, r. L</td><td class="l">1</td><td class="l">249,00</td><td class="l">249,00</td></tr><tr style="--o:0.32"><td>Koszula lniana Lund, biała</td><td class="l">2</td><td class="l">139,00</td><td class="l">278,00</td></tr><tr style="--o:0.38"><td>Skarpety merino, 3 pary</td><td class="l">1</td><td class="l">69,00</td><td class="l">69,00</td></tr></table><div class="sumy"><div><span>Produkty</span><span>925,00</span></div><div><span>Dostawa</span><span>14,99</span></div><div class="r"><span>Razem</span><span>939,99 zł</span></div></div></div><div class="kartka dok" style="--i:1"><div class="naglowek">Faktura FV/09/141 <small>wFirma · 12:04:14</small></div><div class="strony" style="--o:.15"><div><b>Sprzedawca</b><span>Odzież Północ sp. z o.o.</span><span>ul. Długa 12, 80-827 Gdańsk</span><span>NIP 583-000-00-00</span></div><div><b>Nabywca</b><span>Anna Kowalska</span><span>ul. Polna 4/7, 60-001 Poznań</span><span>zamówienie #4821</span></div></div><table><tr><th>Nazwa</th><th class="l">Ilość</th><th class="l">Cena</th><th class="l">Wartość</th></tr><tr style="--o:0.20"><td>Kurtka przeciwdeszczowa Nordal, r. M</td><td class="l">1</td><td class="l">329,00</td><td class="l">329,00</td></tr><tr style="--o:0.26"><td>Sweter wełniany Bergen, r. L</td><td class="l">1</td><td class="l">249,00</td><td class="l">249,00</td></tr><tr style="--o:0.32"><td>Koszula lniana Lund, biała</td><td class="l">2</td><td class="l">139,00</td><td class="l">278,00</td></tr><tr style="--o:0.38"><td>Skarpety merino, 3 pary</td><td class="l">1</td><td class="l">69,00</td><td class="l">69,00</td></tr></table><div class="sumy"><div style="--o:.45"><span>Razem netto</span><span>752,03</span></div><div style="--o:.5"><span>VAT 23%</span><span>172,97</span></div><div class="r" style="--o:.55"><span>Do zapłaty</span><span>925,00 zł</span></div></div><div class="dol-dok">Data sprzedaży 07.09.2026 · termin płatności: zapłacono · wystawił: system</div></div><div class="kartka dok" style="--i:2"><div class="naglowek">KSeF <small>Krajowy System e-Faktur · 12:04:15</small></div><div class="strony"><div><b>Numer KSeF</b><span>5830000000-20260907-A1F2C3-4D</span></div><div><b>Status</b><span class="status">przyjęta</span></div></div><div class="strony"><div><b>Dokument</b><span>FV/09/141, 925,00 zł brutto</span></div><div><b>Data przyjęcia</b><span>07.09.2026 12:04:15</span></div></div><div class="dol-dok">Urzędowe Poświadczenie Odbioru zapisane przy fakturze w wFirmie.</div><div class="piecz">UPO · przyjęto</div></div><div class="kartka dok" style="--i:3"><div class="naglowek">E-mail do klienta <small>12:04:16</small></div><div class="strony"><div><b>Do</b><span>anna.k@poczta.pl</span></div><div><b>Temat</b><span>Zamówienie #4821 przyjęte, faktura w załączniku</span></div></div><div class="mail"><p>Dzień dobry,</p><p>dziękujemy za zamówienie. Paczka wyjdzie dziś kurierem InPost, numer przesyłki wyślemy osobno.</p><p>Pozdrawiamy, Odzież Północ</p><span class="zal">📎 FV-09-141.pdf</span></div></div></div></div></div></section>
-<main class="tresc"><div class="blok wjazd">
-      <h2>Jak to działa</h2>
-      <p>Buduję most między Twoim sklepem a wFirmą. Gdy klient złoży zamówienie, w wFirmie
-         w ciągu paru minut pojawia się gotowa faktura: właściwy nabywca, właściwe stawki VAT,
-         numeracja się zgadza. Jeśli sprzedajesz też na Allegro, tamte zamówienia wchodzą tym samym mostem.</p>
-      <p>Do tego dochodzą rzeczy, o których łatwo zapomnieć: korekty przy zwrotach, rozróżnienie
-         paragon/faktura, sprzedaż zagraniczna, wysyłka faktury mailem do klienta. Ustawiamy to raz —
-         potem dzieje się samo.</p>
+<main id="main-content" tabindex="-1">
+<section class="rozdzial czolo pod jasny skos-dol" id="tresc"><div class="w"><div class="tekst wjazd"><nav class="okruszki" aria-label="Okruszki"><a href="/">Start</a><span aria-hidden="true">›</span><a href="sprawdzarka.html">Dla sklepów</a><span aria-hidden="true">›</span><span aria-current="page">Integracja sklepu z wFirmą</span></nav><p class="etykieta">Integracja</p><h1>Integracja sklepu z wFirmą</h1><p class="wstep">Zamówienia ze sklepu i z Allegro same stają się fakturami w wFirmie — z poprawnymi stawkami VAT, bez przepisywania i bez pomyłek o 23:00.</p></div><div class="obraz"><div class="stos"><div class="kartka dok" style="--i:0"><div class="naglowek">Zamówienie #4821 <small>sklep · 12:04:11</small></div><div class="strony"><div><b>Klient</b><span>Anna Kowalska</span><span>anna.k@poczta.pl</span></div><div><b>Dostawa</b><span>Kurier InPost, 14,99 zł</span><span>płatność: BLIK, opłacone</span></div></div><table><tr><th>Nazwa</th><th class="l">Ilość</th><th class="l">Cena</th><th class="l">Wartość</th></tr><tr style="--o:0.20"><td>Kurtka przeciwdeszczowa Nordal, r. M</td><td class="l">1</td><td class="l">329,00</td><td class="l">329,00</td></tr><tr style="--o:0.26"><td>Sweter wełniany Bergen, r. L</td><td class="l">1</td><td class="l">249,00</td><td class="l">249,00</td></tr><tr style="--o:0.32"><td>Koszula lniana Lund, biała</td><td class="l">2</td><td class="l">139,00</td><td class="l">278,00</td></tr><tr style="--o:0.38"><td>Skarpety merino, 3 pary</td><td class="l">1</td><td class="l">69,00</td><td class="l">69,00</td></tr></table><div class="sumy"><div><span>Produkty</span><span>925,00</span></div><div><span>Dostawa</span><span>14,99</span></div><div class="r"><span>Razem</span><span>939,99 zł</span></div></div></div><div class="kartka dok" style="--i:1"><div class="naglowek">Faktura FV/09/141 <small>wFirma · 12:04:14</small></div><div class="strony" style="--o:.15"><div><b>Sprzedawca</b><span>Odzież Północ sp. z o.o.</span><span>ul. Długa 12, 80-827 Gdańsk</span><span>NIP 583-000-00-00</span></div><div><b>Nabywca</b><span>Anna Kowalska</span><span>ul. Polna 4/7, 60-001 Poznań</span><span>zamówienie #4821</span></div></div><table><tr><th>Nazwa</th><th class="l">Ilość</th><th class="l">Cena</th><th class="l">Wartość</th></tr><tr style="--o:0.20"><td>Kurtka przeciwdeszczowa Nordal, r. M</td><td class="l">1</td><td class="l">329,00</td><td class="l">329,00</td></tr><tr style="--o:0.26"><td>Sweter wełniany Bergen, r. L</td><td class="l">1</td><td class="l">249,00</td><td class="l">249,00</td></tr><tr style="--o:0.32"><td>Koszula lniana Lund, biała</td><td class="l">2</td><td class="l">139,00</td><td class="l">278,00</td></tr><tr style="--o:0.38"><td>Skarpety merino, 3 pary</td><td class="l">1</td><td class="l">69,00</td><td class="l">69,00</td></tr></table><div class="sumy"><div style="--o:.45"><span>Razem netto</span><span>752,03</span></div><div style="--o:.5"><span>VAT 23%</span><span>172,97</span></div><div class="r" style="--o:.55"><span>Do zapłaty</span><span>925,00 zł</span></div></div><div class="dol-dok">Data sprzedaży 07.09.2026 · termin płatności: zapłacono · wystawił: system</div></div><div class="kartka dok" style="--i:2"><div class="naglowek">KSeF <small>Krajowy System e-Faktur · 12:04:15</small></div><div class="strony"><div><b>Numer KSeF</b><span>5830000000-20260907-A1F2C3-4D</span></div><div><b>Status</b><span class="status">przyjęta</span></div></div><div class="strony"><div><b>Dokument</b><span>FV/09/141, 925,00 zł brutto</span></div><div><b>Data przyjęcia</b><span>07.09.2026 12:04:15</span></div></div><div class="dol-dok">Urzędowe Poświadczenie Odbioru zapisane przy fakturze w wFirmie.</div><div class="piecz">UPO · przyjęto</div></div><div class="kartka dok" style="--i:3"><div class="naglowek">E-mail do klienta <small>12:04:16</small></div><div class="strony"><div><b>Do</b><span>anna.k@poczta.pl</span></div><div><b>Temat</b><span>Zamówienie #4821 przyjęte, faktura w załączniku</span></div></div><div class="mail"><p>Dzień dobry,</p><p>dziękujemy za zamówienie. Paczka wyjdzie dziś kurierem InPost, numer przesyłki wyślemy osobno.</p><p>Pozdrawiamy, Odzież Północ</p><span class="zal">📎 FV-09-141.pdf</span></div></div></div></div></div></section>
+<div class="tresc"><div class="blok wjazd">
+      <h2>wFirma jako część procesu księgowego</h2>
+      <p>Przy wFirmie integracja nie kończy się na samym utworzeniu dokumentu. Trzeba ustalić, który użytkownik API wykonuje operację, jakie ma uprawnienia i jak dokument ma przejść dalej do KSeF. To szczególnie ważne wtedy, gdy sklep, Allegro i księgowość mają działać jako jeden kontrolowany przepływ.</p>
+      <p>API wFirma pozwala pracować m.in. z fakturami roboczymi i obsługą numerów KSeF, ale konfiguracja musi odpowiadać rzeczywistym uprawnieniom użytkownika. Dlatego pierwszym krokiem nie jest „podłącz token”, tylko rozpisanie: kto wystawia dokument, z jakiego kanału pochodzą dane i kto odpowiada za wysyłkę do KSeF.</p>
+      <h2>Najważniejsze przy wFirma: użytkownik API i KSeF</h2>
+      <p>Dokumentacja wFirma zwraca uwagę, że faktury tworzone przez API są przypisywane do użytkownika, którego dane autoryzacyjne wykorzystuje integracja. Przy automatycznej obsłudze KSeF właśnie ten użytkownik musi mieć poprawnie skonfigurowane uprawnienia i certyfikaty. Źle ustawiony dostęp może więc wyglądać jak „awaria integracji”, mimo że problem leży w autoryzacji.</p>
+      <p>W praktyce testuję cały scenariusz: dokument powstaje z danych sprzedaży, trafia do właściwego miejsca, KSeF przyjmuje go zgodnie z konfiguracją, a numer/status wraca tam, gdzie zespół może go później znaleźć.</p>
+      <p class="slaby">Dokumentacja producenta: <a href="https://pomoc.wfirma.pl/-api-interfejs-dla-programistow">API wFirma</a> · <a href="https://pomoc.wfirma.pl/-integracja-z-ksef">integracja wFirma z KSeF</a>.</p>
+
       <h2>Co dostajesz</h2>
       <p>Jeden most, od początku do końca: analiza tego, jak sprzedajesz, budowa połączenia,
          testy na prawdziwych zamówieniach, instrukcja. Cena stała z <a href="cennik.html">cennika</a> —
-         pozycja „Most do księgowości” (4 500–6 000 zł, 2–3 tygodnie). Prostsze przypadki to
-         zwykła integracja od 2 900 zł.</p>
+         integracja systemów od 2 900 zł; dokładna cena i termin zależą od API, liczby kanałów i obsługi wyjątków.</p>
     </div>
 
     <div class="wjazd">
       <h2>Najczęstsze pytania</h2>
       <div class="pytania">
-        <details><summary>Mam sklep na Shoperze / IdoSell / WooCommerce — zadziała?</summary><p>Tak. Pracuję ze wszystkimi popularnymi polskimi platformami. Jeśli Twój sklep ma dostęp do danych zamówień (a praktycznie każdy ma), da się go połączyć z wFirmą.</p></details>
+        <details><summary>Co trzeba przygotować po stronie wFirma?</summary><p>Na pierwszym etapie wystarczy informacja, jakie dokumenty mają powstawać i kto w firmie odpowiada za księgowość. Dostęp API i użytkownika technicznego konfigurujemy dopiero wtedy, gdy znamy zakres; przy KSeF dodatkowo sprawdzamy wymagane uprawnienia i certyfikaty.</p></details>
         <details><summary>Sprzedaję też na Allegro. Czy te zamówienia też trafią do wFirmy?</summary><p>Tak — to najczęstszy wariant. Zamówienia z Allegro i ze sklepu wpadają do jednej numeracji, bez podwójnego fakturowania tego samego klienta.</p></details>
-        <details><summary>Co z KSeF?</summary><p>wFirma wysyła faktury do KSeF. Przy wdrożeniu sprawdzam, czy wysyłka faktycznie działa na Twoim koncie i czy żadna faktura nie zostaje po drodze.</p></details>
-        <details><summary>Co jeśli coś się zepsuje za pół roku?</summary><p>Integracje psują się po cichu — wygasa token, dostawca coś zmienia. Dlatego oferuję opiekę miesięczną: raz dziennie sprawdzam połączenie i o awarii dowiadujesz się ode mnie, nie od księgowej.</p></details>
-        <details><summary>Ile trwa wdrożenie?</summary><p>Typowo 2–3 tygodnie od pierwszej rozmowy do działającego mostu, z testami na prawdziwych zamówieniach.</p></details>
+        <details><summary>Czy numer KSeF może wrócić do procesu sklepu?</summary><p>Jeżeli potrzebujesz takiej kontroli, integracja może sprawdzać wynik operacji i zapisywać identyfikator lub status przy powiązanym zamówieniu. Zakres zależy od tego, gdzie Twój zespół później szuka informacji o dokumencie.</p></details>
+        <details><summary>Co jeśli coś się zepsuje za pół roku?</summary><p>Integracje psują się po cichu — wygasa token, dostawca coś zmienia. Dlatego oferuję opiekę miesięczną: integracja może być monitorowana cyklicznie, a po wykryciu problemu dostajesz alert. Częstotliwość monitoringu i zakres obsługi awarii zależą od wybranego pakietu.</p></details>
+        <details><summary>Ile trwa wdrożenie?</summary><p>Prostszy zakres zwykle można uruchomić od około 10 dni roboczych. Dokładny termin zależy od API, liczby kanałów i wyjątków; testy na prawdziwych zamówieniach są częścią wdrożenia.</p></details>
 
       </div>
     </div>
 
     <div class="blok wjazd">
       <div class="pudlo">
-        <h3>Od czego zacząć</h3>
-        <p>Najprościej od bezpłatnego sprawdzenia sklepu — zobaczysz od razu, co u Ciebie
-           wymaga uwagi. Albo po prostu napisz: <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>.</p>
+        <h3>Co podać na start?</h3>
+        <p>Wystarczy sklep i kanały sprzedaży, informacja kto dziś wystawia dokumenty w wFirma oraz jak wygląda obsługa KSeF. Nie wysyłaj kluczy API ani certyfikatów w pierwszej wiadomości.</p>
       </div>
-      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg></a></p>
+      <p><a class="przycisk" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?typ=Integracja%20kilku%20programów%20%2F%20API&zrodlo=wfirma">Opisz przepływ sklep → wFirma → KSeF →</a></p>
       <p class="slaby" style="margin-top:1.4rem">Inne integracje: <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a> · <a href="integracje-shoper.html">Shoper</a></p>
     </div>
-  </main>
+  </div>
 <section class="rozdzial koniec "><div class="w"><div class="tekst wjazd">
-  <h2>To tyle. Co teraz?</h2>
-  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
-  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
+  <h2>Masz proces, który dziś działa Excelem, mailem albo ręcznie?</h2>
+  <p><a data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-wfirma-koniec">Opisz, jak dziś wygląda ta praca</a> — formularz pomoże ułożyć kilka najważniejszych informacji o procesie, narzędziach i problemie. Na tej podstawie łatwiej ustalić, czy lepsza będzie automatyzacja, integracja czy własna aplikacja.</p>
+  <p><a href="realizacje.html">Zobacz realizacje</a>, jeśli chcesz najpierw zobaczyć konkretne systemy i aplikacje. <a href="poradniki.html">Przejrzyj poradniki</a>, jeśli chcesz porównać rozwiązania. <a href="sprawdzarka.html">Prowadzisz sklep internetowy?</a> Możesz też zacząć od bezpłatnej sprawdzarki.</p>
   <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
 </div></div></section>
+</main>
 
-<div class="stopka">
-  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
-</div>
-<script src="list.js?w=2"></script>
+<footer class="stopka">
+  <div class="stopka-grid">
+    <div class="stopka-brand">
+      <strong>Maciej Gryziec</strong>
+      <p>Aplikacje, systemy i automatyzacje dla firm. Pracuję zdalnie z firmami w całej Polsce.</p>
+      <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html?zrodlo=integracja-sklepu-z-wfirma-footer">Opisz projekt →</a></p>
+      <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a><br><a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    </div>
+    <div>
+      <strong>Rozwiązania</strong>
+      <a href="dedykowane-oprogramowanie-dla-firm.html">Oprogramowanie na zamówienie</a>
+      <a href="crm-na-zamowienie.html">CRM na zamówienie</a>
+      <a href="system-do-wycen-i-ofert.html">Wyceny i oferty</a>
+      <a href="system-do-obslugi-zlecen.html">Obsługa zleceń</a>
+      <a href="integracje-api-dla-firm.html">Integracje API</a>
+      <a href="aplikacje-webowe-dla-firm.html">Aplikacje webowe</a>
+    </div>
+    <div>
+      <strong>Zastosowania</strong>
+      <a href="system-zamiast-excela.html">System zamiast Excela</a>
+      <a href="panel-klienta-b2b.html">Panel klienta B2B</a>
+      <a href="system-rezerwacji-dla-firm.html">System rezerwacji</a>
+      <a href="automatyzacja-dokumentow-w-firmie.html">Automatyzacja dokumentów</a>
+      <a href="sprawdzarka.html">Automatyzacje e-commerce</a>
+    </div>
+    <div>
+      <strong>Firma i wiedza</strong>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
+      <a href="o-mnie.html">O mnie</a>
+      <a href="poradniki.html">Poradniki</a>
+    </div>
+  </div>
+  <div class="stopka-dol">
+    <span>© 2026 Maciej Gryziec</span>
+    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+    <a href=".well-known/security.txt">Zgłoszenia bezpieczeństwa</a>
+  </div>
+</footer>
+<script src="list.js?v=ec16464680"></script>
 </body>
 </html>

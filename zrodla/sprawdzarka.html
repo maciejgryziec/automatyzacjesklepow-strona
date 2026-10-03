@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bezpłatne sprawdzenie sklepu internetowego: GPSR, Omnibus, EAN — Automatyzacje Sklepów</title>
-<meta name="description" content="Bezpłatne sprawdzenie sklepu internetowego. Bez logowania i bez dostępów.">
+<title>Bezpłatne sprawdzenie sklepu — GPSR, Omnibus, EAN</title>
+<meta name="description" content="Bezpłatnie sprawdź sklep internetowy bez logowania: GPSR, ceny z 30 dni, EAN, niedziałające adresy i podstawowe problemy widoczne z zewnątrz.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/sprawdzarka.html">
 <link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
@@ -16,7 +16,7 @@
 
 <header class="gora">
   <div class="srodek">
-    <a class="logo" href="index.html">
+    <a class="logo" href="/">
       <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
         <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
@@ -34,8 +34,8 @@
       Automatyzacje Sklepów
     </a>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="index.html#jak">Jak pracuję</a>
+      <a href="/">Start</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
       <a href="problemy.html">Co naprawiam</a>
       <a href="cennik.html">Cennik</a>
       <a href="realizacje.html">Realizacje</a>
@@ -56,14 +56,23 @@
     <!-- PRZY WDROŻENIU: podmień action na publiczny adres sprawdzarki -->
     <form class="formularz-prosty wjazd" action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post">
       <label for="sklep">Adres sklepu</label>
-      <input id="sklep" name="sklep" placeholder="mojsklep.pl" required>
-      <button class="przycisk" type="submit" data-umami-event="wyslanie-sprawdzenia">Sprawdź sklep
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <p class="slaby" style="font-size:.9rem;margin-top:.8rem">Sprawdzenie trwa do dwóch minut.
-         W narzędziu możesz też podać adres pliku dla porównywarek i e-mail do raportu.</p>
+      <div class="sprawdzarka-glowny">
+        <input id="sklep" name="sklep" inputmode="url" autocapitalize="none" spellcheck="false" maxlength="2048" placeholder="mojsklep.pl" required>
+        <button class="przycisk" type="submit" data-umami-event="wyslanie-sprawdzenia">Sprawdź sklep
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <details class="sprawdzarka-opcje">
+        <summary>Opcjonalnie: feed Ceneo / Google Merchant</summary>
+        <div class="sprawdzarka-opcje-grid">
+          <label for="feed">Adres feedu Ceneo lub Google Merchant</label>
+          <input id="feed" name="feed" inputmode="url" autocapitalize="none" spellcheck="false" maxlength="4096" placeholder="https://mojsklep.pl/ceneo.xml">
+        </div>
+      </details>
+      <p class="slaby" style="font-size:.9rem;margin-top:.8rem">Typowy sklep sprawdza się w około 1–2 minuty. Duży sklep, rozbudowana sitemap albo feed może potrwać dłużej; pojedyncze zadanie ma twardy limit 10 minut.
+         Możesz podać natywny XML Ceneo albo feed Google Merchant. Duże feedy są analizowane na reprezentatywnej próbce, a raport mówi o tym wprost.</p>
     </form>
 
     <div class="wjazd">
@@ -71,11 +80,11 @@
       <div class="kafelki">
         <div class="kafelek">
           <h3>Dane producenta (GPSR)</h3>
-          <p>Obowiązek od grudnia 2024. Sprawdzam, przy ilu produktach brakuje nazwy, adresu albo kontaktu.</p>
+          <p>Sprawdzam, czy na karcie produktu są publicznie widoczne informacje wymagane przy sprzedaży na odległość, m.in. dane producenta i identyfikacja produktu. To kontrola techniczna widoku strony, nie audyt prawny.</p>
         </div>
         <div class="kafelek">
           <h3>Najniższa cena z 30 dni</h3>
-          <p>Przy każdej przecenie. Brak to podstawa do kary od UOKiK.</p>
+          <p>Przy komunikowaniu obniżki sprawdzam, czy klient widzi informację o najniższej cenie z okresu 30 dni przed obniżką, zgodnie z zasadami opisanymi przez UOKiK.</p>
         </div>
         <div class="kafelek">
           <h3>Numery EAN i marki</h3>
@@ -87,7 +96,7 @@
         </div>
         <div class="kafelek">
           <h3>Zgodność z porównywarką</h3>
-          <p>Czy cena i dostępność w Ceneo zgadzają się z tym, co widzi klient w sklepie.</p>
+          <p>Czy cena i dostępność w feedzie Ceneo lub Google Merchant zgadzają się z tym, co widzi klient w sklepie.</p>
         </div>
         <div class="kafelek">
           <h3>Certyfikat i dane dla Google</h3>
@@ -97,10 +106,30 @@
     </div>
 
     <div class="tresc wjazd">
+      <h2>Jeżeli problem jest między systemami, a nie na stronie</h2>
+      <p>Sprawdzarka widzi tylko publiczną warstwę sklepu. Jeżeli problem dotyczy zamówień, stanów, faktur albo danych płynących między programami, przejdź od razu do właściwego typu integracji.</p>
+      <ul class="wpisy ecommerce-hub">
+        <li><a href="integracje-shoper.html">Integracje Shoper</a><small>księgowość, Allegro, hurtownie i własne połączenia</small></li>
+        <li><a href="integracje-idosell.html">Integracje IdoSell</a><small>zamówienia, dokumenty, KSeF i zewnętrzne systemy</small></li>
+        <li><a href="integracja-allegro-z-woocommerce.html">WooCommerce + Allegro</a><small>wspólne zamówienia, stany i dokumenty</small></li>
+        <li><a href="integracja-baselinker.html">BaseLinker / Base</a><small>kiedy gotowy obieg wystarczy, a kiedy potrzebna jest własna logika</small></li>
+        <li><a href="automatyzacja-allegro.html">Automatyzacja Allegro</a><small>zamówienia, stany i obsługa kilku kanałów</small></li>
+        <li><a href="automatyczne-faktury-allegro.html">Automatyczne faktury z Allegro</a><small>dokumenty bez ręcznego przepisywania sprzedaży</small></li>
+        <li><a href="integracja-sklepu-z-hurtownia.html">Integracja sklepu z hurtownią</a><small>stany, ceny i dostępność z XML, CSV lub API</small></li>
+        <li><a href="integracja-sklepu-z-ksiegowoscia.html">Sklep + księgowość</a><small>wFirma, Fakturownia i inne programy księgowe</small></li>
+      </ul>
+    </div>
+
+    <div class="tresc wjazd">
+      <div class="zrodla-box" data-verified="2026-10-03"><strong>Podstawy, które sprawdzarka wykorzystuje jako punkt odniesienia</strong><span class="zrodla-data">Zweryfikowano: 3 października 2026 r.</span><ul>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2023/988/oj?locale=pl">EUR-Lex — rozporządzenie GPSR (UE) 2023/988, w szczególności art. 19</a></li>
+        <li><a href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX%3A52025XC06233">Komisja Europejska — wytyczne dla przedsiębiorców dotyczące GPSR</a></li>
+        <li><a href="https://prawakonsumenta.uokik.gov.pl/prawo-do-informacji/informacje-o-obnizkach-cen/">UOKiK — informacje o obniżkach cen</a></li>
+      </ul><p>Automatyczny wynik wskazuje elementy widoczne lub niewidoczne na stronie. Nie rozstrzyga sam w sobie, czy sklep spełnia wszystkie obowiązki prawne w konkretnym przypadku.</p></div>
+
       <h2>Czego nie robię</h2>
-      <p>Nie sprawdzam sklepu bez Twojej wiedzy — wyłącznie ten adres, który sam wpiszesz.
-         Nie zapisuję treści Twojego sklepu, tylko wynik sprawdzenia. Nie potrzebuję
-         żadnych haseł ani dostępów.</p>
+      <p>Nie potrzebuję żadnych haseł ani dostępów do panelu sklepu — narzędzie pobiera wyłącznie publicznie dostępne strony pod adresem, który sam podasz. Nie przechowuje kopii pobranych stron HTML. Do obsługi sprawdzenia zapisuje adres sklepu, opcjonalny adres feedu, status/postęp zadania oraz wygenerowany raport. <strong>Dane zadania i raport są automatycznie usuwane po 30 dniach.</strong></p>
+      <p class="slaby">Dla ochrony przed nadużyciem liczba nowych skanów z jednego adresu sieciowego jest chwilowo limitowana. Adres nie jest zapisywany w raporcie ani bazie zadań.</p>
       <p>Jeśli czegoś nie da się sprawdzić z zewnątrz, raport mówi o tym wprost — zamiast
          zgadywać albo dopisywać Ci braki, których z zewnątrz nie widać.</p>
     </div>

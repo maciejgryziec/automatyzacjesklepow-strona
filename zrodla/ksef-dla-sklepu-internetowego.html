@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KSeF w sklepie internetowym — czy Twoje faktury naprawdę tam trafiają?</title>
-<meta name="description" content="Obowiązek KSeF już działa. Sprawdzam, czy faktury z Twojego sklepu i Allegro naprawdę trafiają do KSeF — i buduję most, jeśli nie trafiają.">
+<title>KSeF w sklepie internetowym — diagnostyka faktur i integracji</title>
+<meta name="description" content="Sprawdź techniczny łańcuch sklep → integracja → księgowość → KSeF. Jak wykrywać brakujące dokumenty, błędy wysyłki i problemy z kilkoma kanałami sprzedaży.">
 <link rel="canonical" href="https://automatyzacjesklepow.pl/ksef-dla-sklepu-internetowego.html">
 <link rel="stylesheet" href="styl.css?w=3">
 <link rel="icon" type="image/svg+xml" href="ikona.svg">
@@ -16,7 +16,7 @@
 
 <header class="gora">
   <div class="srodek">
-    <a class="logo" href="index.html">
+    <a class="logo" href="/">
       <svg width="30" height="25" viewBox="918 401 897 733" aria-hidden="true">
         <g stroke="var(--blekit)" stroke-width="46" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M999 482 L1124 466 L1199 621"/><path d="M1199 621 L1734 621"/>
@@ -34,8 +34,8 @@
       Automatyzacje Sklepów
     </a>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="index.html#jak">Jak pracuję</a>
+      <a href="/">Start</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
       <a href="problemy.html">Co naprawiam</a>
       <a href="cennik.html">Cennik</a>
       <a href="realizacje.html">Realizacje</a>
@@ -48,52 +48,60 @@
   <div class="srodek">
     <div class="tytul-strony wjazd">
       <p class="etykieta">Integracja</p>
-      <h1>KSeF w sklepie internetowym</h1>
-      <p class="slaby" style="font-size:1.1rem">Obowiązkowy KSeF to już rzeczywistość — dla większości firm od kwietnia 2026. Pytanie nie brzmi „czy”, tylko „czy na pewno działa”: czy każda faktura z Twojego sklepu i Allegro naprawdę tam dociera.</p>
+      <h1>KSeF w sklepie internetowym: czy faktury naprawdę dochodzą?</h1>
+      <p class="slaby" style="font-size:1.1rem">Ta strona nie jest kalendarzem wdrożenia KSeF. Jest o technice: skąd bierze się dokument, przez jakie systemy przechodzi i jak sprawdzić, czy żadna faktura nie zniknęła między sklepem, marketplace’em, księgowością i KSeF.</p>
     </div>
 
     <div class="tresc wjazd">
       <h2>W czym problem</h2>
-      <p>Od 2026 roku faktury między firmami muszą przechodzić przez KSeF — państwowy system faktur.
-         Większość programów księgowych umie je tam wysyłać. Tyle że w sklepie internetowym faktura
-         powstaje na końcu łańcucha: sklep → integracja → program księgowy → KSeF. Wystarczy,
-         że jedno ogniwo się zatnie, a faktury cicho przestają dochodzić — i nikt tego nie widzi,
-         dopóki nie upomni się urząd albo kontrahent.</p>
+      <p>Dla faktur objętych obowiązkiem KSeF sklep internetowy jest tylko początkiem łańcucha:
+         sklep → integracja → program księgowy → KSeF. Sam fakt, że program księgowy obsługuje KSeF,
+         nie oznacza jeszcze, że komplet danych ze wszystkich kanałów sprzedaży dociera do niego poprawnie.</p>
 
-      <h2>Terminy, które Cię dotyczą</h2>
-      <p><strong>Od 1 kwietnia 2026</strong> obowiązek wystawiania faktur w KSeF objął praktycznie
-         wszystkie firmy. Wyjątek jest jeden: najmniejsi sprzedawcy (do 10 tys. zł sprzedaży
-         miesięcznie) mogą jeszcze wystawiać po staremu — ale <strong>tylko do 31 grudnia 2026</strong>.
-         Od stycznia 2027 wyjątków nie ma. Jeśli Twój sklep dopiero się na to szykuje,
-         to nie jest plan na przyszły rok — to zaległość z tego roku.</p>
+      <h2>Najpierw oddziel obowiązek od diagnostyki</h2>
+      <p>Jeżeli chcesz ustalić, od kiedy konkretnie obejmuje Cię obowiązek i jakie są okresy przejściowe, przejdź do osobnego poradnika <a href="ksef-dla-jdg-terminy.html">KSeF dla JDG — terminy 2026–2027</a>. Tutaj zakładamy już, że masz dokument, który powinien zostać prawidłowo obsłużony, i sprawdzamy cały przepływ techniczny.</p>
+      <div class="zrodla-box" data-verified="2026-10-03"><strong>Źródło urzędowe zasad KSeF</strong><span class="zrodla-data">Zweryfikowano: 3 października 2026 r.</span><ul>
+        <li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/zakres-obowiazkowego-ksef/">Ministerstwo Finansów — zakres obowiązkowego KSeF</a></li>
+      </ul><p>Treść tej strony skupia się na przepływie technicznym i nie zastępuje porady podatkowej ani księgowej.</p></div>
 
       <h2>Co robię</h2>
       <p><strong>Sprawdzam cały łańcuch.</strong> Nie „czy program ma KSeF w ulotce”, tylko czy Twoje
          prawdziwe faktury z ostatnich tygodni faktycznie są w systemie.</p>
       <p><strong>Buduję brakujące ogniwo.</strong> Jeśli Twój program sam nie wysyła do KSeF albo
-         integracja gubi część faktur — stawiam most, który to domyka (pozycja „Most do księgowości”
-         w <a href="cennik.html">cenniku</a>).</p>
-      <p><strong>Pilnuję codziennie.</strong> W ramach opieki miesięcznej dostajesz jedno: pewność.
-         Jeśli któregoś dnia faktury przestaną dochodzić, dowiesz się tego samego dnia ode mnie —
-         a nie za trzy miesiące od księgowej.</p>
+         integracja gubi część faktur — buduję albo naprawiam brakujące połączenie. Zakres i cenę ustalam po sprawdzeniu używanych systemów oraz ich API.</p>
+      <p><strong>Monitoring działa cyklicznie.</strong> W ramach opieki miesięcznej dostajesz widoczność problemu zamiast odkrywać go dopiero przy rozliczeniu.
+         Jeśli monitoring wykryje, że faktury przestały dochodzić, dostajesz informację o problemie zamiast odkrywać go dopiero przy późniejszym rozliczeniu.</p>
       <h2>Ile to kosztuje</h2>
       <p>Bez zgadywania — te same kwoty co w <a href="cennik.html">cenniku</a>:</p>
-      <p><strong>Sprawdzenie łańcucha fakturowania</strong> robię w ramach przeglądu sklepu —
-         <strong>1200 zł</strong>. Dostajesz czarno na białym, czy faktury dochodzą do KSeF
+      <p><strong>Analiza łańcucha fakturowania</strong> — <strong>1 200 zł</strong>. Dostajesz czarno na białym, czy faktury dochodzą do KSeF
          i gdzie się gubią.<br>
-         <strong>Most do KSeF</strong> (gdy trzeba zbudować lub naprawić ogniwo) —
-         <strong>4500–6000 zł</strong>, jednorazowo.<br>
+         <strong>Integracja lub naprawa brakującego ogniwa</strong> — <strong>od 2 900 zł</strong>; dokładna cena zależy od API, liczby źródeł danych i obsługi wyjątków.<br>
          <strong>Codzienne pilnowanie</strong> w ramach opieki — <strong>od 349 zł/mies.</strong></p>
+    </div>
+
+    <div class="tresc wjazd">
+      <h2>Gdzie najczęściej szukać problemu?</h2>
+      <ol>
+        <li><strong>Źródło sprzedaży:</strong> czy sklep / Allegro przekazały komplet danych i jednoznaczny identyfikator zamówienia?</li>
+        <li><strong>Integracja:</strong> czy operacja zakończyła się sukcesem, trafiła do kolejki błędów albo została ponowiona?</li>
+        <li><strong>Program księgowy:</strong> czy dokument rzeczywiście powstał i ma właściwy typ, nabywcę, stawki oraz powiązanie z zamówieniem?</li>
+        <li><strong>KSeF:</strong> czy wysyłka została przyjęta i czy numer/status wróciły do programu?</li>
+        <li><strong>Obsługa wyjątku:</strong> co dzieje się z korektą, zwrotem, dokumentem zmienionym po płatności albo sprzedażą z drugiego kanału?</li>
+      </ol>
+
+      <h2>Jak wygląda dobry monitoring?</h2>
+      <p>Nie wystarczy sprawdzić, że „API odpowiada”. Monitoring powinien wiedzieć, ile dokumentów oczekiwano, ile utworzono, ile dostało poprawny status oraz które operacje wymagają reakcji. Dzięki temu brak jednej faktury nie ginie wśród setek poprawnych.</p>
+      <p>Przy większym ruchu warto rozdzielić błąd chwilowy od błędu danych. Niedostępny zewnętrzny system można ponowić; brak NIP-u, błędna stawka albo nieobsługiwany wariant zamówienia powinny trafić do jawnej kolejki wyjątków.</p>
     </div>
 
     <div class="wjazd">
       <h2>Najczęstsze pytania</h2>
       <div class="pytania">
         <details><summary>Mój program księgowy ma KSeF. To po co mi cokolwiek?</summary><p>Program może umieć wysyłać, ale pytanie brzmi, czy wysyła wszystko. Faktury z Allegro, korekty, sprzedaż z kilku kanałów — tam najczęściej coś ginie. Sprawdzenie tego jest szybkie i tanie w porównaniu z porządkowaniem zaległości.</p></details>
-        <details><summary>Sprzedaję głównie osobom prywatnym. Czy KSeF mnie dotyczy?</summary><p>Sprzedaż dla konsumentów nie idzie przez KSeF, ale faktury na firmę (a te w sklepach zdarzają się codziennie) — tak. Wystarczy jedno pole „chcę fakturę” w koszyku, żeby temat Cię dotyczył.</p></details>
+        <details><summary>Jak rozpoznać, że problem jest w integracji, a nie w KSeF?</summary><p>Najpierw sprawdź, czy dokument w ogóle powstał w programie księgowym i czy ma komplet wymaganych danych. Jeśli nie — problem jest wcześniej. Jeżeli dokument istnieje, ale wysyłka ma błąd lub brak statusu/identyfikatora, dopiero wtedy diagnozujesz etap KSeF i autoryzację.</p></details>
         <details><summary>Czy to nie jest robota mojej księgowej?</summary><p>Księgowa pracuje na tym, co do niej dopłynie. Ja pilnuję rur, którymi to płynie. To dwie różne role — i najlepiej działają razem.</p></details>
-        <details><summary>Mam mały sklep, sprzedaję za mniej niż 10 tys. zł miesięcznie. Mnie to jeszcze nie dotyczy?</summary><p>Jeszcze nie — ale tylko do 31 grudnia 2026. Od stycznia 2027 wystawiasz w KSeF jak wszyscy. Lepiej podłączyć się spokojnie jesienią, niż w grudniu stać w jednej kolejce z tysiącami spóźnionych.</p></details>
-        <details><summary>Od czego zacząć?</summary><p>Od krótkiej rozmowy albo bezpłatnego sprawdzenia sklepu. Zobaczę, jak wygląda Twój łańcuch fakturowania, i powiem, czy jest co naprawiać.</p></details>
+        <details><summary>Czy bezpłatna sprawdzarka sklepu może sprawdzić KSeF?</summary><p>Nie. Sprawdzarka widzi tylko publicznie dostępne elementy witryny. Nie ma dostępu do Twojego programu księgowego ani dokumentów w KSeF. Diagnostyka fakturowania wymaga prześledzenia rzeczywistych dokumentów i statusów w używanych systemach.</p></details>
+        <details><summary>Co przygotować do diagnozy?</summary><p>Nazwy kanałów sprzedaży i programu księgowego, kilka identyfikatorów przykładowych zamówień oraz informację, co powinno powstać na końcu. Haseł, tokenów i certyfikatów nie wysyłaj w pierwszej wiadomości.</p></details>
 
       </div>
     </div>
@@ -101,10 +109,11 @@
     <div class="tresc wjazd">
       <div class="pudlo">
         <h3>Od czego zacząć</h3>
-        <p>Najprościej od bezpłatnego sprawdzenia sklepu — zobaczysz od razu, co u Ciebie
-           wymaga uwagi. Albo po prostu napisz: <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a>.</p>
+        <p>Bezpłatna sprawdzarka analizuje tylko publicznie widoczne elementy sklepu i nie może sprawdzić,
+           czy Twoje faktury są w KSeF. Jeżeli chcesz przejrzeć łańcuch fakturowania, opisz używany sklep,
+           kanały sprzedaży i program księgowy.</p>
       </div>
-      <p><a class="przycisk" href="sprawdzarka.html">Sprawdź swój sklep za darmo
+      <p><a class="przycisk" href="opisz-projekt.html?typ=Integracja%20kilku%20programów%20%2F%20API&zrodlo=ksef">Opisz techniczny łańcuch fakturowania
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg></a></p>

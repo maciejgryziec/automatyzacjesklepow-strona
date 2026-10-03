@@ -1,0 +1,53 @@
+name: Site audit
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile build and audit scripts
+        run: python3 -m py_compile narzedzia/buduj-nowa.py narzedzia/audyt-strony.py narzedzia/audyt-tresci.py narzedzia/audyt-assets.py narzedzia/audyt-kontrast.py narzedzia/sprawdz-live.py
+
+      - name: Build static site
+        run: python3 narzedzia/buduj-nowa.py
+
+      - name: Ensure generated files are committed
+        run: |
+          if ! git diff --quiet; then
+            echo "Generated files differ from the committed repository."
+            echo "Run: python3 narzedzia/buduj-nowa.py"
+            echo "Then commit the generated HTML/CSS/JS/sitemap/feed together with source changes."
+            git diff --stat
+            git diff --exit-code
+          fi
+
+      - name: Run site audit
+        run: python3 narzedzia/audyt-strony.py
+
+      - name: Run content / cannibalization audit
+        run: python3 narzedzia/audyt-tresci.py
+
+      - name: Run asset budget
+        run: python3 narzedzia/audyt-assets.py
+
+      - name: Run contrast audit
+        run: python3 narzedzia/audyt-kontrast.py

@@ -1,12 +1,49 @@
 # -*- coding: utf-8 -*-
 # Sklada nowa wersje strony automatyzacjesklepow.pl (styl "listu" z rozdzialami-swiatami)
 # do folderu demo/strona/nowa/. Zrodlem tresci podstron sa obecne pliki produkcyjne.
-import re, os, glob, html
-REPO = "/Users/maciej/Documents/GitHub/demo/strona"
-ZR = REPO + "/zrodla"      # stare strony = zrodlo tresci podstron
-CEL = REPO                 # wynik trafia do korzenia repo (produkcja)
+import re, os, glob, html, json, subprocess, hashlib, unicodedata
+from datetime import date
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ZR = os.path.join(REPO, "zrodla")
+CEL = REPO
 PALETA = "c"               # "" = paleta bazowa z list.css; "a"/"b"/"c" = nakladka paleta-X.css
 os.makedirs(CEL, exist_ok=True)
+
+
+def data_pliku(sciezka):
+    """Data SEO zgodna przed i po commicie: dirty/untracked = dziś, czysty plik = ostatni commit."""
+    try:
+        rel=os.path.relpath(sciezka, REPO)
+        status=subprocess.check_output(
+            ["git","status","--porcelain","--",rel],
+            cwd=REPO, stderr=subprocess.DEVNULL, text=True
+        ).strip()
+        if status:
+            return date.today().isoformat()
+        out=subprocess.check_output(
+            ["git","log","-1","--format=%cs","--",rel],
+            cwd=REPO, stderr=subprocess.DEVNULL, text=True
+        ).strip()
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", out):
+            return out
+    except Exception:
+        pass
+    return date.fromtimestamp(os.path.getmtime(sciezka)).isoformat()
+
+
+def data_publikacji(sciezka):
+    """Pierwszy commit pliku; dla nowych plików używa lokalnej daty utworzenia/mtime."""
+    try:
+        rel=os.path.relpath(sciezka, REPO)
+        out=subprocess.check_output(
+            ["git","log","--follow","--format=%cs","--reverse","--",rel],
+            cwd=REPO, stderr=subprocess.DEVNULL, text=True
+        ).strip().splitlines()
+        if out and re.fullmatch(r"\d{4}-\d{2}-\d{2}", out[0]):
+            return out[0]
+    except Exception:
+        pass
+    return data_pliku(sciezka)
 
 # ---------------------------------------------------------------- CSS
 CSS = r"""
@@ -16,35 +53,56 @@ CSS = r"""
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Inter","Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto;scroll-padding-top:76px}
 body{margin:0;font:15px/1.6 var(--sans);color:var(--tekst);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:var(--link);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{color:#0a2a8c}
 p{margin:0 0 1.1em}
 strong{font-weight:650}
-h1,h2,h3{font-weight:650;letter-spacing:-.01em;margin:0 0 .8em}
+h1,h2,h3{font-weight:650;letter-spacing:-.01em;margin:0 0 .8em;text-wrap:balance}
 h1{font-size:22px;line-height:1.4;font-weight:400}
 h1 strong{font-weight:650}
 h2{font-size:20px;line-height:1.35}
 h3{font-size:16px;margin:1.8em 0 .5em}
 img{max-width:100%;height:auto}
+picture{display:block}
 .slaby{color:var(--szary)}
 
 /* naglowek */
-.gora{position:fixed;top:0;left:0;right:0;z-index:50;pointer-events:none}
-.gora .w{position:relative;height:60px}
+.gora{position:fixed;top:0;left:0;right:0;z-index:50;pointer-events:none;background:rgba(255,255,255,.86);border-bottom:1px solid rgba(22,31,55,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .25s,border-color .25s}
+.gora .w{position:relative;height:58px}
 .gora .znak{position:absolute;left:var(--lewy);top:14px;display:flex;align-items:center;gap:12px;pointer-events:auto;text-decoration:none;color:var(--tekst);font-weight:700;font-size:15px;letter-spacing:-.01em;transition:color .3s}
+body.ciemna .gora{background:rgba(14,38,86,.84);border-color:rgba(255,255,255,.12)}
 body.ciemna .gora .znak{color:#fff}
-@media (max-width:820px){.gora .znak span{display:none}}
+@media (max-width:900px){.gora .znak span{display:none}}
 .gora .znak img{width:40px;height:auto;display:block}
 .gora .znak img.b{display:none}
 body.ciemna .gora .znak img.c{display:none}
 body.ciemna .gora .znak img.b{display:block}
-.gora nav{position:absolute;right:max(24px, calc(50vw - 340px));top:8px;display:flex;gap:18px;font-size:14px;pointer-events:auto;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .3s}
-body.ciemna .gora nav{background:rgba(0,0,0,.35)}
+.gora nav{position:absolute;right:max(24px, calc(50vw - 560px));top:7px;display:flex;gap:18px;font-size:14px;pointer-events:auto;padding:7px 10px;border-radius:10px;background:transparent;transition:background .3s}
+body.ciemna .gora nav{background:transparent}
 .gora nav a{color:var(--link);text-decoration:underline;transition:color .3s}
+.gora nav a[aria-current="page"]{font-weight:750;text-decoration-thickness:2px;text-underline-offset:4px}
 body.ciemna .gora nav a{color:#fff}
-@media (max-width:820px){.gora nav{gap:12px;font-size:13px;right:20px;top:12px}.gora nav a:nth-child(3){display:none}}
+.mobile-actions{display:none}
+@media (max-width:900px){
+  .gora .znak{left:18px;top:13px}.gora .znak img{width:38px}
+  .mobile-actions{position:absolute;right:10px;top:4px;display:flex;align-items:center;gap:7px;pointer-events:auto}
+  .mobile-cta{display:inline-flex;align-items:center;height:44px;padding:0 13px;border-radius:999px;background:#1a5cf0;color:#fff!important;text-decoration:none!important;font-size:12px;font-weight:750;box-shadow:0 8px 24px -16px rgba(0,0,0,.6)}
+  body.ciemna .mobile-cta{background:#fff;color:#143a8b!important}
+  .menu-toggle{position:relative;width:44px;height:44px;border:1px solid rgba(20,30,70,.15);border-radius:999px;background:rgba(255,255,255,.86);padding:0;cursor:pointer}
+  .menu-toggle i,.menu-toggle::before,.menu-toggle::after{content:"";position:absolute;left:14px;width:14px;height:1.5px;background:#1c1c21;transition:transform .2s,top .2s,opacity .2s}
+  .menu-toggle::before{top:13px}.menu-toggle i{top:21px}.menu-toggle::after{top:29px}
+  body.ciemna .menu-toggle{background:rgba(0,0,0,.35);border-color:rgba(255,255,255,.18)}body.ciemna .menu-toggle i,body.ciemna .menu-toggle::before,body.ciemna .menu-toggle::after{background:#fff}
+  body.menu-open .menu-toggle::before{top:21px;transform:rotate(45deg)}body.menu-open .menu-toggle i{opacity:0}body.menu-open .menu-toggle::after{top:21px;transform:rotate(-45deg)}
+  .gora nav{left:auto;right:10px;top:52px;width:min(310px,calc(100vw - 20px));display:flex;flex-direction:column;align-items:stretch;gap:0;font-size:14px;padding:10px;background:#fff!important;border:1px solid rgba(20,30,70,.1);border-radius:14px;box-shadow:0 20px 50px -28px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;transition:opacity .18s,transform .18s}
+  body.ciemna .gora nav{background:#102a5e!important;border-color:rgba(255,255,255,.14)}
+  body.menu-open .gora nav{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  body.menu-open{overflow:hidden}
+  .gora nav a{display:block!important;white-space:normal;padding:10px 11px;border-radius:8px;text-decoration:none}
+  .gora nav a:hover{background:rgba(21,80,208,.08)}body.ciemna .gora nav a:hover{background:rgba(255,255,255,.08)}
+  .gora nav .nav-cta{display:none!important}
+}
 
 /* kolumny i rozdzialy */
 .tekst{position:relative;z-index:2;margin-left:var(--lewy);max-width:440px;padding-right:24px}
@@ -55,9 +113,9 @@ body.ciemna .gora nav a{color:#fff}
 .rozdzial.ciemny{color:#fff}
 .rozdzial.ciemny a{color:#fff}
 .rozdzial.ciemny h1,.rozdzial.ciemny h2{color:#fff}
-.rozdzial.ciemny .slaby{color:rgba(255,255,255,.72)}
+.rozdzial.ciemny .slaby{color:rgba(255,255,255,.84)}
 .cena{color:var(--szary)}
-.ciemny .cena{color:rgba(255,255,255,.72)}
+.ciemny .cena{color:rgba(255,255,255,.84)}
 .linki a{display:inline-block;margin-right:16px}
 [data-s]{transform:translateY(calc(var(--t) * var(--s,0px)))}
 
@@ -77,7 +135,8 @@ body.ciemna .gora nav a{color:#fff}
 .skos-oba{clip-path:polygon(0 7vw,100% 0,100% calc(100% - 7vw),0 100%);margin-top:-7vw;padding-top:7vw}
 .czolo .w{min-height:auto;padding:150px 0 110px}
 .czolo.rozdzial .w{min-height:88vh;padding:120px 0 90px}
-.czolo.pod .w{min-height:80vh;padding:150px 0 90px}
+.czolo.pod .w{min-height:68vh;padding:130px 0 90px}
+.czolo.pod.kontakt-hero .w{min-height:54vh;padding-top:120px;padding-bottom:80px}
 .pod .kasa{margin-top:70px;transform:scale(.82) translateY(calc(var(--t) * -30px));transform-origin:50% 0}
 
 /* ---- czolo: pelny ekran, laptop z mapa mostow ---- */
@@ -93,6 +152,7 @@ body.ciemna .gora nav a{color:#fff}
 .start .cta a{color:#fff;text-decoration:none;border-bottom:2px solid #ffd23f;padding-bottom:2px}
 .start .cta svg{width:34px;height:34px;flex:none;animation:machaj 1.6s ease-in-out infinite}
 @keyframes machaj{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
+.trust-row{display:flex;gap:8px;flex-wrap:wrap;margin:-18px 0 30px}.trust-row span{font-size:11.5px;line-height:1;padding:7px 9px;border:1px solid rgba(255,255,255,.22);border-radius:999px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.06)}
 .start .drobne{font-size:13px;color:rgba(255,255,255,.65)}
 .start .drobne a{color:rgba(255,255,255,.85);margin-right:14px}
 .start .obraz{left:calc(var(--lewy) + 470px);right:auto;width:min(54vw,840px,calc(100vw - var(--lewy) - 400px));pointer-events:none}
@@ -244,9 +304,9 @@ body.ciemna .gora nav a{color:#fff}
 .raport li:last-child{border:0}
 .raport span{font:650 11px var(--sans);letter-spacing:.06em;min-width:52px}
 .raport .b{color:#c23b2b}.raport .u{color:#b7791f}.raport .o{color:#158a4c}
-.ziel form{display:flex;margin:1.2em 0 .6em;max-width:420px}
+.ziel form:not(.formularz-prosty){display:flex;margin:1.2em 0 .6em;max-width:420px}
 .ziel input{flex:1;min-width:0;font:15px var(--sans);padding:11px 14px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;border-radius:0}
-.ziel input::placeholder{color:rgba(255,255,255,.5)}
+.ziel input::placeholder{color:rgba(255,255,255,.65)}
 .ziel button{font:600 15px var(--sans);padding:11px 18px;border:0;background:#fff;color:#0f3d2e;cursor:pointer}
 
 /* ---- paragon (cennik) ---- */
@@ -322,9 +382,10 @@ body.ciemna .gora nav a{color:#fff}
 .ksiega .strzalka:hover{opacity:1}
 .ksiega .strzalka.lewa{left:-80px}.ksiega .strzalka.prawa{right:-80px}
 .ksiega .strzalka svg{width:100%;height:100%;overflow:visible}
-.kropy{display:flex;justify-content:center;gap:10px;margin-top:22px}
-.kropy button{width:12px;height:12px;border-radius:50%;border:0;padding:0;cursor:pointer;background:rgba(255,255,255,.25);transition:transform .3s,background .3s}
-.kropy button.tu{background:#fff;transform:scale(1.35)}
+.kropy{display:flex;justify-content:center;gap:2px;margin-top:12px}
+.kropy button{position:relative;width:32px;height:32px;border:0;padding:0;cursor:pointer;background:transparent;border-radius:50%}
+.kropy button::before{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.25);transform:translate(-50%,-50%);transition:transform .3s,background .3s}
+.kropy button.tu::before{background:#fff;transform:translate(-50%,-50%) scale(1.35)}
 @media (max-width:1140px){.ksiega .strzalka.lewa{left:6px}.ksiega .strzalka.prawa{right:6px}}
 @media (max-width:820px){
   .karty{aspect-ratio:3/4}
@@ -332,7 +393,7 @@ body.ciemna .gora nav a{color:#fff}
   .karta .zdjecie{width:78%;right:-8%;bottom:20%}
   .karta .opis{max-width:88%;bottom:5%}
   .karta .opis span{display:none}
-  .ksiega .strzalka{width:44px;height:30px;margin-top:-15px}
+  .ksiega .strzalka{width:44px;height:44px;margin-top:-22px}
 }
 
 /* ---- ekrany ---- */
@@ -340,6 +401,9 @@ body.ciemna .gora nav a{color:#fff}
 .ekrany{position:relative;width:100%;aspect-ratio:1/0.7}
 .ekran{position:absolute;background:#fff;border:1px solid #d9dbe2;box-shadow:0 40px 60px -30px rgba(20,30,70,.4);overflow:hidden}
 .ekran img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
+.ekran .screen-bg{display:block;width:100%;height:100%;background-size:cover;background-position:top left}
+@media(min-width:821px){.ekran.b .screen-bg{background-image:url("zdjecia/wypozyczalnia-pulpit-800.webp")}}
+@media(max-width:820px){.ekran.b{display:none}}
 .ekran.a{left:6%;top:6%;width:58%;aspect-ratio:16/10;transform:translate(calc((1 - var(--w)) * -160px), calc(var(--t) * 40px)) rotate(-3deg);opacity:clamp(0, calc(var(--w) * 2.5), 1)}
 .ekran.b{left:44%;top:34%;width:50%;aspect-ratio:16/10;transform:translate(calc((1 - var(--w)) * 160px), calc(var(--t) * -40px)) rotate(2deg);opacity:clamp(0, calc(var(--w) * 2.5 - .4), 1)}
 .wpisy{list-style:none;padding:0;margin:1.2em 0 0}
@@ -348,19 +412,29 @@ body.ciemna .gora nav a{color:#fff}
 
 /* ---- koniec i stopka ---- */
 .koniec .w{min-height:auto;padding:14vh 0 6vh}
-.stopka{margin-left:var(--lewy);max-width:620px;padding:40px 24px 60px 0;color:var(--szary);font-size:13px;border-top:1px solid var(--kreska)}
+.stopka{margin:0;padding:54px max(24px,calc(50vw - 560px)) 28px;color:var(--szary);font-size:13px;border-top:1px solid var(--kreska)}
 .stopka a{color:var(--szary)}
+.stopka-grid{display:grid;grid-template-columns:1.45fr 1fr 1fr 1fr;gap:42px;max-width:1120px;margin:0 auto}
+.stopka-grid>div>strong{display:block;color:var(--tekst);font-size:14px;margin-bottom:12px}
+.stopka-grid>div:not(.stopka-brand) a{display:block;text-decoration:none;margin:7px 0;line-height:1.35}
+.stopka-grid>div:not(.stopka-brand) a:hover{text-decoration:underline}
+.stopka-brand p{margin:8px 0;max-width:300px}
+.stopka .stopka-cta{display:inline-block;background:var(--blekit);color:#fff;text-decoration:none;font-weight:700;padding:8px 12px;border-radius:999px;margin:4px 0}
+.stopka-dol{max-width:1120px;margin:38px auto 0;padding-top:18px;border-top:1px solid var(--kreska);display:flex;gap:20px;flex-wrap:wrap;color:var(--szary)}
+.stopka-dol span{margin-right:auto}
+@media(max-width:820px){.stopka{padding:38px 22px 24px}.stopka-grid{grid-template-columns:1fr 1fr;gap:28px 24px}.stopka-brand{grid-column:1/-1}.stopka-dol{margin-top:28px}}
+@media(max-width:520px){.stopka-grid{grid-template-columns:1fr}.stopka-brand{grid-column:auto}.stopka-dol{display:block}.stopka-dol>*{display:block;margin:7px 0}}
 
 /* ---- tresc podstron ---- */
 .tresc{margin-left:var(--lewy);max-width:600px;padding:60px 24px 20px 0}
 .tresc h2{margin-top:2.2em}
 .tresc h2:first-child{margin-top:0}
 .tresc h3{font-size:15px}
-.tresc p{color:#33343b}
+.tresc p{color:#33343b;text-wrap:pretty}
 .tresc ul,.tresc ol{padding-left:1.2em;color:#33343b}
 .tresc li{margin-bottom:.4em}
 .etykieta{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--szary);margin-bottom:1.4em}
-.ciemny .etykieta{color:rgba(255,255,255,.6)}
+.ciemny .etykieta{color:rgba(255,255,255,.84)}
 .pod h1{font-size:26px;line-height:1.3;font-weight:650;max-width:600px}
 .pod .wstep{font-size:17px;line-height:1.55;max-width:520px}
 .pytania details{border-top:1px solid var(--kreska);padding:.7em 0}
@@ -374,7 +448,7 @@ body.ciemna .gora nav a{color:#fff}
 .pudlo h3{margin-top:0}
 a.przycisk{display:inline-block;font-weight:600}
 a.przycisk svg{display:none}
-.przewijane{overflow-x:auto;margin:1.5em 0}
+.przewijane{max-width:100%;overflow-x:auto;margin:1.5em 0;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}.przewijane:focus-visible{outline:3px solid #ffd23f;outline-offset:3px}.przewijane table{min-width:460px}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;vertical-align:top;padding:.7em .8em .7em 0;border-bottom:1px solid var(--kreska)}
 th{font-weight:650;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--szary)}
@@ -392,7 +466,7 @@ td.kwota{white-space:nowrap;font-weight:600}
 .projekty{display:block}
 .projekt{display:block;padding:1.4em 0;border-top:1px solid var(--kreska);color:inherit;text-decoration:none}
 .projekt .rodzaj{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--szary);margin-bottom:.4em}
-.projekt h3{margin:.2em 0 .5em;font-size:17px}
+.projekt h2{margin:.2em 0 .5em;font-size:17px}
 .projekt .stan{color:var(--link);text-decoration:underline;margin:.4em 0 0}
 a.projekt:hover .stan{color:#0a2a8c}
 .uslugi,.metryka{list-style:none;padding:0;margin:1.2em 0 2em;display:flex;flex-wrap:wrap;gap:.4em 1.2em;font-size:13px;color:var(--szary)}
@@ -407,19 +481,22 @@ a.projekt:hover .stan{color:#0a2a8c}
 .kafelek .ikona{width:28px;height:28px;color:var(--blekit);display:block;margin-bottom:.5em}
 .kafelek h3{margin:0 0 .3em}
 .kafelek p{margin:0}
-.formularz-prosty{display:flex;gap:0;max-width:460px;margin:1.4em 0}
+.formularz-prosty{display:block;max-width:520px;margin:1.4em 0}.sprawdzarka-glowny{display:flex;align-items:stretch}.sprawdzarka-glowny input{margin:0;flex:1;min-width:0}.sprawdzarka-glowny button{flex:none}
 .formularz-prosty label{position:absolute;left:-9999px}
-.formularz-prosty input{flex:1;min-width:0;font:15px var(--sans);padding:11px 14px;border:1px solid #c9cbd6;border-radius:0}
-.formularz-prosty button{font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.formularz-prosty input{flex:1;min-width:0;min-height:44px;box-sizing:border-box;font:15px var(--sans);padding:11px 14px;border:1px solid #7f899f;border-radius:0}
+.formularz-prosty button{min-height:44px;font:600 15px var(--sans);padding:11px 18px;border:0;background:var(--blekit);color:#fff;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
 .czolo .formularz-prosty{max-width:520px;margin-bottom:.6em}
 .czolo .nota{font-size:14px;max-width:520px}
-.ciemny .formularz-prosty input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35);color:#fff}
+.ciemny .formularz-prosty input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.65);color:#fff}
 .ciemny .formularz-prosty button{background:#fff;color:#0f3d2e}
 .rzad-przyciskow{display:flex;flex-wrap:wrap;gap:.6em 1.4em}
 .tresc .etykieta{margin-top:2.5em}
 
+.sprawdzarka-opcje{flex-basis:100%;width:100%;margin-top:10px}.sprawdzarka-opcje summary{cursor:pointer;font-size:13px;font-weight:650;line-height:22px;padding:11px 0;color:inherit}.sprawdzarka-opcje-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}.sprawdzarka-opcje-grid label{position:static!important;font-size:12px;font-weight:650}.formularz-prosty .sprawdzarka-opcje-grid input{width:100%;border-radius:0;box-sizing:border-box}.ciemny .sprawdzarka-opcje summary{color:#fff}@media(max-width:620px){.sprawdzarka-glowny{display:flex;flex-wrap:wrap}.sprawdzarka-glowny input{flex:1 1 100%;width:100%}.sprawdzarka-glowny button{margin-top:0}}
+
 /* wjazd tekstu */
 .wjazd{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.czolo .wjazd,.start .wjazd,.tresc>.blok.wjazd{opacity:1;transform:none}
 .wjazd.widac{opacity:1;transform:none}
 
 @media (max-width:820px){
@@ -441,7 +518,120 @@ a.projekt:hover .stan{color:#0a2a8c}
   .tresc{padding:40px 22px 20px 0}
   .mapa .pod{font-size:34px}
 }
-@media (prefers-reduced-motion:reduce){.wjazd{opacity:1;transform:none;transition:none}.rozdzial{--w:1 !important;--t:0 !important}}
+
+/* ---- dostępność, nawigacja i breadcrumbs ---- */
+.skip-link{position:fixed;left:16px;top:-80px;z-index:200;background:#fff;color:#111;padding:10px 14px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.18);transition:top .15s}
+.skip-link:focus{top:12px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #1550d0}
+.gora nav .nav-cta{background:#1a5cf0;color:#fff;text-decoration:none;padding:5px 11px;border-radius:999px;font-weight:700}
+body.ciemna .gora nav .nav-cta{background:#fff;color:#143a8b}
+.okruszki{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;margin:0 0 18px;color:var(--szary)}
+.okruszki a{color:inherit;text-decoration:none}
+.okruszki a:hover{text-decoration:underline}
+.okruszki span[aria-hidden]{opacity:.55}
+.ciemny .okruszki{color:rgba(255,255,255,.84)}
+.article-meta{font-size:12.5px;color:var(--szary);margin:14px 0 0}
+.article-meta a{color:inherit}
+.ciemny .article-meta{color:rgba(255,255,255,.84)}
+
+.privacy-actions{display:flex;gap:10px;flex-wrap:wrap;margin:.9em 0}
+.privacy-actions button{min-height:44px;font:600 14px var(--sans);border:1px solid #7f899f;background:#fff;color:var(--link);padding:10px 12px;border-radius:8px;cursor:pointer}
+.privacy-actions button:hover{background:#f3f6ff}
+
+
+.case-next{margin:2rem 0;padding:18px;border:1px solid #dfe2ea;border-radius:12px;background:#f8f9fc}.case-next strong{display:block;margin-bottom:.4em}.case-next p{margin:0}
+.case-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.3rem 0 2rem}.case-facts>div{padding:13px 14px;border:1px solid var(--kreska);border-radius:10px;background:rgba(255,255,255,.55)}.case-facts small{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--szary);margin-bottom:4px}.case-facts strong{display:block;font-size:13.5px;line-height:1.4}.case-jump{display:flex;flex-wrap:wrap;gap:8px;margin:1.2rem 0 2.5rem}.case-jump a{display:inline-block;padding:7px 10px;border:1px solid var(--kreska);border-radius:999px;text-decoration:none;font-size:12.5px}.case-jump a:hover{border-color:#9fabce}
+@media(max-width:680px){.case-facts{grid-template-columns:1fr}}
+
+.kontakt-skroty{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.5rem 0 2rem}.kontakt-skroty a{display:flex;flex-direction:column;padding:14px 16px;border:1px solid #dfe2ea;border-radius:11px;background:#fff;text-decoration:none}.kontakt-skroty strong{color:var(--tekst);font-size:14px}.kontakt-skroty span{color:var(--szary);font-size:12.5px;margin-top:4px}.kontakt-skroty a:hover{border-color:#9fabce}
+@media(max-width:620px){.kontakt-skroty{grid-template-columns:1fr}}
+
+.zrodla-box{margin:2rem 0;padding:16px 18px;border:1px solid #dfe2ea;border-radius:12px;background:#f8f9fc}.zrodla-box>strong{display:block;margin-bottom:.5em}.zrodla-box ul{margin:.6em 0;padding-left:1.15em}.zrodla-box p{font-size:13px;color:var(--szary);margin:.7em 0 0}
+
+
+/* ---- progressive enhancement / brak JavaScriptu ---- */
+.no-js .brief-form,
+.no-js .roi-calc,
+.no-js .kwalifikator,
+.no-js .poradniki-filter{display:none!important}
+@media(max-width:900px){
+  .no-js .mobile-actions{display:none!important}
+  .no-js .gora nav{
+    opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+    transform:none!important;top:58px!important;background:#fff!important
+  }
+  .no-js body.ciemna .gora nav{background:#102a5e!important}
+  .no-js .gora nav .nav-cta{display:block!important}
+}
+
+/* ---- powiązane / kwalifikator / wyszukiwanie ---- */
+.porownanie-opcji{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.5rem 0 2.4rem}.porownanie-opcji>div{padding:15px;border:1px solid var(--kreska);border-radius:10px;background:#fff}.porownanie-opcji small{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:9.5px;color:var(--szary);margin-bottom:6px}.porownanie-opcji strong,.porownanie-opcji span{display:block}.porownanie-opcji strong{font-size:13.5px;line-height:1.4;margin-bottom:6px}.porownanie-opcji span{font-size:12.5px;line-height:1.45;color:var(--szary)}
+@media(max-width:680px){.porownanie-opcji{grid-template-columns:1fr}}
+.tresc h2[id]{scroll-margin-top:92px}
+.spis-tresci{margin:0 0 2.5rem;padding:16px 18px;border:1px solid var(--kreska);border-radius:11px;background:#fafbfe}.spis-tresci strong{display:block;margin-bottom:8px;font-size:13px}.spis-tresci ol{margin:0;padding-left:1.25rem;columns:2;column-gap:28px}.spis-tresci li{break-inside:avoid;margin:.28rem 0;font-size:12.5px;line-height:1.4}.spis-tresci a{text-decoration:none}.spis-tresci a:hover{text-decoration:underline}
+@media(max-width:640px){.spis-tresci ol{columns:1}}
+.autor-box{display:grid;grid-template-columns:auto 1fr;gap:16px;margin:3rem 0 1rem;padding:18px;border:1px solid var(--kreska);border-radius:12px;background:#fafafa}.autor-box p{margin:.35em 0;font-size:13.5px}.autor-znak{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#194586;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em}.artykul-body{display:block}
+.powiazane{margin:4rem 0 1.5rem;padding-top:2rem;border-top:1px solid var(--kreska)}
+.powiazane h2{margin:.15em 0 1em}.powiazane-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.powiazane-karta{display:flex;flex-direction:column;min-height:155px;padding:18px;border:1px solid #d9dce6;border-radius:12px;background:#fff;color:var(--tekst);text-decoration:none}
+.powiazane-karta:hover{border-color:#9fabce;transform:translateY(-2px)}.powiazane-karta strong{margin-bottom:8px}.powiazane-karta span{font-size:13.5px;color:var(--szary)}.powiazane-karta i{margin-top:auto;font-size:22px;color:var(--link);font-style:normal}
+.print-action{margin:-.9rem 0 2.2rem}.print-action button{min-height:44px;border:1px solid #7f899f;background:#fff;color:var(--link);font:600 13px var(--sans);padding:10px 12px;border-radius:8px;cursor:pointer}.print-action button:hover{background:#f4f7ff}
+.zrodla-box{margin:1.6rem 0;padding:15px 17px;border:1px solid #dfe2ea;border-radius:10px;background:#f8f9fc}.zrodla-box>strong{display:block}.zrodla-data{display:block;margin:.15rem 0 .6rem;font-size:11px;color:var(--szary)}.zrodla-box ul{margin:.5rem 0 .8rem;padding-left:1.2rem}.zrodla-box p:last-child{margin-bottom:0}
+.price-note{margin:0 0 2rem;padding:12px 14px;border-left:3px solid var(--blekit);background:#f7f8fb;font-size:13.5px}.price-note strong{color:var(--tekst)}
+.roi-calc{margin:1rem 0 3rem;padding:24px;border:1px solid #dfe2ea;border-radius:16px;background:#f8f9fc}.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.roi-grid label{display:block;font-weight:650;font-size:13.5px}.roi-grid label>span{display:block;margin-bottom:7px}.roi-grid label>div{display:flex;align-items:center;gap:8px}.roi-grid input{width:100%;min-width:0;min-height:44px;box-sizing:border-box;padding:10px 11px;border:1px solid #7f899f;border-radius:8px;background:#fff;font:15px var(--sans)}.roi-grid small{white-space:nowrap;color:var(--szary);font-weight:500}.roi-grid em{display:block;font-style:normal;font-weight:400;font-size:11.5px;line-height:1.4;color:var(--szary);margin-top:6px}.roi-wide{grid-column:1/-1}.roi-results{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:22px 0}.roi-results>div{padding:13px 10px;border-radius:10px;background:#fff;border:1px solid #e0e3ec}.roi-results small,.roi-results strong{display:block}.roi-results small{font-size:10.5px;line-height:1.3;color:var(--szary);min-height:28px}.roi-results strong{font-size:18px;line-height:1.25;margin-top:4px}.roi-note{font-size:12.5px;color:var(--szary);padding-top:4px}.roi-calc .przycisk{margin-top:.3rem}
+@media(max-width:760px){.roi-grid{grid-template-columns:1fr}.roi-wide{grid-column:auto}.roi-results{grid-template-columns:1fr 1fr}.roi-results>div:last-child{grid-column:1/-1}.roi-calc{padding:18px}}
+.kwalifikator{margin:2.5rem 0;padding:24px;border:1px solid #dfe2ea;border-radius:16px;background:#f8f9fc}.kwalifikator-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.kwalifikator label{font-weight:650;font-size:14px}.kwalifikator select{width:100%;min-height:44px;margin-top:7px;padding:10px;border:1px solid #7f899f;border-radius:8px;background:#fff}.kwalifikator-wynik{margin-top:18px;padding:17px;border-left:3px solid var(--blekit);background:#fff}
+.problem-start{display:grid;gap:5px;margin:0 0 2.4rem;padding:16px 18px;border-left:3px solid var(--blekit);background:#f7f9ff}.problem-start strong{font-size:14px}.problem-start span{font-size:13px;color:var(--szary)}.problem-start a{font-size:13px;font-weight:650;margin-top:3px}.ecommerce-hub{margin-top:1rem}
+.poradniki-filter{margin:1.8rem 0 2.8rem}.poradniki-filter label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.poradniki-filter input{width:100%;padding:12px 14px;border:1px solid #7f899f;border-radius:9px;background:#fff;font:15px var(--sans)}.poradniki-filter .wyniki{display:block;font-size:12.5px;color:var(--szary);margin-top:7px}.wpisy li[hidden]{display:none!important}
+@media(max-width:760px){.powiazane-grid,.kwalifikator-grid{grid-template-columns:1fr}.powiazane-karta{min-height:0}.kwalifikator{padding:18px}}
+
+/* ---- formularz briefu ---- */
+.brief-form{margin:2rem 0 3rem;padding:26px;border:1px solid #dfe2ea;background:#f8f9fc;border-radius:16px}
+.brief-form label{display:block;margin:0 0 18px}
+.brief-form label>span{display:block;font-weight:650;margin-bottom:7px;color:#252631}
+.brief-form label small{font-weight:400;color:var(--szary)}
+.brief-form input,.brief-form select,.brief-form textarea{width:100%;font:15px/1.5 var(--sans);color:var(--tekst);background:#fff;border:1px solid #7f899f;border-radius:8px;padding:11px 12px}
+.brief-form textarea{resize:vertical;min-height:90px}
+.brief-form input:focus,.brief-form select:focus,.brief-form textarea:focus{border-color:#1a5cf0}
+.brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.brief-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.brief-actions .przycisk{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border:0;border-radius:8px;font:600 14px var(--sans);cursor:pointer}
+.brief-actions .drugorzedny{background:#fff;color:#1a5cf0;border:1px solid #7f899f}
+.brief-clear{min-height:44px;border:0;background:transparent;color:var(--szary);font:13px var(--sans);text-decoration:underline;cursor:pointer;padding:10px 6px}
+.brief-info{font-size:13px;color:var(--szary);margin:15px 0 0}
+.brief-fallback{margin-top:14px;width:100%;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;background:#fff;border:1px solid #7f899f;border-radius:8px;padding:12px;white-space:pre-wrap}
+@media(max-width:680px){.brief-grid{grid-template-columns:1fr}.brief-form{padding:18px}.brief-actions{align-items:stretch}.brief-actions .przycisk{width:100%;text-align:center}}
+
+
+@media print{
+  @page{size:A4;margin:16mm}
+  html{scroll-behavior:auto}
+  body{background:#fff!important;color:#000!important;font-size:11pt;overflow:visible}
+  .gora,.stopka,.koniec,.mobile-actions,.menu-toggle,.strzalka,.kropy,.brief-actions,.poradniki-filter,.kwalifikator,.print-action,.skip-link,.okruszki,.powiazane{display:none!important}
+  .czolo,.rozdzial,.tresc,.studium{clip-path:none!important;background:#fff!important;color:#000!important;margin:0!important;overflow:visible!important}
+  .czolo .w,.rozdzial .w{min-height:0!important;padding:0 0 18mm!important;display:block!important}
+  .czolo .tekst,.tekst,.tresc{margin:0!important;max-width:none!important;padding:0!important;color:#000!important}
+  .czolo .obraz,.rozdzial .obraz{display:none!important}
+  .wjazd{opacity:1!important;transform:none!important}
+  a{color:#000!important;text-decoration:none!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+  figure,.pudlo,.case-facts,.powiazane-karta,.autor-box,table{break-inside:avoid}
+  picture,img{max-width:100%!important}
+  .powiazane-grid{grid-template-columns:1fr 1fr 1fr!important}
+  .tresc table{font-size:9pt}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important}
+  .wjazd{opacity:1!important;transform:none!important;transition:none!important}
+  .rozdzial{--w:1!important;--t:0!important}
+  .start .cta svg,.laptop,.mosty .lampka.a,.mosty .pakiet,.mosty .puls,
+  .miasto .mig,.gwiazdy.a,.gwiazdy.b{animation:none!important}
+  .laptop{transform:perspective(1800px) rotateY(-16deg) rotateX(5deg) rotate(-2deg)!important}
+  .dymek{display:none!important}
+  .karta.odchodzi,.karta.wraca{animation:none!important}
+}
 """
 
 # ---------------------------------------------------------------- JS
@@ -449,6 +639,22 @@ JS = r"""
 (function(){
   var spokoj = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var NS = "http://www.w3.org/2000/svg";
+  window.siteTrack = window.siteTrack || function(name,data){try{if(window.umami&&typeof window.umami.track==="function")window.umami.track(name,data||{});}catch(e){}};
+
+  // Umami: nie pobieraj trackera po opt-out ani poza publiczną domeną.
+  (function(){
+    try{if(localStorage.getItem("umami.disabled")==="1")return;}catch(e){}
+    var host=(location.hostname||"").toLowerCase();
+    if(host!=="automatyzacjesklepow.pl"&&host!=="www.automatyzacjesklepow.pl")return;
+    if(document.querySelector('script[data-umami-loader="1"]'))return;
+    var sc=document.createElement("script");
+    sc.async=true;
+    sc.src="https://statystyki.automatyzacjesklepow.pl/script.js";
+    sc.setAttribute("data-website-id","426e2d75-f696-4c0a-ab60-79e76cf1d73c");
+    sc.setAttribute("data-domains","automatyzacjesklepow.pl,www.automatyzacjesklepow.pl");
+    sc.setAttribute("data-umami-loader","1");
+    document.head.appendChild(sc);
+  })();
 
   // kartony: rysowane izometrycznie na regale
   document.querySelectorAll("svg.kartony").forEach(function(svg){
@@ -494,14 +700,34 @@ JS = r"""
   // ksiega realizacji: przewracanie kart
   document.querySelectorAll(".ksiega").forEach(function(ks){
     var karty = [].slice.call(ks.querySelectorAll(".karta")), kropy = [].slice.call(ks.querySelectorAll(".kropy button"));
-    var i = 0, zajety = false, n = karty.length, timer;
+    var i = 0, zajety = false, n = karty.length;
+    function zaladujKarte(karta){
+      karta.querySelectorAll("img[data-carousel-src]").forEach(function(img){
+        var srcset=img.getAttribute("data-carousel-srcset"), sizes=img.getAttribute("data-carousel-sizes"), src=img.getAttribute("data-carousel-src");
+        if(srcset)img.setAttribute("srcset",srcset);
+        if(sizes)img.setAttribute("sizes",sizes);
+        if(src)img.setAttribute("src",src);
+        img.removeAttribute("data-carousel-src");
+        img.removeAttribute("data-carousel-srcset");
+        img.removeAttribute("data-carousel-sizes");
+      });
+    }
     function ustaw(){
-      karty.forEach(function(k, j){ k.classList.toggle("aktywna", j === i); k.classList.toggle("pod-spodem", j === (i+1)%n); });
-      kropy.forEach(function(d, j){ d.classList.toggle("tu", j === i); });
+      karty.forEach(function(k, j){
+        var active=j===i;
+        if(active)zaladujKarte(k);
+        k.classList.toggle("aktywna", active); k.classList.toggle("pod-spodem", j === (i+1)%n);
+        k.setAttribute("aria-hidden", active ? "false" : "true");
+        k.setAttribute("aria-label", (j+1)+" z "+n);
+        k.setAttribute("role","group");
+        k.querySelectorAll("a,button,input,select,textarea").forEach(function(el){if(active)el.removeAttribute("tabindex");else el.setAttribute("tabindex","-1");});
+      });
+      kropy.forEach(function(d, j){ d.classList.toggle("tu", j === i); d.setAttribute("aria-current", j===i ? "true" : "false"); });
     }
     function idz(kier){
       if (zajety) return; zajety = true;
       var stara = karty[i], nowy = (i + kier + n) % n, nowa = karty[nowy];
+      zaladujKarte(nowa);
       if (spokoj){ i = nowy; ustaw(); zajety = false; return; }
       if (kier > 0){
         nowa.classList.add("pod-spodem"); karty.forEach(function(k){ if (k!==stara && k!==nowa) k.classList.remove("pod-spodem"); });
@@ -511,20 +737,16 @@ JS = r"""
         nowa.classList.add("wraca");
         setTimeout(function(){ nowa.classList.remove("wraca"); i = nowy; ustaw(); zajety = false; }, 900);
       }
-      odlicz();
     }
-    function odlicz(){ clearTimeout(timer); timer = setTimeout(function(){ idz(1); }, 5500); }
     ks.querySelector(".strzalka.prawa").addEventListener("click", function(){ idz(1); });
     ks.querySelector(".strzalka.lewa").addEventListener("click", function(){ idz(-1); });
     kropy.forEach(function(d, j){ d.addEventListener("click", function(){ if (j !== i) idz(j > i ? 1 : -1); }); });
     var x0 = null;
     ks.addEventListener("pointerdown", function(e){ x0 = e.clientX; });
     ks.addEventListener("pointerup", function(e){ if (x0 === null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) idz(dx < 0 ? 1 : -1); });
-    ks.addEventListener("mouseenter", function(){ clearTimeout(timer); });
-    ks.addEventListener("mouseleave", odlicz);
-    document.addEventListener("keydown", function(e){ var r = ks.getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) return; if (e.key === "ArrowRight") idz(1); if (e.key === "ArrowLeft") idz(-1); });
-    var widoczna = new IntersectionObserver(function(ws){ ws.forEach(function(w){ if (w.isIntersecting) odlicz(); else clearTimeout(timer); }); }, {threshold:.4});
-    widoczna.observe(ks); ustaw();
+
+    ks.addEventListener("keydown", function(e){ if (e.key === "ArrowRight"){e.preventDefault();idz(1);} if (e.key === "ArrowLeft"){e.preventDefault();idz(-1);} });
+    ustaw();
   });
 
   // kod na dokumencie ksef
@@ -545,6 +767,79 @@ JS = r"""
     wj.forEach(function(e){ob.observe(e)});
     setTimeout(function(){ wj.forEach(function(e){e.classList.add("widac")}); }, 1500);
   }
+
+  // pierwsze źródło wejścia / UTM — tylko w sessionStorage, do kontekstu leada
+  (function(){
+    try{
+      var p=new URLSearchParams(location.search), saved=JSON.parse(sessionStorage.getItem("leadSource")||"{}"), changed=false;
+      ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function(k){
+        if(p.get(k)&&!saved[k]){saved[k]=p.get(k);changed=true;}
+      });
+      if(!saved.entry){saved.entry=location.pathname;changed=true;}
+      if(!saved.referrer&&document.referrer){saved.referrer=document.referrer;changed=true;}
+      if(p.get("zrodlo")){saved.zrodlo=p.get("zrodlo");changed=true;}
+      if(changed)sessionStorage.setItem("leadSource",JSON.stringify(saved));
+    }catch(e){}
+  })();
+
+  // filtrowanie bazy wiedzy
+  document.querySelectorAll("[data-poradniki-filter]").forEach(function(input){
+    var items=[].slice.call(document.querySelectorAll(".wpisy li"));
+    var out=document.querySelector("[data-poradniki-count]"), tracked=false;
+    function norm(v){return (v||"").toLocaleLowerCase("pl").normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+    function filtruj(){var q=norm(input.value.trim()),visible=0;items.forEach(function(li){var ok=!q||norm(li.textContent).indexOf(q)>=0;li.hidden=!ok;if(ok)visible++;});if(out)out.textContent=q?("Pasujących pozycji: "+visible):("Wszystkich pozycji: "+items.length);}
+    input.addEventListener("input",function(){filtruj();if(!tracked&&input.value.trim().length>=2){tracked=true;siteTrack("poradniki-szukaj");}});filtruj();
+  });
+
+  // kwalifikator pierwszego etapu — wskazuje punkt startowy, nie wycenę całego projektu
+  document.querySelectorAll("[data-kwalifikator]").forEach(function(box){
+    var problem=box.querySelector("[name=problem]"),stan=box.querySelector("[name=stan]"),wynik=box.querySelector("[data-wynik]");
+    var map={
+      excel:["Pierwszy moduł aplikacji","od 2 900 zł","Zacząłbym od jednego procesu i wspólnej bazy zamiast przenoszenia całego Excela 1:1.","System zamiast Excela"],
+      przepisywanie:["Integracja systemów","od 2 900 zł","Najpierw sprawdziłbym API obu programów i ustalił jedno źródło prawdy dla danych.","Integracja kilku programów / API"],
+      sprzedaz:["Pierwszy moduł CRM","od 2 900 zł","Warto zacząć od klientów, szans i jednego realnego etapu sprzedaży.","CRM lub obsługa sprzedaży"],
+      wyceny:["Pierwszy moduł wycen i ofert","od 2 900 zł","Zacząłbym od jednego sposobu kalkulacji, kontroli marży i jednego szablonu oferty PDF.","System do wycen i ofert"],
+      zlecenia:["Pierwszy moduł obsługi zleceń","od 2 900 zł","Lista spraw, karta zlecenia i statusy zwykle wystarczą na pierwszy etap.","System do obsługi zleceń"],
+      rezerwacje:["Pierwszy moduł rezerwacji","od 2 900 zł","Najpierw trzeba opisać zasoby i reguły, które decydują o dostępności.","System rezerwacji"],
+      dokumenty:["Automatyzacja dokumentu","od 2 900 zł","Najlepszym wejściem jest jeden prawdziwy wzór dokumentu i źródło jego danych.","Automatyzacja dokumentów"],
+      klient:["Panel klienta / B2B","od 2 900 zł","Najpierw wybieramy jedną informację lub czynność, którą klient ma obsłużyć sam.","Panel klienta B2B"],
+      ai:["Analiza procesu + punktowe AI","od 1 200 zł za analizę","Najpierw oddzieliłbym zwykłe reguły od kroku, który naprawdę wymaga interpretacji.","Automatyzacja z AI"]
+    };
+    function render(track){var m=map[problem.value];if(!m){wynik.hidden=true;return;}if(track)siteTrack("kwalifikator-wynik",{problem:problem.value,stan:stan.value});var dopisek=stan.value==="niejasny"?" Przy niejasnym procesie rozsądniej zacząć od analizy za 1 200 zł.":"";var href="opisz-projekt.html?typ="+encodeURIComponent(m[3])+"&zrodlo=kwalifikator";wynik.innerHTML='<h3>'+m[0]+'</h3><p><strong>Punkt startowy: '+m[1]+'</strong></p><p>'+m[2]+dopisek+'</p><p class="slaby">To nie jest automatyczna wycena całego projektu — wynik wskazuje najbardziej prawdopodobny pierwszy etap na podstawie obecnego cennika.</p><a class="przycisk" data-umami-event="kwalifikator-opisz-projekt" href="'+href+'">Opisz ten projekt →</a>';wynik.hidden=false;}
+    problem.addEventListener("change",function(){render(true)});stan.addEventListener("change",function(){render(true)});render(false);
+  });
+
+  // dostępne menu mobilne
+  (function(){
+    var btn=document.querySelector(".menu-toggle"), nav=document.getElementById("nav-main"); if(!btn||!nav)return;
+    function close(){document.body.classList.remove("menu-open");btn.setAttribute("aria-expanded","false");btn.setAttribute("aria-label","Otwórz menu");}
+    btn.addEventListener("click",function(){var open=!document.body.classList.contains("menu-open");document.body.classList.toggle("menu-open",open);btn.setAttribute("aria-expanded",open?"true":"false");btn.setAttribute("aria-label",open?"Zamknij menu":"Otwórz menu");});
+    nav.addEventListener("click",function(e){if(e.target.closest("a"))close();});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.body.classList.contains("menu-open")){close();btn.focus();}});
+    addEventListener("resize",function(){if(innerWidth>900)close();});
+    document.addEventListener("click",function(e){if(document.body.classList.contains("menu-open")&&!nav.contains(e.target)&&!btn.contains(e.target))close();});
+  })();
+
+  // oglądanie case studies — tylko identyfikator sekcji, bez danych użytkownika
+  (function(){
+    if(!("IntersectionObserver" in window))return;
+    var seen={};
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&!seen[e.target.id]){seen[e.target.id]=true;siteTrack("case-study-view",{case:e.target.id});obs.unobserve(e.target);}});},{threshold:.05,rootMargin:"0px 0px -20% 0px"});
+    ["photonroof","wypozyczalnia"].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});
+  })();
+
+  // aktywna pozycja głównej nawigacji
+  (function(){
+    var current = location.pathname.split("/").pop() || "index.html";
+    var group = document.body.getAttribute("data-nav-active") || "";
+    document.querySelectorAll(".gora nav a[href]").forEach(function(a){
+      var raw = a.getAttribute("href");
+      if (!raw || raw.indexOf(":") >= 0 || raw.charAt(0) === "#") return;
+      var target = raw.split("#")[0].split("?")[0] || "index.html";
+      if (target === current || target === group) a.setAttribute("aria-current","page");
+      else a.removeAttribute("aria-current");
+    });
+  })();
 
   // ciemny naglowek nad ciemnymi rozdzialami
   var ciemne = [].slice.call(document.querySelectorAll("[data-ciemna]"));
@@ -587,6 +882,175 @@ JS = r"""
   addEventListener("scroll", zaplanuj, {passive:true});
   addEventListener("resize", zaplanuj);
   zaplanuj();
+
+  // page-specific: kalkulator kosztu ręcznej pracy
+  (function(){
+    var box=document.querySelector("[data-roi-calc]"); if(!box)return;
+    var tracked=false;
+    var fmt0=new Intl.NumberFormat("pl-PL",{maximumFractionDigits:0});
+    var fmt1=new Intl.NumberFormat("pl-PL",{maximumFractionDigits:1});
+    var money=new Intl.NumberFormat("pl-PL",{style:"currency",currency:"PLN",maximumFractionDigits:0});
+    function val(n){var x=parseFloat(box.querySelector("[name="+n+"]").value);return Number.isFinite(x)&&x>=0?x:0;}
+    function render(){
+      var minutes=val("minuty"),times=val("razy"),people=val("osoby"),days=val("dni"),rate=val("stawka");
+      var ops=times*people*days,hours=ops*minutes/60,cost=hours*rate;
+      box.querySelector("[data-r=operacje]").textContent=fmt0.format(ops);
+      box.querySelector("[data-r=godziny]").textContent=fmt1.format(hours)+" h";
+      box.querySelector("[data-r=koszt]").textContent=money.format(cost);
+      box.querySelector("[data-r=rok-h]").textContent=fmt0.format(hours*12)+" h";
+      box.querySelector("[data-r=rok-koszt]").textContent=money.format(cost*12);
+    }
+    box.addEventListener("input",function(){
+      render();
+      if(!tracked){tracked=true;siteTrack("kalkulator-kosztu-pracy-uzyty");}
+    });
+    render();
+  })();
+
+  // page-specific: formularz briefu
+  (function(){
+    var form=document.getElementById("brief-form"); if(!form)return;
+    var copy=document.getElementById("kopiuj-brief"),
+        download=document.getElementById("pobierz-brief"),
+        clear=document.getElementById("wyczysc-brief"),
+        info=document.getElementById("brief-info"),
+        fallback=document.getElementById("brief-fallback");
+    function value(fd,n){return (fd.get(n)||"").toString().trim();}
+    var briefStarted=false,saveTimer;
+
+    function saveDraft(){
+      try{
+        var obj={};
+        new FormData(form).forEach(function(v,k){obj[k]=v;});
+        sessionStorage.setItem("briefDraft",JSON.stringify(obj));
+      }catch(e){}
+    }
+
+    try{
+      var draft=JSON.parse(sessionStorage.getItem("briefDraft")||"{}");
+      Object.keys(draft).forEach(function(k){
+        var el=form.elements[k];
+        if(el&&draft[k]!=null)el.value=draft[k];
+      });
+    }catch(e){}
+
+    form.addEventListener("input",function(){
+      if(!briefStarted){briefStarted=true;siteTrack("brief-start");}
+      clearTimeout(saveTimer);
+      saveTimer=setTimeout(saveDraft,180);
+    },{passive:true});
+    form.addEventListener("change",saveDraft,{passive:true});
+
+    var params=new URLSearchParams(location.search);
+    var typParam=params.get("typ");
+    if(typParam){
+      var select=form.querySelector("[name=typ]");
+      var match=[].slice.call(select.options).find(function(o){return o.text===typParam;});
+      if(match)select.value=match.value;
+    }
+
+    function showFallback(message){
+      fallback.value=message;
+      fallback.hidden=false;
+      fallback.focus();
+      fallback.select();
+      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@automatyzacjesklepow.pl.";
+    }
+
+    function brief(){
+      var fd=new FormData(form),ref=document.referrer||location.href,source="";
+      try{
+        var saved=JSON.parse(sessionStorage.getItem("leadSource")||"{}");
+        source=Object.keys(saved).map(function(k){return k+"="+saved[k];}).join(" | ");
+      }catch(e){}
+      return [
+        "Dzień dobry","","chcę porozmawiać o projekcie dla firmy.","",
+        "Imię i nazwisko: "+value(fd,"imie"),
+        "Firma: "+(value(fd,"firma")||"—"),
+        "E-mail: "+value(fd,"email"),
+        "Telefon: "+(value(fd,"telefon")||"—"),
+        "Typ projektu: "+value(fd,"typ"),"",
+        "JAK WYGLĄDA TO DZISIAJ","----------------------",value(fd,"dzis"),"",
+        "NAJWIĘKSZY PROBLEM","-----------------",value(fd,"problem"),"",
+        "Obecne narzędzia: "+(value(fd,"narzedzia")||"—"),
+        "Liczba użytkowników: "+value(fd,"uzytkownicy"),
+        "Orientacyjny budżet: "+(value(fd,"budzet")||"—"),"",
+        "EFEKT PIERWSZEGO ETAPU","----------------------",value(fd,"efekt")||"—","",
+        "Strona, z której trafiłem do formularza: "+ref,
+        "Źródło / kampania: "+(source||"—")
+      ].join("\n");
+    }
+
+    form.addEventListener("submit",async function(e){
+      e.preventDefault();
+      if(!form.reportValidity())return;
+      var fd=new FormData(form);
+      var subject="Zapytanie o projekt — "+(fd.get("typ")||"aplikacja dla firmy");
+      var message=brief();
+      var copied=false;
+      try{await navigator.clipboard.writeText(message);copied=true;}catch(err){}
+      var mailBody=message;
+      if(message.length>3500&&copied){
+        mailBody="Dzień dobry,\n\nprzygotowałem pełny brief projektu w formularzu na stronie. Został skopiowany do schowka — wkleję go poniżej tej wiadomości.\n\nPozdrawiam";
+        info.textContent="Pełny brief został skopiowany. Po otwarciu wiadomości wklej go pod przygotowanym tekstem.";
+      }else if(message.length>3500&&!copied){
+        showFallback(message);return;
+      }else{
+        info.textContent=copied?"Brief został też skopiowany do schowka jako kopia zapasowa.":"Otwieram program pocztowy z przygotowanym briefem.";
+      }
+      siteTrack("brief-mailto-ready",{typ:value(fd,"typ")});
+      location.href="mailto:kontakt@automatyzacjesklepow.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
+    });
+
+    if(copy)copy.addEventListener("click",async function(){
+      if(!form.reportValidity())return;
+      var message=brief();
+      try{
+        await navigator.clipboard.writeText(message);
+        fallback.hidden=true;
+        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@automatyzacjesklepow.pl.";
+      }catch(e){showFallback(message);}
+    });
+
+    if(download)download.addEventListener("click",function(){
+      if(!form.reportValidity())return;
+      var blob=new Blob([brief()],{type:"text/plain;charset=utf-8"}),
+          url=URL.createObjectURL(blob),
+          a=document.createElement("a");
+      a.href=url;
+      a.download="brief-projektu.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+      info.textContent="Brief zapisany jako plik TXT.";
+    });
+
+    if(clear)clear.addEventListener("click",function(){
+      if(!confirm("Wyczyścić cały szkic briefu zapisany w tej karcie?"))return;
+      form.reset();
+      fallback.hidden=true;
+      sessionStorage.removeItem("briefDraft");
+      info.textContent="Szkic wyczyszczony. Formularz nadal niczego nie wysyła na serwer.";
+      form.querySelector("[name=imie]").focus();
+    });
+  })();
+
+  // page-specific: ustawienia prywatności Umami
+  (function(){
+    var status=document.getElementById("umami-status"); if(!status)return;
+    var off=document.getElementById("umami-off"),on=document.getElementById("umami-on");
+    function disabled(){return localStorage.getItem("umami.disabled")==="1";}
+    function render(){status.textContent=disabled()?"Statystyki są wyłączone w tej przeglądarce.":"Statystyki są włączone w tej przeglądarce.";}
+    if(off)off.addEventListener("click",function(){localStorage.setItem("umami.disabled","1");location.reload();});
+    if(on)on.addEventListener("click",function(){localStorage.removeItem("umami.disabled");location.reload();});
+    render();
+  })();
+
+  // druk / zapis cennika jako PDF
+  document.querySelectorAll("[data-print-cennik]").forEach(function(btn){
+    btn.addEventListener("click",function(){window.print();});
+  });
 })();
 """
 
@@ -665,6 +1129,12 @@ def schody(nazwy=("sklep","magazyn","faktura","księgowość","e-mail"), czasy=(
     s += f'<g style="--s:6px"><path class="tor" d="{d}"/><path class="grot" d="M622 80 L638 58 L654 80" fill="none" stroke="#f08a3c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></svg>'
     return s
 
+def schody_firma():
+    return schody(
+        ("zapytanie","CRM","realizacja","dokument","klient"),
+        ("nowe","kwalifikacja","w toku","gotowy","powiadomiony")
+    )
+
 POZYCJE = [("Kurtka przeciwdeszczowa Nordal, r. M","1","329,00","329,00"),("Sweter wełniany Bergen, r. L","1","249,00","249,00"),("Koszula lniana Lund, biała","2","139,00","278,00"),("Skarpety merino, 3 pary","1","69,00","69,00")]
 def tabela_pozycji(z_o=False):
     t = '<table><tr><th>Nazwa</th><th class="l">Ilość</th><th class="l">Cena</th><th class="l">Wartość</th></tr>'
@@ -718,10 +1188,10 @@ def noc():
       f'<svg class="miasto" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true"><g data-s style="--s:10px">{r}{okna}</g><rect x="0" y="418" width="1440" height="2" fill="#081538"/></svg>')
 
 def droga():
-    kroki = [(90,430,"01","Przegląd sklepu","mapa, którędy płyną dane","1 200 zł · 3–5 dni",".05"),
-             (300,330,"02","Integracja","jeden most, z testami","od 2 900 zł · 10 dni",".25"),
-             (510,230,"03","System na zamówienie","gdy nie ma nic z półki","wycena po rozmowie",".45"),
-             (700,120,"04","Opieka miesięczna","codzienne sprawdzanie","od 349 zł / mies.",".65")]
+    kroki = [(90,430,"01","Analiza procesu","mapa pracy i plan rozwiązania","1 200 zł · 3–5 dni",".05"),
+             (300,330,"02","Pierwszy moduł","działający etap aplikacji","od 2 900 zł",".25"),
+             (510,230,"03","System na zamówienie","kolejne moduły i integracje","wycena etapami",".45"),
+             (700,120,"04","Opieka miesięczna","monitoring i rozwój","od 349 zł / mies.",".65")]
     s = '<svg class="droga" viewBox="0 0 920 520" aria-hidden="true">'
     d = "M40 470 C120 470 60 330 300 330 C520 330 420 230 510 230 C640 230 600 120 700 120 L760 120"
     s += f'<path class="trasa" d="{d}"/><path class="trasa jazda" d="{d}"/>'
@@ -736,142 +1206,526 @@ def raport():
       + ''.join(f'<li style="--o:{j*.07:.2f}"><span class="{k}">{ {"b":"BŁĄD","u":"UWAGA","o":"OK"}[k] }</span> {t}</li>' for j,(k,t) in enumerate(w)) + '</ul></div>')
 
 def paragon():
-    poz = [("01 Przegląd sklepu","1 200 zł"),("   3–5 dni, mapa danych i lista napraw",None),("02 Integracja","od 2 900 zł"),("   10 dni roboczych, jeden most",None),("02+ Most do księgowości","4 500–6 000 zł"),("   sklep + Allegro → faktury, KSeF",None),("03 System na zamówienie","wycena"),("   po rozmowie",None),("04 Opieka miesięczna",""),("   podstawowa","349 zł"),("   rozszerzona","599 zł"),("   pełna","899 zł")]
+    poz = [("01 Analiza procesu","1 200 zł"),("   3–5 dni, mapa pracy i plan programu",None),("02 Pierwszy moduł","od 2 900 zł"),("   działający etap aplikacji",None),("02+ Integracja systemów","od 2 900 zł"),("   CRM / sklep / kalendarz → dokumenty",None),("03 System na zamówienie","wycena"),("   kolejne moduły etapami",None),("04 Opieka miesięczna",""),("   podstawowa","349 zł"),("   rozszerzona","599 zł"),("   pełna","899 zł")]
     w = ''
     for a,b in poz:
         if a.startswith("   "): w += f'<div class="poz sz"><span>{a.strip()}</span><span>{b or ""}</span></div>'
         else: w += f'<div class="poz"><b>{a}</b><span>{b}</span></div>'
     return ('<div class="kasa"><div class="drukarka"><i></i></div><div class="paragon"><div class="wys">'
-      '<div class="naglowek">AUTOMATYZACJE SKLEPÓW</div><div class="drobne">Maciej Gryziec · cała Polska, zdalnie</div><div class="drobne">' + "wydruk: przed rozmową, nie po" + '</div><hr>'
-      + w + '<hr><div class="razem"><span>RAZEM</span><span>tyle, ile ustalimy</span></div><div class="poz sz"><span>ceny netto, nie rosną w trakcie pracy</span></div><div class="poz sz"><span>bez rozliczania godzin</span></div><hr>'
+      '<div class="naglowek">AUTOMATYZACJE DLA FIRM</div><div class="drobne">Maciej Gryziec · aplikacje i systemy na zamówienie</div><div class="drobne">' + "zakres i cena ustalone przed startem" + '</div><hr>'
+      + w + '<hr><div class="razem"><span>RAZEM</span><span>tyle, ile ustalimy</span></div><div class="poz sz"><span>cena uzgodnionego zakresu jest stała</span></div><div class="poz sz"><span>nowy zakres = osobny etap</span></div><hr>'
       '<div class="drobne">Dziękujemy. Każdy krok można kupić osobno.</div><div class="kod"></div><p>5 902 2026 0907 4</p></div></div></div>')
 
 def ksiega():
     spr = ('<div class="spr"><div class="gora-p">sprawdzarka · mojsklep.pl <small>312 podstron, 41 s</small></div><div class="wynik"><b>62</b><span>punkty na 100<br>3 błędy, 2 ostrzeżenia, 9 sprawdzeń OK</span></div><div class="pasek-w"><i></i></div><ul>'
            '<li><span class="b">BŁĄD</span> 98 adresów z mapy strony zwraca 404</li><li><span class="b">BŁĄD</span> 12 promocji bez najniższej ceny z 30 dni (Omnibus)</li><li><span class="b">BŁĄD</span> brak danych producenta przy 27 produktach (GPSR)</li><li><span class="u">UWAGA</span> 41 produktów bez numeru EAN</li><li><span class="u">UWAGA</span> cena w Ceneo różni się w 6 ofertach</li><li><span class="o">OK</span> certyfikat SSL ważny 214 dni</li><li><span class="o">OK</span> regulamin i polityka zwrotów dostępne</li></ul></div>')
-    mosty = [("Shoper → wFirma","faktury · 12:04",False,[6,7,5,8,7,9,8]),("Allegro → magazyn","stany · co 5 min",False,[8,8,7,9,8,8,9]),("wFirma → KSeF","UPO · 12:04",False,[5,6,6,7,8,8,9]),("Hurtownia → sklep","ceny · opóźnienie 14 min",True,[7,7,3,2,4,6,7]),("BaseLinker → Allegro","zamówienia · 12:03",False,[9,8,9,9,8,9,9]),("Sklep → klient","e-mail · 12:04",False,[8,9,8,8,9,9,8])]
+    mosty = [("Formularz → CRM","nowa sprawa · 12:04",False,[6,7,5,8,7,9,8]),("Kalendarz → realizacja","termin · 12:04",False,[8,8,7,9,8,8,9]),("wFirma → KSeF","UPO · 12:04",False,[5,6,6,7,8,8,9]),("CRM → faktury","dokument · 12:04",True,[7,7,3,2,4,6,7]),("Faktury → KSeF","UPO · 12:04",False,[9,8,9,9,8,9,9]),("CRM → klient","e-mail · 12:04",False,[8,9,8,8,9,9,8])]
     kaf = ''.join(f'<div class="kafel{" uwaga" if u else ""}"><b>{n}</b><span>{o}</span><i>' + ''.join(f'<em style="height:{h*10}%"></em>' for h in sl) + '</i></div>' for n,o,u,sl in mosty)
     panel = f'<div class="panel"><div class="gora-p">Strażnik połączeń <small>wtorek 8.09 · sprawdzono 06:00</small></div><div class="kafle">{kaf}</div><div class="dol"><div><b>12</b>mostów</div><div><b>1</b>ostrzeżenie</div><div><b>0</b>awarii</div><div><b>14 dni</b>od ostatniej naprawy</div></div></div>'
-    karty = [("#5b6cff","Konfigurator","Photonroof",'<img src="zdjecia/photonroof-wymiary.jpg" alt="">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
-             ("#e6982f","Panel firmy","<span style=\"font-size:.72em\">Wypożyczalnia</span>",'<img src="zdjecia/wypozyczalnia-flota.png" alt="">',"Panel wypożyczalni samochodowej","Flota, najmy, faktury i kalendarz, który sam wykrywa podwójną rezerwację. <span>Przykład systemu szytego pod jedną branżę.</span>","realizacje.html#wypozyczalnia"),
+    karty = [("#5b6cff","Konfigurator","Photonroof",'<img src="zdjecia/photonroof-wymiary.jpg" alt="" fetchpriority="high" decoding="async">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
+             ("#e6982f","Panel firmy","<span style=\"font-size:.72em\">Wypożyczalnia</span>",'<img data-carousel-src="zdjecia/wypozyczalnia-flota-800.webp" data-carousel-srcset="zdjecia/wypozyczalnia-flota-800.webp 800w, zdjecia/wypozyczalnia-flota.webp 1440w" data-carousel-sizes="(max-width: 820px) calc(100vw - 44px), 720px" alt="" width="1440" height="900" fetchpriority="low" decoding="async">',"Panel wypożyczalni samochodowej","Flota, najmy, faktury i kalendarz, który sam wykrywa podwójną rezerwację. <span>Przykład systemu szytego pod jedną branżę.</span>","realizacje.html#wypozyczalnia"),
              ("#2f9e88","Narzędzie","Sprawdzarka",spr,"Sprawdzarka sklepu","Wpisujesz adres, dostajesz listę tego, co widać z zewnątrz: GPSR, Omnibus, EAN, mapa strony. <span>Bezpłatnie, działa dziś.</span>","sprawdzarka.html"),
-             ("#c8473f","Abonament","Strażnik",panel,"Strażnik połączeń","Codziennie o 6:00 sprawdza, czy mosty żyją: zamówienia, stany, faktury do KSeF. <span>O awarii wiesz ode mnie, nie od klienta.</span>","cennik.html#straznik")]
+             ("#c8473f","Abonament","Strażnik",panel,"Strażnik połączeń","Codziennie sprawdza, czy formularze, CRM, kalendarz, dokumenty i integracje nadal wymieniają dane. <span>Problem wychodzi w monitoringu, nie dopiero przy kliencie.</span>","cennik.html#straznik")]
     k = ''
     for i,(kol,nad,duze,obr,tyt,op,link) in enumerate(karty):
         zd = f'<div class="zdjecie">{obr}</div>' if i < 2 else (f'<div class="zdjecie panelowe jasne">{obr}</div>' if i == 2 else f'<div class="zdjecie panelowe">{obr}</div>')
-        k += f'<article class="karta{" aktywna" if i==0 else (" pod-spodem" if i==1 else "")}" style="background:{kol}"><div class="duze"><small>{nad}</small>{duze}</div>{zd}<div class="opis"><b>{tyt}</b>{op}<br><a href="{link}">Zobacz więcej</a></div></article>'
+        k += f'<article class="karta{" aktywna" if i==0 else (" pod-spodem" if i==1 else "")}" style="background:{kol}"><div class="duze"><small>{nad}</small>{duze}</div>{zd}<div class="opis"><b>{tyt}</b>{op}<br><a href="{link}" aria-label="Zobacz więcej: {html.escape(tyt)}">Zobacz więcej</a></div></article>'
     strz = lambda kl, d: f'<button class="strzalka {kl}" type="button" aria-label="{ "Poprzednia" if kl=="lewa" else "Następna"} karta"><svg viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="{d}"/></svg></button>'
-    return ('<div class="ksiega"><div class="karty">' + k + '</div>' + strz("lewa","M60 22 C40 10 24 12 6 22 M16 12 L6 22 L16 32") + strz("prawa","M4 22 C24 10 40 12 58 22 M48 12 L58 22 L48 32") + '<div class="kropy">' + ''.join(f'<button type="button" class="{"tu" if i==0 else ""}" aria-label="Karta {i+1}"></button>' for i in range(4)) + '</div></div>')
+    return ('<div class="ksiega" role="region" tabindex="0" aria-label="Realizacje — użyj strzałek w lewo i w prawo" aria-roledescription="karuzela"><div class="karty">' + k + '</div>' + strz("lewa","M60 22 C40 10 24 12 6 22 M16 12 L6 22 L16 32") + strz("prawa","M4 22 C24 10 40 12 58 22 M48 12 L58 22 L48 32") + '<div class="kropy">' + ''.join(f'<button type="button" class="{"tu" if i==0 else ""}" aria-label="Karta {i+1}"></button>' for i in range(4)) + '</div></div>')
 
 def ekrany():
-    return '<div class="ekrany"><div class="ekran a"><img src="zdjecia/photonroof-kreator3d.jpg" alt=""></div><div class="ekran b"><img src="zdjecia/wypozyczalnia-pulpit.png" alt=""></div></div>'
+    return '<div class="ekrany"><div class="ekran a"><img src="zdjecia/photonroof-kreator3d.jpg" alt="" fetchpriority="high" decoding="async"></div><div class="ekran b" aria-hidden="true"><span class="screen-bg"></span></div></div>'
+
+ASSET_VERSION = hashlib.sha256((CSS + "\n" + JS).encode("utf-8")).hexdigest()[:10]
 
 # ---------------------------------------------------------------- szkielet
-NAV = '<a href="sprawdzarka.html">Sprawdzarka</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a>'
-def glowa(tytul, opis, kanon):
+NAV = '<a href="dedykowane-oprogramowanie-dla-firm.html">Dla firm</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a href="sprawdzarka.html">Dla sklepów</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz projekt</a>'
+ARTYKULY = {
+  "system-zamiast-excela", "gotowy-system-czy-dedykowane-oprogramowanie",
+  "ile-kosztuje-aplikacja-dla-firmy", "jak-przygotowac-brief-aplikacji",
+  "ai-w-automatyzacji-firmy", "wtyczka-czy-integracja", "ksef-dla-jdg-terminy",
+}
+ECOMMERCE = {
+  "sprawdzarka", "automatyczne-faktury-allegro", "automatyzacja-allegro",
+  "integracja-allegro-z-woocommerce", "integracja-baselinker",
+  "integracja-sklepu-z-fakturownia", "integracja-sklepu-z-hurtownia",
+  "integracja-sklepu-z-ksiegowoscia", "integracja-sklepu-z-wfirma",
+  "integracje-idosell", "integracje-shoper", "ksef-dla-sklepu-internetowego",
+}
+USLUGI = {
+  "dedykowane-oprogramowanie-dla-firm", "aplikacje-webowe-dla-firm",
+  "automatyzacja-dokumentow-w-firmie", "automatyzacja-procesow-w-firmie",
+  "crm-na-zamowienie", "system-do-wycen-i-ofert", "integracje-api-dla-firm", "kalkulator-konfigurator-dla-klientow",
+  "panel-klienta-b2b", "program-dla-wypozyczalni", "system-dla-firmy-uslugowej",
+  "system-dla-produkcji-na-zamowienie", "system-dla-serwisu-technicznego",
+  "system-do-obslugi-zlecen", "system-rezerwacji-dla-firm", "jak-pracuje",
+}
+
+POWIAZANE = {
+  "dedykowane-oprogramowanie-dla-firm": [
+    ("Jak pracuję", "jak-pracuje.html", "Zobacz, jak dzielę projekt na małe, działające etapy."),
+    ("Ile kosztuje aplikacja?", "ile-kosztuje-aplikacja-dla-firmy.html", "Co tworzy budżet i od czego sensownie zacząć."),
+    ("Opisz projekt", "opisz-projekt.html", "Ułóż proces w krótki brief bez technicznej specyfikacji."),
+  ],
+  "crm-na-zamowienie": [
+    ("System do wycen i ofert", "system-do-wycen-i-ofert.html", "Kalkulacja, marża, rabaty i PDF jako kolejny krok procesu sprzedaży."),
+    ("System do obsługi zleceń", "system-do-obslugi-zlecen.html", "Co dzieje się ze sprawą po wygranej sprzedaży."),
+    ("Opisz proces sprzedaży", "opisz-projekt.html?typ=CRM%20lub%20obsługa%20sprzedaży", "Przejdź od obecnego procesu do pierwszego modułu."),
+  ],
+  "system-do-obslugi-zlecen": [
+    ("Automatyzacja dokumentów", "automatyzacja-dokumentow-w-firmie.html", "Protokoły, potwierdzenia i PDF z danych zlecenia."),
+    ("Panel klienta B2B", "panel-klienta-b2b.html", "Udostępnij klientowi status i dokumenty bez telefonów."),
+    ("Opisz jedno zlecenie", "opisz-projekt.html?typ=System%20do%20obsługi%20zleceń", "Pokaż drogę sprawy od zapytania do zakończenia."),
+  ],
+  "system-zamiast-excela": [
+    ("Gotowy czy dedykowany?", "gotowy-system-czy-dedykowane-oprogramowanie.html", "Sprawdź, czy na pewno potrzebujesz własnego systemu."),
+    ("Aplikacje webowe", "aplikacje-webowe-dla-firm.html", "Jak wygląda wspólna aplikacja zamiast wielu arkuszy."),
+    ("Pokaż obecny proces", "opisz-projekt.html?typ=System%20zamiast%20Excela", "Opisz, co dziś robicie w Excelu."),
+  ],
+  "integracje-api-dla-firm": [
+    ("Automatyzacja procesów", "automatyzacja-procesow-w-firmie.html", "Połącz integracje z regułami całego procesu."),
+    ("Monitoring i opieka", "cennik.html#straznik", "Co dzieje się, gdy zewnętrzne API przestanie działać."),
+    ("Podaj dwa systemy", "opisz-projekt.html?typ=Integracja%20kilku%20programów%20%2F%20API", "Zacznij od źródła danych i miejsca docelowego."),
+  ],
+  "automatyzacja-procesow-w-firmie": [
+    ("Policz koszt ręcznej pracy", "kalkulator-kosztu-recznej-pracy.html", "Zobacz, ile godzin miesięcznie pochłania powtarzalna czynność."),
+    ("Integracje API", "integracje-api-dla-firm.html", "Usuń ręczne przenoszenie danych między programami."),
+    ("Opisz powtarzalną czynność", "opisz-projekt.html", "Wskaż krok, który zespół wykonuje codziennie."),
+  ],
+  "aplikacje-webowe-dla-firm": [
+    ("Panel klienta B2B", "panel-klienta-b2b.html", "Przykład aplikacji dostępnej dla klientów po logowaniu."),
+    ("System rezerwacji", "system-rezerwacji-dla-firm.html", "Przykład aplikacji z kalendarzem i zasobami."),
+    ("Jak pracuję", "jak-pracuje.html", "Od pierwszego modułu do stabilnej aplikacji."),
+  ],
+  "panel-klienta-b2b": [
+    ("Integracje API", "integracje-api-dla-firm.html", "Panel powinien korzystać z tych samych danych co firma."),
+    ("Automatyzacja dokumentów", "automatyzacja-dokumentow-w-firmie.html", "Dokumenty klienta generowane z procesu."),
+    ("Opisz obsługę klienta", "opisz-projekt.html?typ=Panel%20klienta%20B2B", "Wskaż pytania, które dziś obsługa odpowiada ręcznie."),
+  ],
+  "system-rezerwacji-dla-firm": [
+    ("Program dla wypożyczalni", "program-dla-wypozyczalni.html", "Rezerwacja zasobu w praktycznym przykładzie."),
+    ("Integracje API", "integracje-api-dla-firm.html", "Kalendarz, płatność i CRM jako jeden proces."),
+    ("Opisz reguły rezerwacji", "opisz-projekt.html?typ=System%20rezerwacji", "Co poza terminem decyduje o dostępności?"),
+  ],
+  "kalkulator-konfigurator-dla-klientow": [
+    ("Realizacja Photonroof", "realizacje.html#photonroof", "Zobacz konfigurator oparty na parametrach klienta."),
+    ("System do wycen i ofert", "system-do-wycen-i-ofert.html", "Połącz dane klienta z wewnętrzną kalkulacją handlową i ofertą PDF."),
+    ("Opisz logikę wyceny", "opisz-projekt.html?typ=Kalkulator%20lub%20konfigurator%20dla%20klientów", "Pokaż, co handlowiec dziś liczy ręcznie."),
+  ],
+  "automatyzacja-dokumentow-w-firmie": [
+    ("System zleceń", "system-do-obslugi-zlecen.html", "Dokument jako kolejny krok realizacji."),
+    ("System do wycen i ofert", "system-do-wycen-i-ofert.html", "Oferta PDF generowana z policzonej i zatwierdzonej wyceny."),
+    ("Podeślij wzór dokumentu", "opisz-projekt.html?typ=Automatyzacja%20dokumentów", "Zacznij od dokumentu, który dziś powstaje ręcznie."),
+  ],
+  "ai-w-automatyzacji-firmy": [
+    ("Automatyzacja procesów", "automatyzacja-procesow-w-firmie.html", "Najpierw uporządkuj przepływ, potem dodaj AI tam, gdzie trzeba."),
+    ("Integracje API", "integracje-api-dla-firm.html", "AI jako jeden krok większego systemu."),
+    ("Opisz zadanie dla AI", "opisz-projekt.html?typ=Automatyzacja%20z%20AI", "Pokaż, co dziś wymaga czytania lub interpretacji."),
+  ],
+  "program-dla-wypozyczalni": [
+    ("Realizacja wypożyczalni", "realizacje.html#wypozyczalnia", "Zobacz kalendarz, flotę i faktury na ekranach."),
+    ("System rezerwacji", "system-rezerwacji-dla-firm.html", "Logika dostępności i blokowania kolizji."),
+    ("Opisz swoją flotę lub sprzęt", "opisz-projekt.html", "Jak dziś pilnujesz dostępności, dokumentów i zwrotów?"),
+  ],
+  "system-dla-firmy-uslugowej": [
+    ("Obsługa zleceń", "system-do-obslugi-zlecen.html", "Rdzeń większości procesów usługowych."),
+    ("System rezerwacji", "system-rezerwacji-dla-firm.html", "Jeśli klient wybiera termin lub zasób."),
+    ("Opisz jedną usługę", "opisz-projekt.html", "Od zapytania klienta do rozliczenia."),
+  ],
+  "system-dla-serwisu-technicznego": [
+    ("Obsługa zleceń", "system-do-obslugi-zlecen.html", "Status, technik, termin i historia sprawy."),
+    ("Automatyzacja dokumentów", "automatyzacja-dokumentow-w-firmie.html", "Protokół serwisowy z danych i zdjęć."),
+    ("Opisz zgłoszenie", "opisz-projekt.html", "Pokaż drogę od awarii do zamknięcia naprawy."),
+  ],
+  "system-dla-produkcji-na-zamowienie": [
+    ("System do wycen i ofert", "system-do-wycen-i-ofert.html", "Połącz kalkulację handlową, wersję oferty i specyfikację przekazywaną do realizacji."),
+    ("Integracje API", "integracje-api-dla-firm.html", "Połącz sprzedaż z obecnym ERP lub magazynem."),
+    ("Opisz drogę zamówienia", "opisz-projekt.html", "Od zapytania i specyfikacji do uruchomienia realizacji."),
+  ],
+  "system-do-wycen-i-ofert": [
+    ("CRM na zamówienie", "crm-na-zamowienie.html", "Klient, szansa i historia kontaktu przed przygotowaniem wyceny."),
+    ("Automatyzacja dokumentów", "automatyzacja-dokumentow-w-firmie.html", "Szablony PDF, wersje i dokumenty generowane z danych procesu."),
+    ("Opisz obecny sposób wyceny", "opisz-projekt.html?typ=System%20do%20wycen%20i%20ofert", "Podeślij logikę ceny, rabatów i jeden przykładowy wzór oferty."),
+  ],
+  "ile-kosztuje-aplikacja-dla-firmy": [
+    ("Cennik", "cennik.html", "Zobacz jawne ceny pierwszych etapów."),
+    ("Jak pracuję", "jak-pracuje.html", "Dlaczego projekt dzielę na działające moduły."),
+    ("Opisz projekt", "opisz-projekt.html", "Daj kontekst potrzebny do sensownej pierwszej wyceny."),
+  ],
+  "gotowy-system-czy-dedykowane-oprogramowanie": [
+    ("System zamiast Excela", "system-zamiast-excela.html", "Przykład sytuacji, w której własne narzędzie może mieć sens."),
+    ("Integracje API", "integracje-api-dla-firm.html", "Czasem wystarczy połączyć to, co już działa."),
+    ("Opisz obecne narzędzia", "opisz-projekt.html", "Sprawdźmy, czego naprawdę brakuje."),
+  ],
+  "jak-przygotowac-brief-aplikacji": [
+    ("Opisz projekt", "opisz-projekt.html", "Formularz przeprowadzi Cię przez dokładnie te pytania."),
+    ("Ile kosztuje aplikacja?", "ile-kosztuje-aplikacja-dla-firmy.html", "Zobacz, co wpływa na budżet."),
+    ("Jak pracuję", "jak-pracuje.html", "Co dzieje się po pierwszym opisie procesu."),
+  ],
+}
+
+def blok_powiazanych(nazwa):
+    pozycje=POWIAZANE.get(nazwa)
+    if not pozycje:
+        return ""
+    karty=[]
+    for tyt,href,opis in pozycje:
+        event=' data-umami-event="klik-opisz-projekt-powiazane"' if href.startswith("opisz-projekt.html") else ""
+        if href.startswith("opisz-projekt.html") and "zrodlo=" not in href:
+            sep = "&" if "?" in href else "?"
+            href = f"{href}{sep}zrodlo={nazwa}-powiazane"
+        karty.append(f'<a class="powiazane-karta" href="{href}"{event}><strong>{tyt}</strong><span>{opis}</span><i aria-hidden="true">→</i></a>')
+    return '<aside class="powiazane" aria-labelledby="powiazane-title"><p class="etykieta">Co dalej?</p><h2 id="powiazane-title">Następny sensowny krok</h2><div class="powiazane-grid">'+''.join(karty)+'</div></aside>'
+
+def blok_autora(nazwa):
+    if nazwa not in ARTYKULY:
+        return ""
+    return '''<aside class="autor-box" aria-label="Autor tekstu">
+      <div><span class="autor-znak">MG</span></div>
+      <div><strong>Maciej Gryziec</strong><p>Projektuję aplikacje, integracje i automatyzacje wokół realnego procesu firmy. Na stronie pokazuję zarówno rozwiązania dedykowane, jak i sytuacje, w których lepiej zostać przy gotowym narzędziu.</p><p><a href="o-mnie.html">O mnie</a> · <a href="realizacje.html">Zobacz realizacje</a></p></div>
+    </aside>'''
+
+WYMIARY_ZDJEC = {
+    "photonroof-kopertowy.jpg": (1600, 905),
+    "photonroof-kreator3d.jpg": (1600, 833),
+    "photonroof-mapa.jpg": (1600, 827),
+    "photonroof-tryby.png": (1280, 800),
+    "photonroof-wymiary.jpg": (1600, 914),
+    "wypozyczalnia-faktury.png": (1440, 900),
+    "wypozyczalnia-flota.png": (1440, 900),
+    "wypozyczalnia-kalendarz.png": (1440, 740),
+    "wypozyczalnia-pulpit.png": (1440, 900),
+}
+
+def uzupelnij_wymiary_obrazow(html_text):
+    def repl(m):
+        caly=m.group(0)
+        plik=m.group(1)
+        if plik not in WYMIARY_ZDJEC:
+            return caly
+        if not re.search(r'\bwidth=', caly):
+            w,h=WYMIARY_ZDJEC[plik]
+            caly=caly[:-1] + f' width="{w}" height="{h}">'
+        if 'data-webp=' in caly:
+            return caly
+        webp=os.path.splitext(plik)[0] + ".webp"
+        webp_path=os.path.join(REPO, "zdjecia", webp)
+        if not os.path.exists(webp_path):
+            return caly
+        w,_=WYMIARY_ZDJEC[plik]
+        webp_800=os.path.splitext(plik)[0] + "-800.webp"
+        webp_800_path=os.path.join(REPO, "zdjecia", webp_800)
+        if os.path.exists(webp_800_path):
+            srcset=f'zdjecia/{webp_800} 800w, zdjecia/{webp} {w}w'
+            sizes='(max-width: 820px) calc(100vw - 44px), 720px'
+            source=f'<source srcset="{srcset}" sizes="{sizes}" type="image/webp">'
+        else:
+            source=f'<source srcset="zdjecia/{webp}" type="image/webp">'
+        caly=caly[:-1] + ' data-webp="1">'
+        return f'<picture>{source}{caly}</picture>'
+    return re.sub(r'<img\b[^>]*src="zdjecia/([^"]+)"[^>]*>', repl, html_text)
+
+def slug_kotwicy(tekst):
+    tekst=html.unescape(re.sub(r"<[^>]+>","",tekst))
+    tekst=tekst.translate(str.maketrans({"ł":"l","Ł":"L","đ":"d","Đ":"D"}))
+    tekst=unicodedata.normalize("NFKD",tekst).encode("ascii","ignore").decode("ascii").lower()
+    tekst=re.sub(r"[^a-z0-9]+","-",tekst).strip("-")
+    return tekst[:80] or "sekcja"
+
+def dodaj_spis_tresci(body):
+    naglowki=[]; used=set()
+    def repl(m):
+        attrs=m.group(1) or ""; inner=m.group(2)
+        idm=re.search(r'\bid="([^"]+)"',attrs)
+        base=idm.group(1) if idm else slug_kotwicy(inner)
+        ident=base; n=2
+        while ident in used:
+            ident=f"{base}-{n}"; n+=1
+        used.add(ident)
+        if not idm: attrs += f' id="{ident}"'
+        label=' '.join(re.sub(r'<[^>]+>',' ',html.unescape(inner)).split())
+        naglowki.append((ident,label))
+        return f'<h2{attrs}>{inner}</h2>'
+    body=re.sub(r'<h2([^>]*)>(.*?)</h2>',repl,body,flags=re.S|re.I)
+    if len(naglowki)<3:
+        return body
+    links=''.join(f'<li><a href="#{ident}">{html.escape(label)}</a></li>' for ident,label in naglowki)
+    toc=f'<nav class="spis-tresci" aria-label="Spis treści"><strong>Na tej stronie</strong><ol>{links}</ol></nav>'
+    return toc+body
+
+def rodzic_dla(nazwa):
+    if nazwa in ARTYKULY or nazwa == "kalkulator-kosztu-recznej-pracy":
+        return ("Poradniki", "poradniki.html")
+    if nazwa in ECOMMERCE and nazwa != "sprawdzarka":
+        return ("Dla sklepów", "sprawdzarka.html")
+    if nazwa in USLUGI and nazwa != "dedykowane-oprogramowanie-dla-firm":
+        return ("Dla firm", "dedykowane-oprogramowanie-dla-firm.html")
+    return None
+
+OG_MEDIA = {
+  "realizacje": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D Photonroof — przykład aplikacji webowej"),
+  "kalkulator-konfigurator-dla-klientow": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D i kalkulator Photonroof"),
+  "program-dla-wypozyczalni": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Kalendarz obłożenia w panelu wypożyczalni"),
+  "system-rezerwacji-dla-firm": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Przykład kalendarza rezerwacji zasobów"),
+}
+
+def faq_zrodla(nazwa):
+    """Zwraca widoczne pytania/odpowiedzi z bloku .pytania w źródle strony."""
+    if not nazwa:
+        return []
+    sciezka=os.path.join(ZR,nazwa+".html")
+    if not os.path.exists(sciezka):
+        return []
+    src=open(sciezka,encoding="utf-8").read()
+    blok=re.search(r'<div class="pytania"[^>]*>(.*?)</div>',src,re.S|re.I)
+    if not blok:
+        return []
+    wynik=[]
+    for summary,answer in re.findall(
+        r'<details[^>]*>\s*<summary>(.*?)</summary>(.*?)</details>',
+        blok.group(1),
+        re.S|re.I,
+    ):
+        pytanie=' '.join(re.sub(r'<[^>]+>',' ',html.unescape(summary)).split())
+        odpowiedz=' '.join(re.sub(r'<[^>]+>',' ',html.unescape(answer)).split())
+        if pytanie and odpowiedz:
+            wynik.append((pytanie,odpowiedz))
+    return wynik
+
+
+def glowa(tytul, opis, kanon, nazwa=None):
     PAL = f'\n<link rel="stylesheet" href="paleta-{PALETA}.css?w=1">' if PALETA else ''
+    PRELOAD = ''
+    if nazwa == "realizacje":
+        PRELOAD = ('\n<link rel="preload" as="image" '
+                   'href="zdjecia/photonroof-wymiary-800.webp" '
+                   'imagesrcset="zdjecia/photonroof-wymiary-800.webp 800w, zdjecia/photonroof-wymiary.webp 1600w" '
+                   'imagesizes="(max-width: 820px) calc(100vw - 44px), 720px" '
+                   'type="image/webp" fetchpriority="high">')
+    og_image, og_w, og_h, og_alt = OG_MEDIA.get(nazwa, ("https://automatyzacjesklepow.pl/og-image.png", 1200, 630, "Aplikacje, które pracują tak jak firma — Automatyzacje dla firm"))
+    og_mime = "image/png" if og_image.lower().endswith(".png") else "image/jpeg"
+    page_type = "ContactPage" if nazwa == "opisz-projekt" else ("CollectionPage" if nazwa in ("poradniki","realizacje") else "WebPage")
+    graph = [{
+        "@type":page_type, "@id":kanon+"#webpage", "url":kanon, "name":tytul,
+        "description":opis, "inLanguage":"pl-PL",
+        "isPartOf":{"@id":"https://automatyzacjesklepow.pl/#website"}
+    }]
+    if nazwa:
+        elementy=[{"@type":"ListItem","position":1,"name":"Start","item":"https://automatyzacjesklepow.pl/"}]
+        rodzic=rodzic_dla(nazwa)
+        pos=2
+        if rodzic:
+            elementy.append({"@type":"ListItem","position":pos,"name":rodzic[0],"item":"https://automatyzacjesklepow.pl/"+rodzic[1]})
+            pos+=1
+        elementy.append({"@type":"ListItem","position":pos,"name":tytul,"item":kanon})
+        graph.append({"@type":"BreadcrumbList","itemListElement":elementy})
+        if nazwa in ARTYKULY:
+            sciezka_art=os.path.join(ZR,nazwa+".html")
+            data_modyfikacji=data_pliku(sciezka_art)
+            graph.append({
+                "@type":"BlogPosting","headline":tytul,"description":opis,"inLanguage":"pl-PL",
+                "datePublished":data_publikacji(sciezka_art),"dateModified":data_modyfikacji,
+                "image":"https://automatyzacjesklepow.pl/og-image.png",
+                "mainEntityOfPage":{"@id":kanon+"#webpage"},
+                "author":{"@type":"Person","@id":"https://automatyzacjesklepow.pl/o-mnie.html#person","name":"Maciej Gryziec","url":"https://automatyzacjesklepow.pl/o-mnie.html"}
+            })
+    if nazwa == "o-mnie":
+        graph.append({
+            "@type":"Person","@id":"https://automatyzacjesklepow.pl/o-mnie.html#person",
+            "name":"Maciej Gryziec","url":"https://automatyzacjesklepow.pl/o-mnie.html",
+            "email":"kontakt@automatyzacjesklepow.pl","telephone":"+48570427127"
+        })
+        graph.append({
+            "@type":"ProfilePage","@id":kanon+"#profile","url":kanon,"name":tytul,
+            "mainEntity":{"@id":"https://automatyzacjesklepow.pl/o-mnie.html#person"}
+        })
+    if nazwa in USLUGI and nazwa != "jak-pracuje":
+        graph.append({
+            "@type":"Service","@id":kanon+"#service","name":tytul,"description":opis,"url":kanon,
+            "areaServed":{"@type":"Country","name":"Polska"},
+            "provider":{"@type":"Person","@id":"https://automatyzacjesklepow.pl/o-mnie.html#person","name":"Maciej Gryziec","url":"https://automatyzacjesklepow.pl/o-mnie.html"}
+        })
+    if nazwa == "poradniki":
+        src_por=open(os.path.join(ZR,"poradniki.html"),encoding="utf-8").read()
+        lista=[]; seen=set()
+        for href,label in re.findall(r'<li><a href="([^"]+)">(.*?)</a>',src_por,re.S):
+            clean=re.sub(r'<[^>]+>', '', label).strip()
+            if not href.endswith('.html') or href in seen: continue
+            seen.add(href)
+            lista.append({"@type":"ListItem","position":len(lista)+1,"name":clean,"url":"https://automatyzacjesklepow.pl/"+href})
+        graph.append({"@type":"ItemList","name":"Poradniki i rozwiązania dla firm","itemListElement":lista})
+    if nazwa == "kalkulator-kosztu-recznej-pracy":
+        graph.append({
+            "@type":"WebApplication","name":tytul,"description":opis,"url":kanon,
+            "applicationCategory":"BusinessApplication","operatingSystem":"Any",
+            "browserRequirements":"JavaScript",
+            "offers":{"@type":"Offer","price":"0","priceCurrency":"PLN"}
+        })
+    faq=faq_zrodla(nazwa)
+    if faq:
+        graph.append({
+            "@type":"FAQPage",
+            "@id":kanon+"#faq",
+            "mainEntity":[
+                {
+                    "@type":"Question",
+                    "name":pytanie,
+                    "acceptedAnswer":{"@type":"Answer","text":odpowiedz},
+                }
+                for pytanie,odpowiedz in faq
+            ],
+        })
+    LD=json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)
+    og_type = "article" if nazwa in ARTYKULY else "website"
+    nav_active = ""
+    if nazwa in ECOMMERCE:
+        nav_active = "sprawdzarka.html"
+    elif nazwa in USLUGI or nazwa == "problemy":
+        nav_active = "dedykowane-oprogramowanie-dla-firm.html"
+    elif nazwa in ARTYKULY or nazwa in {"poradniki", "kalkulator-kosztu-recznej-pracy"}:
+        nav_active = "poradniki.html"
+    elif nazwa in {"realizacje", "cennik", "opisz-projekt"}:
+        nav_active = nazwa + ".html"
+    nav_attr = f' data-nav-active="{nav_active}"' if nav_active else ""
+    source_slug = nazwa or "index"
+    nav_html = NAV.replace(
+        'href="opisz-projekt.html"',
+        f'href="opisz-projekt.html?zrodlo={source_slug}-nav"',
+        1,
+    )
+    mobile_href = f"opisz-projekt.html?zrodlo={source_slug}-mobile"
+    article_tags = ""
+    if nazwa in ARTYKULY:
+        sciezka_art=os.path.join(ZR,nazwa+".html")
+        data_modyfikacji=data_pliku(sciezka_art)
+        data_pub=data_publikacji(sciezka_art)
+        article_tags = f'\n<meta property="article:published_time" content="{data_pub}T00:00:00+02:00">\n<meta property="article:modified_time" content="{data_modyfikacji}T00:00:00+02:00">\n<meta property="article:author" content="https://automatyzacjesklepow.pl/o-mnie.html">\n<link rel="author" href="o-mnie.html">'
     return f'''<!doctype html>
-<html lang="pl">
+<html class="no-js" lang="pl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
+<meta name="theme-color" content="#194586">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <title>{tytul}</title>
 <meta name="description" content="{opis}">
+<meta property="og:type" content="{og_type}">
+<meta property="og:locale" content="pl_PL">{article_tags}
+<meta property="og:site_name" content="Automatyzacje dla firm">
+<meta property="og:title" content="{tytul}">
+<meta property="og:description" content="{opis}">
+<meta property="og:url" content="{kanon}">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:width" content="{og_w}">
+<meta property="og:image:height" content="{og_h}">
+<meta property="og:image:type" content="{og_mime}">
+<meta property="og:image:alt" content="{og_alt}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{tytul}">
+<meta name="twitter:description" content="{opis}">
+<meta name="twitter:image" content="{og_image}">
+<meta name="twitter:image:alt" content="{og_alt}">
 <link rel="canonical" href="{kanon}">
-<link rel="stylesheet" href="list.css?w=3">{PAL}
+<link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje dla firm" href="feed.xml">{PRELOAD}
+<link rel="stylesheet" href="list.css?v={ASSET_VERSION}">{PAL}
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
 <link rel="icon" href="favicon.ico?w=3" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="ikona-96.png?w=3">
 <link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png?w=3">
 <link rel="apple-touch-icon" href="ikona-180.png?w=3">
-<script defer src="https://statystyki.automatyzacjesklepow.pl/script.js" data-website-id="426e2d75-f696-4c0a-ab60-79e76cf1d73c" data-domains="automatyzacjesklepow.pl,www.automatyzacjesklepow.pl"></script>
+<link rel="mask-icon" href="znak.svg" color="#194586">
+<link rel="manifest" href="site.webmanifest">
+<script type="application/ld+json">{LD}</script>
 </head>
-<body>
+<body{nav_attr}>
+<a class="skip-link" href="#main-content">Przejdź do treści</a>
 <header class="gora"><div class="w">
-  <a class="znak" href="index.html" aria-label="Automatyzacje Sklepów, start"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <nav>{NAV}</nav>
+  <a class="znak" href="/" aria-label="Maciej Gryziec — aplikacje i automatyzacje dla firm"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje dla firm</span></a>
+  <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="{mobile_href}">Opisz projekt</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
+  <nav id="nav-main" aria-label="Główna nawigacja">{nav_html}</nav>
 </div></header>
 '''
-STOPKA = '''
-<div class="stopka">
-  <strong>Maciej Gryziec</strong> · automatyzacje i integracje dla sklepów internetowych · pracuję zdalnie, z całą Polską · <a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a> · <a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a><br>
-  Integracje: <a href="integracja-sklepu-z-ksiegowoscia.html">księgowość</a> · <a href="integracja-sklepu-z-wfirma.html">wFirma</a> · <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a> · <a href="automatyzacja-allegro.html">Allegro</a> · <a href="automatyczne-faktury-allegro.html">faktury z Allegro</a> · <a href="integracja-baselinker.html">BaseLinker</a> · <a href="integracja-sklepu-z-hurtownia.html">hurtownie</a> · <a href="ksef-dla-sklepu-internetowego.html">KSeF</a><br>
-  Platformy: <a href="integracje-shoper.html">Shoper</a> · <a href="integracje-idosell.html">IdoSell</a> · <a href="integracja-allegro-z-woocommerce.html">WooCommerce i Allegro</a><br>
-  Poradniki: <a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności</a> · <a href="wtyczka-czy-integracja.html">wtyczka czy integracja?</a> · <a href="problemy.html">co naprawiam</a>
-</div>
-<script src="list.js?w=2"></script>
+STOPKA = f"""
+<footer class="stopka">
+  <div class="stopka-grid">
+    <div class="stopka-brand">
+      <strong>Maciej Gryziec</strong>
+      <p>Aplikacje, systemy i automatyzacje dla firm. Pracuję zdalnie z firmami w całej Polsce.</p>
+      <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz projekt →</a></p>
+      <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a><br><a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
+    </div>
+    <div>
+      <strong>Rozwiązania</strong>
+      <a href="dedykowane-oprogramowanie-dla-firm.html">Oprogramowanie na zamówienie</a>
+      <a href="crm-na-zamowienie.html">CRM na zamówienie</a>
+      <a href="system-do-wycen-i-ofert.html">Wyceny i oferty</a>
+      <a href="system-do-obslugi-zlecen.html">Obsługa zleceń</a>
+      <a href="integracje-api-dla-firm.html">Integracje API</a>
+      <a href="aplikacje-webowe-dla-firm.html">Aplikacje webowe</a>
+    </div>
+    <div>
+      <strong>Zastosowania</strong>
+      <a href="system-zamiast-excela.html">System zamiast Excela</a>
+      <a href="panel-klienta-b2b.html">Panel klienta B2B</a>
+      <a href="system-rezerwacji-dla-firm.html">System rezerwacji</a>
+      <a href="automatyzacja-dokumentow-w-firmie.html">Automatyzacja dokumentów</a>
+      <a href="sprawdzarka.html">Automatyzacje e-commerce</a>
+    </div>
+    <div>
+      <strong>Firma i wiedza</strong>
+      <a href="realizacje.html">Realizacje</a>
+      <a href="cennik.html">Cennik</a>
+      <a href="jak-pracuje.html">Jak pracuję</a>
+      <a href="o-mnie.html">O mnie</a>
+      <a href="poradniki.html">Poradniki</a>
+    </div>
+  </div>
+  <div class="stopka-dol">
+    <span>© 2026 Maciej Gryziec</span>
+    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+    <a href=".well-known/security.txt">Zgłoszenia bezpieczeństwa</a>
+  </div>
+</footer>
+<script src="list.js?v={ASSET_VERSION}"></script>
 </body>
 </html>
-'''
+"""
+
+def stopka_dla(nazwa):
+    slug = nazwa or "index"
+    return STOPKA.replace(
+        'href="opisz-projekt.html"',
+        f'href="opisz-projekt.html?zrodlo={slug}-footer"',
+        1,
+    )
 
 def rozdzial(klasa, tekst, obraz, extra="", ciemny=False):
     c = " ciemny" if ciemny else ""
     d = " data-ciemna" if ciemny else ""
     return f'<section class="rozdzial {klasa}{c}"{d}{extra}><div class="w"><div class="tekst wjazd">{tekst}</div><div class="obraz">{obraz}</div></div></section>\n'
 
-KONIEC = '''<section class="rozdzial koniec KONIEC_KLASA" KONIEC_ATR><div class="w"><div class="tekst wjazd">
-  <h2>To tyle. Co teraz?</h2>
-  <p><a href="sprawdzarka.html">Sprawdź swój sklep</a>, jeśli chcesz zobaczyć, co widać z zewnątrz, zanim ze mną porozmawiasz.</p>
-  <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">Napisz do mnie</a>, jeśli masz konkretny problem z zamówieniami, fakturami albo stanami. Odpisuję tego samego dnia.</p>
+KONIEC = """<section class="rozdzial koniec KONIEC_KLASA" KONIEC_ATR><div class="w"><div class="tekst wjazd">
+  <h2>Masz proces, który dziś działa Excelem, mailem albo ręcznie?</h2>
+  <p><a data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz, jak dziś wygląda ta praca</a> — formularz pomoże ułożyć kilka najważniejszych informacji o procesie, narzędziach i problemie. Na tej podstawie łatwiej ustalić, czy lepsza będzie automatyzacja, integracja czy własna aplikacja.</p>
+  <p><a href="realizacje.html">Zobacz realizacje</a>, jeśli chcesz najpierw zobaczyć konkretne systemy i aplikacje. <a href="poradniki.html">Przejrzyj poradniki</a>, jeśli chcesz porównać rozwiązania. <a href="sprawdzarka.html">Prowadzisz sklep internetowy?</a> Możesz też zacząć od bezpłatnej sprawdzarki.</p>
   <p><a data-umami-event="klik-telefon" href="tel:+48570427127">Zadzwoń: 570 427 127</a>, jeśli wolisz rozmawiać. Nie ma handlowca, odbieram ja.</p>
 </div></div></section>
-'''
+"""
 
 # ---------------------------------------------------------------- strona glowna
 def index():
-    s = glowa("Integracja sklepu z księgowością, magazynem i Allegro — Automatyzacje Sklepów",
-              "Automatyczne faktury, synchronizacja stanów magazynowych, integracja sklepu z księgowością, Allegro i KSeF. Jedna osoba, jawne ceny. Zacznij od bezpłatnego sprawdzenia sklepu.",
-              "https://automatyzacjesklepow.pl/")
-    s += rozdzial("czolo start skos-dol", '''
-    <div class="nadtytul"><i></i> 12 mostów działa w tej chwili</div>
-    <h1><em>Sklep,</em><br>który sam robi<br>papierkową robotę.</h1>
-    <p class="zacheta">Zamówienie z 23:10 o 23:11 jest już fakturą, zdjęło towar ze stanu na Allegro i wysłało klientowi maila. Buduję takie mosty dla małych sklepów: jedna osoba, jawne ceny, dziesięć dni na wdrożenie.</p>
-    <div class="cta"><svg viewBox="0 0 34 34" fill="none" stroke="#ffd23f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 17H6M16 7L6 17l10 10"/></svg><div><a href="#sprawdzarka">Sprawdź swój sklep</a><br><span style="font-weight:500;font-size:14px;color:rgba(255,255,255,.75)">za darmo, bez logowania, w minutę</span></div></div>
-    <p class="drobne">Maciej Gryziec · automatyzacjesklepow.pl<br><a href="cennik.html">Cennik</a><a href="realizacje.html">Realizacje</a><a href="problemy.html">Co naprawiam</a><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">E-mail</a></p>''', laptop(), ciemny=True)
-    s += rozdzial("faktura bialy", '''
-    <h2>Faktura, której nie przepisujesz</h2>
-    <p>Najczęstsza pomyłka w sklepie nie jest w magazynie, tylko na fakturze: zła stawka VAT, brak NIP-u, zamówienie z Allegro zafakturowane dwa razy. Każda taka pomyłka to korekta, telefon od księgowej i klient, który czeka.</p>
-    <p>Numer, stawka, dane nabywcy, pozycje z zamówienia i wysyłka do KSeF wpisują się same. Ty widzisz gotowy dokument w wFirmie, iFirmie albo Fakturowni i tylko zerkasz, zamiast przepisywać.</p>
-    <p class="cena">Od 2 900 zł. Most do księgowości ze sklepem i Allegro naraz: 4 500–6 000 zł, dwa do trzech tygodni.</p>
-    <p class="linki"><a href="integracja-sklepu-z-fakturownia.html">Sklep z Fakturownią</a><a href="integracja-sklepu-z-wfirma.html">Sklep z wFirmą</a><a href="automatyczne-faktury-allegro.html">Faktury z Allegro</a></p>''', stos())
-    s += rozdzial("zamowienie jasny skos-oba", '''
-    <h2>Jedno zamówienie, pięć miejsc</h2>
-    <p>Dziś zamówienie obsługujesz w kilku programach po kolei: sprawdzasz stan, wystawiasz fakturę, wysyłasz ją, poprawiasz magazyn, odpisujesz klientowi. Trzydzieści zamówień dziennie to godzina klikania, w której nic nie zarabiasz.</p>
-    <p>Buduję jeden most: zamówienie samo poprawia stan magazynu, wystawia fakturę, wysyła ją do księgowości i do klienta. Pięć sekund, o każdej porze, także w niedzielę.</p>
-    <p class="cena">Jeden most od 2 900 zł, gotowy w dziesięć dni roboczych. Z testami na prawdziwych zamówieniach i instrukcją.</p>
-    <p class="linki"><a href="integracja-sklepu-z-ksiegowoscia.html">Integracja sklepu z księgowością</a><a href="wtyczka-czy-integracja.html">Wtyczka czy integracja?</a></p>''', schody())
-    s += rozdzial("magazyn piasek skos-oba", '''
-    <h2>Stany, które się zgadzają</h2>
-    <p>Ostatnia sztuka schodzi na Allegro o 22:40, a w sklepie do rana wisi jako dostępna. Klient płaci, czeka, dostaje przeprosiny i zostawia ocenę, która zostaje na lata.</p>
-    <p>Jeden stan magazynowy dla wszystkich kanałów. Sprzedaż w sklepie zdejmuje towar z Allegro i odwrotnie, dostawa z hurtowni podnosi stan w obu miejscach, a różnice wychodzą w raporcie, zanim zauważy je klient.</p>
-    <p class="cena">Od 2 900 zł. Sklep, Allegro, hurtownia albo BaseLinker, w dowolnej parze.</p>
-    <p class="linki"><a href="automatyzacja-allegro.html">Allegro i sklep</a><a href="integracja-sklepu-z-hurtownia.html">Sklep i hurtownia</a><a href="integracja-baselinker.html">BaseLinker</a></p>''', kartony())
-    s += rozdzial("ksef czern", '''
-    <h2>KSeF już obowiązuje</h2>
-    <p>Od 1 kwietnia 2026 każda faktura między firmami przechodzi przez Krajowy System e-Faktur. Program „wysyła", ale czy naprawdę wysłał, dowiadujesz się dopiero, gdy księgowa pyta o brakujące numery.</p>
-    <p>Sprawdzam, czy Twoje faktury faktycznie trafiają do KSeF i wracają z potwierdzeniem. Jeśli nie trafiają, buduję most: bez zmiany programu do faktur i bez ręcznego wgrywania czegokolwiek.</p>
-    <div class="daty"><div><b>1 IV 2026</b>obowiązek dla wszystkich</div><div><b>31 XII 2026</b>koniec ulgi dla najmniejszych</div></div>
-    <p class="linki" style="margin-top:1.4em"><a href="ksef-dla-sklepu-internetowego.html">KSeF w sklepie</a><a href="ksef-dla-jdg-terminy.html">Terminy dla jednoosobowej działalności</a></p>''', dokument(), ciemny=True)
-    s += rozdzial("opieka noc skos-oba", '''
-    <h2>O awarii dowiadujesz się ode mnie, nie od klienta</h2>
-    <p>Integracje psują się po cichu. Token wygasa w czwartek, zamówienia przestają schodzić, a Ty dowiadujesz się w poniedziałek od klienta, który pyta o paczkę. Trzy dni sprzedaży do ręcznego odtworzenia.</p>
-    <p>Codziennie o szóstej rano sprawdzam każde połączenie: czy zamówienia schodzą, czy stany się aktualizują, czy faktury wychodzą do KSeF. Kiedy coś nie gra, naprawiam, zanim otworzysz sklep, a Ty dostajesz jednego maila z tym, co się stało.</p>
-    <p class="cena">Od 349 zł miesięcznie, do wypowiedzenia w każdym miesiącu. Z naprawami i drobnymi zmianami 599 zł, z reakcją tego samego dnia 899 zł.</p>
-    <div class="lampki">''' + ''.join(f'<b style="--o:{j*.035:.3f}"></b>' for j in range(12)) + ''' <span>dziś 12 połączeń, wszystkie działają</span></div>''', noc(), ciemny=True)
-    s += rozdzial("kroki szary", '''
-    <h2>Zawsze w tej kolejności</h2>
-    <p>Nie sprzedaję „całościowej transformacji". Biorę jedną rzecz, doprowadzam ją do końca, potem następną. Każdy krok da się kupić osobno i każdy ma sens sam z siebie: po przeglądzie możesz część rzeczy naprawić sam, beze mnie.</p>
-    <p class="cena">Wszystkie kwoty są netto i nie rosną w trakcie pracy. Nie rozliczam godzin: wiesz, ile zapłacisz, zanim zaczniemy.</p>
-    <p class="linki"><a href="cennik.html">Pełny cennik</a><a href="problemy.html">Co naprawiam</a></p>''', paragon())
-    s += rozdzial("sprawdz ziel", '''
-    <h2>Zacznij od sprawdzenia, nie od rozmowy</h2>
-    <p>Wpisujesz adres sklepu, a narzędzie przegląda kilkaset podstron i pokazuje, czego brakuje: danych producenta wymaganych przez GPSR, najniższej ceny z 30 dni przy promocjach, numerów EAN, martwych adresów w mapie strony, ważności certyfikatu.</p>
-    <p>Bez logowania, bez haseł, bez handlowca. Raport ma stały adres, więc możesz go wysłać księgowej albo osobie, która prowadzi Ci sklep.</p>
-    <form action="https://sprawdzarka.automatyzacjesklepow.pl/sprawdz" method="post"><input type="text" name="sklep" placeholder="adres Twojego sklepu" aria-label="Adres sklepu" required><button type="submit" data-umami-event="wyslanie-sprawdzenia">Sprawdź</button></form>
-    <p class="cena">Bezpłatnie, wynik po minucie.</p>''', raport(), extra=' id="sprawdzarka"', ciemny=True)
-    s += '<section class="rozdzial realizacje ksiega-tlo ciemny" data-ciemna><div class="w"><div class="tekst wjazd"><h2>Kiedy nie da się kupić z półki</h2><p>Czasem żaden gotowy program nie pracuje tak jak Ty. Wtedy piszę własny: kalkulator dla klientów, panel z raportami, system CRM pod Twój sposób pracy. Cztery rzeczy, które zbudowałem od zera. Przewracaj strzałkami albo przeciągnij.</p></div>' + ksiega() + '<div class="tekst wjazd" style="margin-top:44px"><p>Piszę też o tym, co robię. Trzy teksty, które właściciele sklepów czytają najczęściej:</p><ul class="wpisy"><li><a href="wtyczka-czy-integracja.html">Wtyczka czy integracja? Kiedy zostać przy wtyczce</a><small>sierpień 2026</small></li><li><a href="ksef-dla-jdg-terminy.html">KSeF dla jednoosobowej działalności: od kiedy i co zrobić w pięć minut</a><small>sierpień 2026</small></li><li><a href="integracja-sklepu-z-ksiegowoscia.html">Integracja sklepu z księgowością: pary programów i ceny</a><small>sierpień 2026</small></li></ul></div></div></section>\n'
-    s += KONIEC + STOPKA
-    open(CEL + "/index.html", "w", encoding="utf-8").write(s)
+    src = ZR + "/index.html"
+    if not os.path.exists(src):
+        raise FileNotFoundError("Brak zrodla/index.html")
+    with open(src, encoding="utf-8") as f:
+        s = f.read()
+    s = uzupelnij_wymiary_obrazow(s)
+    s = re.sub(r'href="list\.css\?[^"]*"', f'href="list.css?v={ASSET_VERSION}"', s)
+    s = re.sub(r'src="list\.js\?[^"]*"', f'src="list.js?v={ASSET_VERSION}"', s)
+    with open(CEL + "/index.html", "w", encoding="utf-8") as f:
+        f.write(s)
 
 # ---------------------------------------------------------------- podstrony
 SWIATY = {
@@ -881,7 +1735,35 @@ SWIATY = {
   "integracje-shoper": ("jasny", schody), "integracje-idosell": ("piasek", kartony), "integracja-allegro-z-woocommerce": ("piasek", kartony),
   "ksef-dla-sklepu-internetowego": ("czern", dokument), "ksef-dla-jdg-terminy": ("czern", dokument),
   "wtyczka-czy-integracja": ("jasny", schody), "cennik": ("szary", paragon), "realizacje": ("czern", ksiega),
-  "problemy": ("jasny", schody), "sprawdzarka": ("ziel", raport),
+  "problemy": ("jasny", schody_firma), "sprawdzarka": ("ziel", raport),
+  "dedykowane-oprogramowanie-dla-firm": ("jasny", ekrany),
+  "system-zamiast-excela": ("szary", schody_firma),
+  "crm-na-zamowienie": ("jasny", schody_firma),
+  "system-do-wycen-i-ofert": ("jasny", schody_firma),
+  "system-do-obslugi-zlecen": ("piasek", schody_firma),
+  "automatyzacja-procesow-w-firmie": ("jasny", schody_firma),
+  "integracje-api-dla-firm": ("jasny", schody_firma),
+  "kalkulator-konfigurator-dla-klientow": ("czern", ekrany),
+  "kalkulator-kosztu-recznej-pracy": ("jasny", schody_firma),
+  "ile-kosztuje-aplikacja-dla-firmy": ("szary", paragon),
+  "gotowy-system-czy-dedykowane-oprogramowanie": ("jasny", schody_firma),
+  "aplikacje-webowe-dla-firm": ("jasny", ekrany),
+  "panel-klienta-b2b": ("piasek", schody_firma),
+  "system-rezerwacji-dla-firm": ("jasny", schody_firma),
+  "automatyzacja-dokumentow-w-firmie": ("szary", stos),
+  "ai-w-automatyzacji-firmy": ("czern", ekrany),
+  "jak-przygotowac-brief-aplikacji": ("jasny", schody_firma),
+  "system-dla-firmy-uslugowej": ("jasny", schody_firma),
+  "system-dla-serwisu-technicznego": ("piasek", schody_firma),
+  "system-dla-produkcji-na-zamowienie": ("szary", schody_firma),
+  "program-dla-wypozyczalni": ("jasny", ekrany),
+  "poradniki": ("jasny", ksiega),
+  "opisz-projekt": ("jasny", ekrany),
+  "jak-pracuje": ("jasny", droga),
+  "o-mnie": ("jasny", droga),
+  "polityka-prywatnosci": ("szary", schody_firma),
+  "404": ("szary", schody_firma),
+  "50x": ("szary", schody_firma),
 }
 CIEMNE = {"czern","ziel","noc"}
 KSIEGA_NA_PODSTRONIE = {"realizacje"}
@@ -921,15 +1803,46 @@ def podstrona(plik):
             nota = ""
             if m: nota = '<p class="slaby nota">' + re.sub(r'\s+', ' ', re.sub(r'</?p[^>]*>', '', m.group(0))).strip() + '</p>'; frm = frm.replace(m.group(0), "")
             czolo_extra = frm + nota
-    s = glowa(tytul, opis, kanon)
-    tekst = f'<p class="etykieta">{ety}</p><h1>{h1}</h1>' + (f'<p class="wstep">{wst}</p>' if wst else "") + czolo_extra
+    s = glowa(tytul, opis, kanon, nazwa)
+    s += '<main id="main-content" tabindex="-1">\n'
+    rodzic = rodzic_dla(nazwa)
+    okruszki = '<nav class="okruszki" aria-label="Okruszki"><a href="/">Start</a><span aria-hidden="true">›</span>'
+    if rodzic:
+        okruszki += f'<a href="{rodzic[1]}">{rodzic[0]}</a><span aria-hidden="true">›</span>'
+    okruszki += f'<span aria-current="page">{re.sub(r"<[^>]+>", "", h1)}</span></nav>'
+    meta_artykulu = ""
+    if nazwa in ARTYKULY:
+        data_modyfikacji = date.fromisoformat(data_pliku(os.path.join(ZR, nazwa + ".html")))
+        meta_artykulu = f'<p class="article-meta">Maciej Gryziec · aktualizacja {data_modyfikacji.strftime("%d.%m.%Y")} · <a href="o-mnie.html">o autorze</a></p>'
+    tekst = okruszki + f'<p class="etykieta">{ety}</p><h1>{h1}</h1>' + (f'<p class="wstep">{wst}</p>' if wst else "") + meta_artykulu + czolo_extra
     kl = f"czolo pod {swiat} skos-dol" + (" lewo" if swiat in ("piasek","szary") else "")
+    if nazwa in ("opisz-projekt","404","50x"):
+        kl += " kontakt-hero"
     if nazwa in KSIEGA_NA_PODSTRONIE:
-        s += f'<section class="rozdzial czolo pod ksiega-tlo ciemny" data-ciemna><div class="w"><div class="tekst wjazd">{tekst}</div>{obraz()}</div></section>\n'
+        s += f'<section id="tresc" class="rozdzial czolo pod ksiega-tlo ciemny" data-ciemna><div class="w"><div class="tekst wjazd">{tekst}</div>{obraz()}</div></section>\n'
     else:
-        s += rozdzial(kl, tekst, obraz(), ciemny=ciemny)
-    s += f'<main class="tresc{" cennik-tabela" if nazwa=="cennik" else ""}">{body}</main>\n'
-    s += KONIEC.replace('class="rozdzial koniec"', 'class="rozdzial koniec"') + STOPKA
+        s += rozdzial(kl, tekst, obraz(), extra=' id="tresc"', ciemny=ciemny)
+    body = re.sub(r'(<a class="przycisk"[^>]*?)href="mailto:kontakt@automatyzacjesklepow\.pl"', r'\1href="opisz-projekt.html"', body)
+    body = body.replace('data-umami-event="klik-mail" href="opisz-projekt.html"', 'data-umami-event="klik-opisz-projekt" href="opisz-projekt.html"')
+    if nazwa not in ("opisz-projekt", "404", "50x"):
+        body = body.replace('href="opisz-projekt.html"', f'href="opisz-projekt.html?zrodlo={nazwa}"')
+    body = re.sub(r'<a class="przycisk"(?![^>]*data-umami-event)([^>]*href="opisz-projekt\.html(?:\?[^"]*)?"[^>]*)>', r'<a class="przycisk" data-umami-event="klik-opisz-projekt"\1>', body)
+    body = re.sub(r'<a class="przycisk"(?![^>]*data-umami-event)([^>]*href="sprawdzarka\.html(?:\?[^"]*)?"[^>]*)>', r'<a class="przycisk" data-umami-event="klik-sprawdzarka"\1>', body)
+    body = re.sub(r'<img (?![^>]*loading=)(?=[^>]*src="zdjecia/)', '<img loading="lazy" decoding="async" ', body)
+    body = uzupelnij_wymiary_obrazow(body)
+    if nazwa in ARTYKULY:
+        body = dodaj_spis_tresci(body)
+    body += blok_powiazanych(nazwa)
+    s += f'<div class="tresc{" cennik-tabela" if nazwa=="cennik" else ""}">{body}</div>\n'
+    if nazwa in ("404","50x"):
+        s = s.replace('<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">', '<meta name="robots" content="noindex,follow">', 1)
+        s += '</main>\n' + stopka_dla(nazwa)
+    elif nazwa == "opisz-projekt":
+        s += '</main>\n' + stopka_dla(nazwa)
+    else:
+        koniec = KONIEC.replace('href="opisz-projekt.html"', f'href="opisz-projekt.html?zrodlo={nazwa}-koniec"', 1)
+        s += koniec + '</main>\n' + stopka_dla(nazwa)
+    s = uzupelnij_wymiary_obrazow(s)
     open(CEL + "/" + nazwa + ".html", "w", encoding="utf-8").write(s)
     return nazwa
 
@@ -941,4 +1854,112 @@ zrobione = []
 for plik in sorted(glob.glob(ZR + "/*.html")):
     if os.path.basename(plik) == "index.html": continue
     zrobione.append(podstrona(plik))
+SITEMAP_IMAGES = {
+  "realizacje.html": [
+    ("zdjecia/photonroof-tryby.png", "Photonroof — wybór trybu konfiguratora"),
+    ("zdjecia/photonroof-mapa.jpg", "Photonroof — konfiguracja dachu na mapie satelitarnej"),
+    ("zdjecia/photonroof-kreator3d.jpg", "Photonroof — kreator dachu 3D"),
+    ("zdjecia/photonroof-kopertowy.jpg", "Photonroof — model dachu kopertowego"),
+    ("zdjecia/photonroof-wymiary.jpg", "Photonroof — wymiary i wynik konfiguracji dachu"),
+    ("zdjecia/wypozyczalnia-pulpit.png", "Panel wypożyczalni — pulpit"),
+    ("zdjecia/wypozyczalnia-kalendarz.png", "Panel wypożyczalni — kalendarz obłożenia"),
+    ("zdjecia/wypozyczalnia-flota.png", "Panel wypożyczalni — flota"),
+    ("zdjecia/wypozyczalnia-faktury.png", "Panel wypożyczalni — faktury"),
+  ],
+  "kalkulator-konfigurator-dla-klientow.html": [
+    ("zdjecia/photonroof-kreator3d.jpg", "Przykład konfiguratora online — Photonroof"),
+    ("zdjecia/photonroof-mapa.jpg", "Przykład kalkulatora opartego na parametrach klienta"),
+  ],
+  "program-dla-wypozyczalni.html": [
+    ("zdjecia/wypozyczalnia-pulpit.png", "Przykład programu dla wypożyczalni — pulpit"),
+    ("zdjecia/wypozyczalnia-kalendarz.png", "Przykład programu dla wypożyczalni — kalendarz"),
+  ],
+  "system-rezerwacji-dla-firm.html": [
+    ("zdjecia/wypozyczalnia-kalendarz.png", "Przykład kalendarza rezerwacji zasobów"),
+  ],
+}
+
+# mapa strony jest budowana automatycznie z wszystkich stron HTML w katalogu produkcyjnym
+priorytet = {
+    "index.html": "1.0",
+    "dedykowane-oprogramowanie-dla-firm.html": "0.9",
+    "realizacje.html": "0.9",
+    "cennik.html": "0.8",
+    "system-zamiast-excela.html": "0.8",
+    "crm-na-zamowienie.html": "0.8",
+    "system-do-wycen-i-ofert.html": "0.8",
+    "system-do-obslugi-zlecen.html": "0.8",
+    "automatyzacja-procesow-w-firmie.html": "0.8",
+    "integracje-api-dla-firm.html": "0.8",
+    "kalkulator-konfigurator-dla-klientow.html": "0.8",
+    "kalkulator-kosztu-recznej-pracy.html": "0.8",
+    "aplikacje-webowe-dla-firm.html": "0.8",
+    "panel-klienta-b2b.html": "0.8",
+    "system-rezerwacji-dla-firm.html": "0.8",
+    "automatyzacja-dokumentow-w-firmie.html": "0.8",
+    "ai-w-automatyzacji-firmy.html": "0.7",
+    "jak-przygotowac-brief-aplikacji.html": "0.7",
+    "system-dla-firmy-uslugowej.html": "0.7",
+    "system-dla-serwisu-technicznego.html": "0.7",
+    "system-dla-produkcji-na-zamowienie.html": "0.7",
+    "program-dla-wypozyczalni.html": "0.8",
+    "poradniki.html": "0.9",
+    "opisz-projekt.html": "0.9",
+    "jak-pracuje.html": "0.8",
+    "o-mnie.html": "0.7",
+    "polityka-prywatnosci.html": "0.3",
+}
+linie = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
+for pth in sorted(glob.glob(CEL + "/*.html")):
+    fn = os.path.basename(pth)
+    if fn in ("404.html","50x.html"):
+        continue
+    url = "https://automatyzacjesklepow.pl/" if fn == "index.html" else "https://automatyzacjesklepow.pl/" + fn
+    pr = priorytet.get(fn, "0.7")
+    zrodlo_daty = os.path.join(ZR, fn)
+    if not os.path.exists(zrodlo_daty):
+        zrodlo_daty = pth
+    lastmod = data_pliku(zrodlo_daty)
+    wpis=[f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>{pr}</priority>']
+    for img_path,img_title in SITEMAP_IMAGES.get(fn,[]):
+        wpis.append(f'<image:image><image:loc>https://automatyzacjesklepow.pl/{html.escape(img_path)}</image:loc><image:title>{html.escape(img_title)}</image:title></image:image>')
+    wpis.append('</url>')
+    linie.append(''.join(wpis))
+linie.append('</urlset>')
+open(CEL + "/sitemap.xml", "w", encoding="utf-8").write(chr(10).join(linie) + chr(10))
+
+# Atom feed dla stron poradnikowych.
+artykuly_feed=[]
+for nazwa in sorted(ARTYKULY):
+    src_path=os.path.join(ZR,nazwa+".html")
+    if not os.path.exists(src_path):
+        continue
+    src_txt=open(src_path,encoding="utf-8").read()
+    title_m=re.search(r"<title>(.*?)</title>",src_txt,re.S)
+    desc_m=re.search(r'name="description" content="([^"]*)"',src_txt)
+    if not title_m or not desc_m:
+        continue
+    artykuly_feed.append({
+        "title":re.sub(r"<[^>]+>","",title_m.group(1)).strip(),
+        "desc":desc_m.group(1).strip(),
+        "url":f"https://automatyzacjesklepow.pl/{nazwa}.html",
+        "published":data_publikacji(src_path),
+        "modified":data_pliku(src_path),
+    })
+feed_updated=max((a["modified"] for a in artykuly_feed),default=date.today().isoformat())
+feed=['<?xml version="1.0" encoding="UTF-8"?>','<feed xmlns="http://www.w3.org/2005/Atom">',
+      '<title>Poradniki — Automatyzacje dla firm</title>',
+      '<id>https://automatyzacjesklepow.pl/feed.xml</id>',
+      '<link href="https://automatyzacjesklepow.pl/feed.xml" rel="self"/>',
+      '<link href="https://automatyzacjesklepow.pl/poradniki.html"/>',
+      f'<updated>{feed_updated}T00:00:00+02:00</updated>',
+      '<author><name>Maciej Gryziec</name></author>']
+for a in sorted(artykuly_feed,key=lambda x:x["modified"],reverse=True):
+    feed += ['<entry>',f'<title>{html.escape(a["title"])}</title>',f'<id>{a["url"]}</id>',
+             f'<link href="{a["url"]}"/>',f'<published>{a["published"]}T00:00:00+02:00</published>',
+             f'<updated>{a["modified"]}T00:00:00+02:00</updated>',
+             f'<summary>{html.escape(a["desc"])}</summary>','</entry>']
+feed.append('</feed>')
+open(CEL+"/feed.xml","w",encoding="utf-8").write(chr(10).join(feed)+chr(10))
+
 print("index +", len(zrobione), "podstron:", ", ".join(zrobione))

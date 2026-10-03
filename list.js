@@ -1,6 +1,22 @@
 (function(){
   var spokoj = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var NS = "http://www.w3.org/2000/svg";
+  window.siteTrack = window.siteTrack || function(name,data){try{if(window.umami&&typeof window.umami.track==="function")window.umami.track(name,data||{});}catch(e){}};
+
+  // Umami: nie pobieraj trackera po opt-out ani poza publiczną domeną.
+  (function(){
+    try{if(localStorage.getItem("umami.disabled")==="1")return;}catch(e){}
+    var host=(location.hostname||"").toLowerCase();
+    if(host!=="automatyzacjesklepow.pl"&&host!=="www.automatyzacjesklepow.pl")return;
+    if(document.querySelector('script[data-umami-loader="1"]'))return;
+    var sc=document.createElement("script");
+    sc.async=true;
+    sc.src="https://statystyki.automatyzacjesklepow.pl/script.js";
+    sc.setAttribute("data-website-id","426e2d75-f696-4c0a-ab60-79e76cf1d73c");
+    sc.setAttribute("data-domains","automatyzacjesklepow.pl,www.automatyzacjesklepow.pl");
+    sc.setAttribute("data-umami-loader","1");
+    document.head.appendChild(sc);
+  })();
 
   // kartony: rysowane izometrycznie na regale
   document.querySelectorAll("svg.kartony").forEach(function(svg){
@@ -46,14 +62,34 @@
   // ksiega realizacji: przewracanie kart
   document.querySelectorAll(".ksiega").forEach(function(ks){
     var karty = [].slice.call(ks.querySelectorAll(".karta")), kropy = [].slice.call(ks.querySelectorAll(".kropy button"));
-    var i = 0, zajety = false, n = karty.length, timer;
+    var i = 0, zajety = false, n = karty.length;
+    function zaladujKarte(karta){
+      karta.querySelectorAll("img[data-carousel-src]").forEach(function(img){
+        var srcset=img.getAttribute("data-carousel-srcset"), sizes=img.getAttribute("data-carousel-sizes"), src=img.getAttribute("data-carousel-src");
+        if(srcset)img.setAttribute("srcset",srcset);
+        if(sizes)img.setAttribute("sizes",sizes);
+        if(src)img.setAttribute("src",src);
+        img.removeAttribute("data-carousel-src");
+        img.removeAttribute("data-carousel-srcset");
+        img.removeAttribute("data-carousel-sizes");
+      });
+    }
     function ustaw(){
-      karty.forEach(function(k, j){ k.classList.toggle("aktywna", j === i); k.classList.toggle("pod-spodem", j === (i+1)%n); });
-      kropy.forEach(function(d, j){ d.classList.toggle("tu", j === i); });
+      karty.forEach(function(k, j){
+        var active=j===i;
+        if(active)zaladujKarte(k);
+        k.classList.toggle("aktywna", active); k.classList.toggle("pod-spodem", j === (i+1)%n);
+        k.setAttribute("aria-hidden", active ? "false" : "true");
+        k.setAttribute("aria-label", (j+1)+" z "+n);
+        k.setAttribute("role","group");
+        k.querySelectorAll("a,button,input,select,textarea").forEach(function(el){if(active)el.removeAttribute("tabindex");else el.setAttribute("tabindex","-1");});
+      });
+      kropy.forEach(function(d, j){ d.classList.toggle("tu", j === i); d.setAttribute("aria-current", j===i ? "true" : "false"); });
     }
     function idz(kier){
       if (zajety) return; zajety = true;
       var stara = karty[i], nowy = (i + kier + n) % n, nowa = karty[nowy];
+      zaladujKarte(nowa);
       if (spokoj){ i = nowy; ustaw(); zajety = false; return; }
       if (kier > 0){
         nowa.classList.add("pod-spodem"); karty.forEach(function(k){ if (k!==stara && k!==nowa) k.classList.remove("pod-spodem"); });
@@ -63,20 +99,16 @@
         nowa.classList.add("wraca");
         setTimeout(function(){ nowa.classList.remove("wraca"); i = nowy; ustaw(); zajety = false; }, 900);
       }
-      odlicz();
     }
-    function odlicz(){ clearTimeout(timer); timer = setTimeout(function(){ idz(1); }, 5500); }
     ks.querySelector(".strzalka.prawa").addEventListener("click", function(){ idz(1); });
     ks.querySelector(".strzalka.lewa").addEventListener("click", function(){ idz(-1); });
     kropy.forEach(function(d, j){ d.addEventListener("click", function(){ if (j !== i) idz(j > i ? 1 : -1); }); });
     var x0 = null;
     ks.addEventListener("pointerdown", function(e){ x0 = e.clientX; });
     ks.addEventListener("pointerup", function(e){ if (x0 === null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) idz(dx < 0 ? 1 : -1); });
-    ks.addEventListener("mouseenter", function(){ clearTimeout(timer); });
-    ks.addEventListener("mouseleave", odlicz);
-    document.addEventListener("keydown", function(e){ var r = ks.getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) return; if (e.key === "ArrowRight") idz(1); if (e.key === "ArrowLeft") idz(-1); });
-    var widoczna = new IntersectionObserver(function(ws){ ws.forEach(function(w){ if (w.isIntersecting) odlicz(); else clearTimeout(timer); }); }, {threshold:.4});
-    widoczna.observe(ks); ustaw();
+
+    ks.addEventListener("keydown", function(e){ if (e.key === "ArrowRight"){e.preventDefault();idz(1);} if (e.key === "ArrowLeft"){e.preventDefault();idz(-1);} });
+    ustaw();
   });
 
   // kod na dokumencie ksef
@@ -97,6 +129,79 @@
     wj.forEach(function(e){ob.observe(e)});
     setTimeout(function(){ wj.forEach(function(e){e.classList.add("widac")}); }, 1500);
   }
+
+  // pierwsze źródło wejścia / UTM — tylko w sessionStorage, do kontekstu leada
+  (function(){
+    try{
+      var p=new URLSearchParams(location.search), saved=JSON.parse(sessionStorage.getItem("leadSource")||"{}"), changed=false;
+      ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function(k){
+        if(p.get(k)&&!saved[k]){saved[k]=p.get(k);changed=true;}
+      });
+      if(!saved.entry){saved.entry=location.pathname;changed=true;}
+      if(!saved.referrer&&document.referrer){saved.referrer=document.referrer;changed=true;}
+      if(p.get("zrodlo")){saved.zrodlo=p.get("zrodlo");changed=true;}
+      if(changed)sessionStorage.setItem("leadSource",JSON.stringify(saved));
+    }catch(e){}
+  })();
+
+  // filtrowanie bazy wiedzy
+  document.querySelectorAll("[data-poradniki-filter]").forEach(function(input){
+    var items=[].slice.call(document.querySelectorAll(".wpisy li"));
+    var out=document.querySelector("[data-poradniki-count]"), tracked=false;
+    function norm(v){return (v||"").toLocaleLowerCase("pl").normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+    function filtruj(){var q=norm(input.value.trim()),visible=0;items.forEach(function(li){var ok=!q||norm(li.textContent).indexOf(q)>=0;li.hidden=!ok;if(ok)visible++;});if(out)out.textContent=q?("Pasujących pozycji: "+visible):("Wszystkich pozycji: "+items.length);}
+    input.addEventListener("input",function(){filtruj();if(!tracked&&input.value.trim().length>=2){tracked=true;siteTrack("poradniki-szukaj");}});filtruj();
+  });
+
+  // kwalifikator pierwszego etapu — wskazuje punkt startowy, nie wycenę całego projektu
+  document.querySelectorAll("[data-kwalifikator]").forEach(function(box){
+    var problem=box.querySelector("[name=problem]"),stan=box.querySelector("[name=stan]"),wynik=box.querySelector("[data-wynik]");
+    var map={
+      excel:["Pierwszy moduł aplikacji","od 2 900 zł","Zacząłbym od jednego procesu i wspólnej bazy zamiast przenoszenia całego Excela 1:1.","System zamiast Excela"],
+      przepisywanie:["Integracja systemów","od 2 900 zł","Najpierw sprawdziłbym API obu programów i ustalił jedno źródło prawdy dla danych.","Integracja kilku programów / API"],
+      sprzedaz:["Pierwszy moduł CRM","od 2 900 zł","Warto zacząć od klientów, szans i jednego realnego etapu sprzedaży.","CRM lub obsługa sprzedaży"],
+      wyceny:["Pierwszy moduł wycen i ofert","od 2 900 zł","Zacząłbym od jednego sposobu kalkulacji, kontroli marży i jednego szablonu oferty PDF.","System do wycen i ofert"],
+      zlecenia:["Pierwszy moduł obsługi zleceń","od 2 900 zł","Lista spraw, karta zlecenia i statusy zwykle wystarczą na pierwszy etap.","System do obsługi zleceń"],
+      rezerwacje:["Pierwszy moduł rezerwacji","od 2 900 zł","Najpierw trzeba opisać zasoby i reguły, które decydują o dostępności.","System rezerwacji"],
+      dokumenty:["Automatyzacja dokumentu","od 2 900 zł","Najlepszym wejściem jest jeden prawdziwy wzór dokumentu i źródło jego danych.","Automatyzacja dokumentów"],
+      klient:["Panel klienta / B2B","od 2 900 zł","Najpierw wybieramy jedną informację lub czynność, którą klient ma obsłużyć sam.","Panel klienta B2B"],
+      ai:["Analiza procesu + punktowe AI","od 1 200 zł za analizę","Najpierw oddzieliłbym zwykłe reguły od kroku, który naprawdę wymaga interpretacji.","Automatyzacja z AI"]
+    };
+    function render(track){var m=map[problem.value];if(!m){wynik.hidden=true;return;}if(track)siteTrack("kwalifikator-wynik",{problem:problem.value,stan:stan.value});var dopisek=stan.value==="niejasny"?" Przy niejasnym procesie rozsądniej zacząć od analizy za 1 200 zł.":"";var href="opisz-projekt.html?typ="+encodeURIComponent(m[3])+"&zrodlo=kwalifikator";wynik.innerHTML='<h3>'+m[0]+'</h3><p><strong>Punkt startowy: '+m[1]+'</strong></p><p>'+m[2]+dopisek+'</p><p class="slaby">To nie jest automatyczna wycena całego projektu — wynik wskazuje najbardziej prawdopodobny pierwszy etap na podstawie obecnego cennika.</p><a class="przycisk" data-umami-event="kwalifikator-opisz-projekt" href="'+href+'">Opisz ten projekt →</a>';wynik.hidden=false;}
+    problem.addEventListener("change",function(){render(true)});stan.addEventListener("change",function(){render(true)});render(false);
+  });
+
+  // dostępne menu mobilne
+  (function(){
+    var btn=document.querySelector(".menu-toggle"), nav=document.getElementById("nav-main"); if(!btn||!nav)return;
+    function close(){document.body.classList.remove("menu-open");btn.setAttribute("aria-expanded","false");btn.setAttribute("aria-label","Otwórz menu");}
+    btn.addEventListener("click",function(){var open=!document.body.classList.contains("menu-open");document.body.classList.toggle("menu-open",open);btn.setAttribute("aria-expanded",open?"true":"false");btn.setAttribute("aria-label",open?"Zamknij menu":"Otwórz menu");});
+    nav.addEventListener("click",function(e){if(e.target.closest("a"))close();});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.body.classList.contains("menu-open")){close();btn.focus();}});
+    addEventListener("resize",function(){if(innerWidth>900)close();});
+    document.addEventListener("click",function(e){if(document.body.classList.contains("menu-open")&&!nav.contains(e.target)&&!btn.contains(e.target))close();});
+  })();
+
+  // oglądanie case studies — tylko identyfikator sekcji, bez danych użytkownika
+  (function(){
+    if(!("IntersectionObserver" in window))return;
+    var seen={};
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&!seen[e.target.id]){seen[e.target.id]=true;siteTrack("case-study-view",{case:e.target.id});obs.unobserve(e.target);}});},{threshold:.05,rootMargin:"0px 0px -20% 0px"});
+    ["photonroof","wypozyczalnia"].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});
+  })();
+
+  // aktywna pozycja głównej nawigacji
+  (function(){
+    var current = location.pathname.split("/").pop() || "index.html";
+    var group = document.body.getAttribute("data-nav-active") || "";
+    document.querySelectorAll(".gora nav a[href]").forEach(function(a){
+      var raw = a.getAttribute("href");
+      if (!raw || raw.indexOf(":") >= 0 || raw.charAt(0) === "#") return;
+      var target = raw.split("#")[0].split("?")[0] || "index.html";
+      if (target === current || target === group) a.setAttribute("aria-current","page");
+      else a.removeAttribute("aria-current");
+    });
+  })();
 
   // ciemny naglowek nad ciemnymi rozdzialami
   var ciemne = [].slice.call(document.querySelectorAll("[data-ciemna]"));
@@ -139,4 +244,173 @@
   addEventListener("scroll", zaplanuj, {passive:true});
   addEventListener("resize", zaplanuj);
   zaplanuj();
+
+  // page-specific: kalkulator kosztu ręcznej pracy
+  (function(){
+    var box=document.querySelector("[data-roi-calc]"); if(!box)return;
+    var tracked=false;
+    var fmt0=new Intl.NumberFormat("pl-PL",{maximumFractionDigits:0});
+    var fmt1=new Intl.NumberFormat("pl-PL",{maximumFractionDigits:1});
+    var money=new Intl.NumberFormat("pl-PL",{style:"currency",currency:"PLN",maximumFractionDigits:0});
+    function val(n){var x=parseFloat(box.querySelector("[name="+n+"]").value);return Number.isFinite(x)&&x>=0?x:0;}
+    function render(){
+      var minutes=val("minuty"),times=val("razy"),people=val("osoby"),days=val("dni"),rate=val("stawka");
+      var ops=times*people*days,hours=ops*minutes/60,cost=hours*rate;
+      box.querySelector("[data-r=operacje]").textContent=fmt0.format(ops);
+      box.querySelector("[data-r=godziny]").textContent=fmt1.format(hours)+" h";
+      box.querySelector("[data-r=koszt]").textContent=money.format(cost);
+      box.querySelector("[data-r=rok-h]").textContent=fmt0.format(hours*12)+" h";
+      box.querySelector("[data-r=rok-koszt]").textContent=money.format(cost*12);
+    }
+    box.addEventListener("input",function(){
+      render();
+      if(!tracked){tracked=true;siteTrack("kalkulator-kosztu-pracy-uzyty");}
+    });
+    render();
+  })();
+
+  // page-specific: formularz briefu
+  (function(){
+    var form=document.getElementById("brief-form"); if(!form)return;
+    var copy=document.getElementById("kopiuj-brief"),
+        download=document.getElementById("pobierz-brief"),
+        clear=document.getElementById("wyczysc-brief"),
+        info=document.getElementById("brief-info"),
+        fallback=document.getElementById("brief-fallback");
+    function value(fd,n){return (fd.get(n)||"").toString().trim();}
+    var briefStarted=false,saveTimer;
+
+    function saveDraft(){
+      try{
+        var obj={};
+        new FormData(form).forEach(function(v,k){obj[k]=v;});
+        sessionStorage.setItem("briefDraft",JSON.stringify(obj));
+      }catch(e){}
+    }
+
+    try{
+      var draft=JSON.parse(sessionStorage.getItem("briefDraft")||"{}");
+      Object.keys(draft).forEach(function(k){
+        var el=form.elements[k];
+        if(el&&draft[k]!=null)el.value=draft[k];
+      });
+    }catch(e){}
+
+    form.addEventListener("input",function(){
+      if(!briefStarted){briefStarted=true;siteTrack("brief-start");}
+      clearTimeout(saveTimer);
+      saveTimer=setTimeout(saveDraft,180);
+    },{passive:true});
+    form.addEventListener("change",saveDraft,{passive:true});
+
+    var params=new URLSearchParams(location.search);
+    var typParam=params.get("typ");
+    if(typParam){
+      var select=form.querySelector("[name=typ]");
+      var match=[].slice.call(select.options).find(function(o){return o.text===typParam;});
+      if(match)select.value=match.value;
+    }
+
+    function showFallback(message){
+      fallback.value=message;
+      fallback.hidden=false;
+      fallback.focus();
+      fallback.select();
+      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@automatyzacjesklepow.pl.";
+    }
+
+    function brief(){
+      var fd=new FormData(form),ref=document.referrer||location.href,source="";
+      try{
+        var saved=JSON.parse(sessionStorage.getItem("leadSource")||"{}");
+        source=Object.keys(saved).map(function(k){return k+"="+saved[k];}).join(" | ");
+      }catch(e){}
+      return [
+        "Dzień dobry","","chcę porozmawiać o projekcie dla firmy.","",
+        "Imię i nazwisko: "+value(fd,"imie"),
+        "Firma: "+(value(fd,"firma")||"—"),
+        "E-mail: "+value(fd,"email"),
+        "Telefon: "+(value(fd,"telefon")||"—"),
+        "Typ projektu: "+value(fd,"typ"),"",
+        "JAK WYGLĄDA TO DZISIAJ","----------------------",value(fd,"dzis"),"",
+        "NAJWIĘKSZY PROBLEM","-----------------",value(fd,"problem"),"",
+        "Obecne narzędzia: "+(value(fd,"narzedzia")||"—"),
+        "Liczba użytkowników: "+value(fd,"uzytkownicy"),
+        "Orientacyjny budżet: "+(value(fd,"budzet")||"—"),"",
+        "EFEKT PIERWSZEGO ETAPU","----------------------",value(fd,"efekt")||"—","",
+        "Strona, z której trafiłem do formularza: "+ref,
+        "Źródło / kampania: "+(source||"—")
+      ].join("\n");
+    }
+
+    form.addEventListener("submit",async function(e){
+      e.preventDefault();
+      if(!form.reportValidity())return;
+      var fd=new FormData(form);
+      var subject="Zapytanie o projekt — "+(fd.get("typ")||"aplikacja dla firmy");
+      var message=brief();
+      var copied=false;
+      try{await navigator.clipboard.writeText(message);copied=true;}catch(err){}
+      var mailBody=message;
+      if(message.length>3500&&copied){
+        mailBody="Dzień dobry,\n\nprzygotowałem pełny brief projektu w formularzu na stronie. Został skopiowany do schowka — wkleję go poniżej tej wiadomości.\n\nPozdrawiam";
+        info.textContent="Pełny brief został skopiowany. Po otwarciu wiadomości wklej go pod przygotowanym tekstem.";
+      }else if(message.length>3500&&!copied){
+        showFallback(message);return;
+      }else{
+        info.textContent=copied?"Brief został też skopiowany do schowka jako kopia zapasowa.":"Otwieram program pocztowy z przygotowanym briefem.";
+      }
+      siteTrack("brief-mailto-ready",{typ:value(fd,"typ")});
+      location.href="mailto:kontakt@automatyzacjesklepow.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
+    });
+
+    if(copy)copy.addEventListener("click",async function(){
+      if(!form.reportValidity())return;
+      var message=brief();
+      try{
+        await navigator.clipboard.writeText(message);
+        fallback.hidden=true;
+        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@automatyzacjesklepow.pl.";
+      }catch(e){showFallback(message);}
+    });
+
+    if(download)download.addEventListener("click",function(){
+      if(!form.reportValidity())return;
+      var blob=new Blob([brief()],{type:"text/plain;charset=utf-8"}),
+          url=URL.createObjectURL(blob),
+          a=document.createElement("a");
+      a.href=url;
+      a.download="brief-projektu.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+      info.textContent="Brief zapisany jako plik TXT.";
+    });
+
+    if(clear)clear.addEventListener("click",function(){
+      if(!confirm("Wyczyścić cały szkic briefu zapisany w tej karcie?"))return;
+      form.reset();
+      fallback.hidden=true;
+      sessionStorage.removeItem("briefDraft");
+      info.textContent="Szkic wyczyszczony. Formularz nadal niczego nie wysyła na serwer.";
+      form.querySelector("[name=imie]").focus();
+    });
+  })();
+
+  // page-specific: ustawienia prywatności Umami
+  (function(){
+    var status=document.getElementById("umami-status"); if(!status)return;
+    var off=document.getElementById("umami-off"),on=document.getElementById("umami-on");
+    function disabled(){return localStorage.getItem("umami.disabled")==="1";}
+    function render(){status.textContent=disabled()?"Statystyki są wyłączone w tej przeglądarce.":"Statystyki są włączone w tej przeglądarce.";}
+    if(off)off.addEventListener("click",function(){localStorage.setItem("umami.disabled","1");location.reload();});
+    if(on)on.addEventListener("click",function(){localStorage.removeItem("umami.disabled");location.reload();});
+    render();
+  })();
+
+  // druk / zapis cennika jako PDF
+  document.querySelectorAll("[data-print-cennik]").forEach(function(btn){
+    btn.addEventListener("click",function(){window.print();});
+  });
 })();

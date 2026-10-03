@@ -1,0 +1,41 @@
+# Automatyzacje dla firm — Maciej Gryziec
+
+> Dedykowane aplikacje webowe, systemy do obsługi zleceń, CRM-y, integracje API, automatyzacje procesów i narzędzia dla e-commerce.
+
+## Najważniejsze strony
+- [Oferta dla firm](https://automatyzacjesklepow.pl/dedykowane-oprogramowanie-dla-firm.html)
+- [Realizacje](https://automatyzacjesklepow.pl/realizacje.html)
+- [Cennik](https://automatyzacjesklepow.pl/cennik.html)
+- [Jak pracuję](https://automatyzacjesklepow.pl/jak-pracuje.html)
+- [O mnie](https://automatyzacjesklepow.pl/o-mnie.html)
+- [Poradniki](https://automatyzacjesklepow.pl/poradniki.html)
+- [Opisz projekt](https://automatyzacjesklepow.pl/opisz-projekt.html)
+
+## Narzędzia
+- [Kalkulator kosztu ręcznej pracy](https://automatyzacjesklepow.pl/kalkulator-kosztu-recznej-pracy.html)
+
+## Rozwiązania
+- [System do wycen i ofert](https://automatyzacjesklepow.pl/system-do-wycen-i-ofert.html)
+- [CRM na zamówienie](https://automatyzacjesklepow.pl/crm-na-zamowienie.html)
+- [System do obsługi zleceń](https://automatyzacjesklepow.pl/system-do-obslugi-zlecen.html)
+- [Integracje API](https://automatyzacjesklepow.pl/integracje-api-dla-firm.html)
+- [Aplikacje webowe](https://automatyzacjesklepow.pl/aplikacje-webowe-dla-firm.html)
+- [System zamiast Excela](https://automatyzacjesklepow.pl/system-zamiast-excela.html)
+- [Panel klienta B2B](https://automatyzacjesklepow.pl/panel-klienta-b2b.html)
+- [System rezerwacji](https://automatyzacjesklepow.pl/system-rezerwacji-dla-firm.html)
+- [Automatyzacja dokumentów](https://automatyzacjesklepow.pl/automatyzacja-dokumentow-w-firmie.html)
+
+## Branże
+- [Firma usługowa](https://automatyzacjesklepow.pl/system-dla-firmy-uslugowej.html)
+- [Serwis techniczny](https://automatyzacjesklepow.pl/system-dla-serwisu-technicznego.html)
+- [Produkcja na zamówienie](https://automatyzacjesklepow.pl/system-dla-produkcji-na-zamowienie.html)
+- [Wypożyczalnia](https://automatyzacjesklepow.pl/program-dla-wypozyczalni.html)
+
+## E-commerce
+- [Sprawdzarka sklepu](https://automatyzacjesklepow.pl/sprawdzarka.html)
+- [Integracja sklepu z księgowością](https://automatyzacjesklepow.pl/integracja-sklepu-z-ksiegowoscia.html)
+- [Automatyzacja Allegro](https://automatyzacjesklepow.pl/automatyzacja-allegro.html)
+
+## Kontakt
+E-mail: kontakt@automatyzacjesklepow.pl
+Telefon: +48 570 427 127
