@@ -558,7 +558,7 @@ body.ciemna .gora nav .nav-cta{background:#fff;color:#143a8b}
   @page{size:A4;margin:16mm}
   html{scroll-behavior:auto}
   body{background:#fff!important;color:#000!important;font-size:11pt;overflow:visible}
-  .gora,.stopka,.koniec,.mobile-actions,.menu-toggle,.strzalka,.kropy,.brief-actions,.poradniki-filter,.kwalifikator,.print-action,.skip-link,.okruszki,.powiazane{display:none!important}
+  .gora,.stopka,.koniec,.mobile-actions,.menu-toggle,.strzalka,.kropy,.brief-actions,.poradniki-filter,.kwalifikator,.print-action,.skip-link,.okruszki,.powiazane,.no-print{display:none!important}
   .czolo,.rozdzial,.tresc,.studium{clip-path:none!important;background:#fff!important;color:#000!important;margin:0!important;overflow:visible!important}
   .czolo .w,.rozdzial .w{min-height:0!important;padding:0 0 18mm!important;display:block!important}
   .czolo .tekst,.tekst,.tresc{margin:0!important;max-width:none!important;padding:0!important;color:#000!important}

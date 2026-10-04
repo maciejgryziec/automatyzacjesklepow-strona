@@ -607,7 +607,7 @@ body.ciemna .gora nav .nav-cta{background:#fff;color:#143a8b}
   @page{size:A4;margin:16mm}
   html{scroll-behavior:auto}
   body{background:#fff!important;color:#000!important;font-size:11pt;overflow:visible}
-  .gora,.stopka,.koniec,.mobile-actions,.menu-toggle,.strzalka,.kropy,.brief-actions,.poradniki-filter,.kwalifikator,.print-action,.skip-link,.okruszki,.powiazane{display:none!important}
+  .gora,.stopka,.koniec,.mobile-actions,.menu-toggle,.strzalka,.kropy,.brief-actions,.poradniki-filter,.kwalifikator,.print-action,.skip-link,.okruszki,.powiazane,.no-print{display:none!important}
   .czolo,.rozdzial,.tresc,.studium{clip-path:none!important;background:#fff!important;color:#000!important;margin:0!important;overflow:visible!important}
   .czolo .w,.rozdzial .w{min-height:0!important;padding:0 0 18mm!important;display:block!important}
   .czolo .tekst,.tekst,.tresc{margin:0!important;max-width:none!important;padding:0!important;color:#000!important}
@@ -803,9 +803,9 @@ JS = r"""
       rezerwacje:["Pierwszy moduł rezerwacji","od 2 900 zł","Najpierw trzeba opisać zasoby i reguły, które decydują o dostępności.","System rezerwacji"],
       dokumenty:["Automatyzacja dokumentu","od 2 900 zł","Najlepszym wejściem jest jeden prawdziwy wzór dokumentu i źródło jego danych.","Automatyzacja dokumentów"],
       klient:["Panel klienta / B2B","od 2 900 zł","Najpierw wybieramy jedną informację lub czynność, którą klient ma obsłużyć sam.","Panel klienta B2B"],
-      ai:["Analiza procesu + punktowe AI","od 1 200 zł za analizę","Najpierw oddzieliłbym zwykłe reguły od kroku, który naprawdę wymaga interpretacji.","Automatyzacja z AI"]
+      ai:["Wstępny plan + punktowe AI","0 zł na start","Najpierw oddzieliłbym zwykłe reguły od kroku, który naprawdę wymaga interpretacji.","Automatyzacja z AI"]
     };
-    function render(track){var m=map[problem.value];if(!m){wynik.hidden=true;return;}if(track)siteTrack("kwalifikator-wynik",{problem:problem.value,stan:stan.value});var dopisek=stan.value==="niejasny"?" Przy niejasnym procesie rozsądniej zacząć od analizy za 1 200 zł.":"";var href="opisz-projekt.html?typ="+encodeURIComponent(m[3])+"&zrodlo=kwalifikator";wynik.innerHTML='<h3>'+m[0]+'</h3><p><strong>Punkt startowy: '+m[1]+'</strong></p><p>'+m[2]+dopisek+'</p><p class="slaby">To nie jest automatyczna wycena całego projektu — wynik wskazuje najbardziej prawdopodobny pierwszy etap na podstawie obecnego cennika.</p><a class="przycisk" data-umami-event="kwalifikator-opisz-projekt" href="'+href+'">Opisz ten projekt →</a>';wynik.hidden=false;}
+    function render(track){var m=map[problem.value];if(!m){wynik.hidden=true;return;}if(track)siteTrack("kwalifikator-wynik",{problem:problem.value,stan:stan.value});var dopisek=stan.value==="niejasny"?" Przy niejasnym procesie zacząłbym od bezpłatnego wstępnego planu.":"";var href="opisz-projekt.html?typ="+encodeURIComponent(m[3])+"&zrodlo=kwalifikator";wynik.innerHTML='<h3>'+m[0]+'</h3><p><strong>Punkt startowy: '+m[1]+'</strong></p><p>'+m[2]+dopisek+'</p><p class="slaby">To nie jest automatyczna wycena całego projektu — wynik wskazuje najbardziej prawdopodobny pierwszy etap na podstawie obecnego cennika.</p><a class="przycisk" data-umami-event="kwalifikator-opisz-projekt" href="'+href+'">Opisz ten projekt →</a>';wynik.hidden=false;}
     problem.addEventListener("change",function(){render(true)});stan.addEventListener("change",function(){render(true)});render(false);
   });
 
@@ -1188,7 +1188,7 @@ def noc():
       f'<svg class="miasto" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true"><g data-s style="--s:10px">{r}{okna}</g><rect x="0" y="418" width="1440" height="2" fill="#081538"/></svg>')
 
 def droga():
-    kroki = [(90,430,"01","Analiza procesu","mapa pracy i plan rozwiązania","1 200 zł · 3–5 dni",".05"),
+    kroki = [(90,430,"01","Wstępny plan","problem → pierwszy krok","0 zł · 1–2 dni",".05"),
              (300,330,"02","Pierwszy moduł","działający etap aplikacji","od 2 900 zł",".25"),
              (510,230,"03","System na zamówienie","kolejne moduły i integracje","wycena etapami",".45"),
              (700,120,"04","Opieka miesięczna","monitoring i rozwój","od 349 zł / mies.",".65")]
@@ -1206,7 +1206,7 @@ def raport():
       + ''.join(f'<li style="--o:{j*.07:.2f}"><span class="{k}">{ {"b":"BŁĄD","u":"UWAGA","o":"OK"}[k] }</span> {t}</li>' for j,(k,t) in enumerate(w)) + '</ul></div>')
 
 def paragon():
-    poz = [("01 Analiza procesu","1 200 zł"),("   3–5 dni, mapa pracy i plan programu",None),("02 Pierwszy moduł","od 2 900 zł"),("   działający etap aplikacji",None),("02+ Integracja systemów","od 2 900 zł"),("   CRM / sklep / kalendarz → dokumenty",None),("03 System na zamówienie","wycena"),("   kolejne moduły etapami",None),("04 Opieka miesięczna",""),("   podstawowa","349 zł"),("   rozszerzona","599 zł"),("   pełna","899 zł")]
+    poz = [("01 Wstępny plan","0 zł"),("   problem → pierwszy krok → budżet",None),("02 Pierwszy moduł","od 2 900 zł"),("   działający etap aplikacji",None),("02+ Integracja systemów","od 2 900 zł"),("   CRM / sklep / kalendarz → dokumenty",None),("03 System na zamówienie","wycena"),("   kolejne moduły etapami",None),("04 Opieka miesięczna",""),("   podstawowa","349 zł"),("   rozszerzona","599 zł"),("   pełna","899 zł")]
     w = ''
     for a,b in poz:
         if a.startswith("   "): w += f'<div class="poz sz"><span>{a.strip()}</span><span>{b or ""}</span></div>'
@@ -1214,7 +1214,7 @@ def paragon():
     return ('<div class="kasa"><div class="drukarka"><i></i></div><div class="paragon"><div class="wys">'
       '<div class="naglowek">AUTOMATYZACJE DLA FIRM</div><div class="drobne">Maciej Gryziec · aplikacje i systemy na zamówienie</div><div class="drobne">' + "zakres i cena ustalone przed startem" + '</div><hr>'
       + w + '<hr><div class="razem"><span>RAZEM</span><span>tyle, ile ustalimy</span></div><div class="poz sz"><span>cena uzgodnionego zakresu jest stała</span></div><div class="poz sz"><span>nowy zakres = osobny etap</span></div><hr>'
-      '<div class="drobne">Dziękujemy. Każdy krok można kupić osobno.</div><div class="kod"></div><p>5 902 2026 0907 4</p></div></div></div>')
+      '<div class="drobne">Płatna praca zaczyna się po akceptacji zakresu.</div><div class="kod"></div><p>5 902 2026 0907 4</p></div></div></div>')
 
 def ksiega():
     spr = ('<div class="spr"><div class="gora-p">sprawdzarka · mojsklep.pl <small>312 podstron, 41 s</small></div><div class="wynik"><b>62</b><span>punkty na 100<br>3 błędy, 2 ostrzeżenia, 9 sprawdzeń OK</span></div><div class="pasek-w"><i></i></div><ul>'

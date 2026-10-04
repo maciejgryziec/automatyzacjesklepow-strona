@@ -14,6 +14,7 @@ from pathlib import Path
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 import base64
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -132,11 +133,12 @@ try:
             )
 
         text = "\n".join((page.extract_text() or "") for page in reader.pages)
+        text_flat = re.sub(r"\s+", " ", text)
         check("PDF zawiera dużo treści", len(text) >= 3000, str(len(text)))
 
         required = (
             "CENNIK",
-            "01 Analiza",
+            "01 Wstępny",
             "02 Pierwszy",
             "02+ Integracja",
             "03 System na",
@@ -145,7 +147,7 @@ try:
             "899 zł / mies.",
         )
         for marker in required:
-            check(f"PDF zawiera: {marker}", marker in text)
+            check(f"PDF zawiera: {marker}", marker in text_flat)
 
         forbidden = (
             "Przejdź do treści",
