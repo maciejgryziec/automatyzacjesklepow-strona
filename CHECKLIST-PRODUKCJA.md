@@ -32,57 +32,47 @@ Stan audytu: 2026-10-06.
 - [x] finalna konfiguracja nginx przeszła `nginx -t` w aktualnym obrazie nginx z Coolify.
 - [x] symulacja release’u w tymczasowym klonie: artefakty przed i po commicie są identyczne.
 
-## 2. Obecna produkcja — poprawić przy deployu
+## 2. Obecna produkcja — stan po wdrożeniu 2026-10-06
 
-Obecny live nadal działa na starej wersji.
+Wdrożony commit funkcjonalny: `a9d78ac` — `Separate ecommerce SEO from maciejgryziec.pl`.
 
-- [ ] sprawdzarka: `./narzedzia/release-check.sh` → 160 testów zielonych,
-- [ ] sprawdzarka: commit/push/deploy wersji z retencją 30 dni, cleanupem, limitami kolejki/odpowiedzi i CSP,
-- [ ] sprawdzarka: `HEAD /` → 200 oraz `/healthz` → `{"status":"ok"}`,
-- [ ] sprawdzarka: potwierdzić na live komunikat „automatycznie usuwane po 30 dniach”,
-- [ ] sprawdzarka: potwierdzić na live brak pola e-mail (raport jest dostępny przez niepubliczny link),
-- [ ] sprawdzarka: potwierdzić natywny Ceneo XML + Google Merchant RSS oraz healthcheck,
-- [ ] sprawdzarka: potwierdzić security.txt, CSP/HSTS i Swagger/OpenAPI → 404,
-- [ ] dopiero potem lub w tym samym release: commit zmian strony głównej,
-- [ ] push strony do `main`,
-- [ ] pełny redeploy aplikacji Static w Coolify,
-- [ ] Coolify healthcheck strony ustawić na `/healthz`,
-- [ ] sprawdzić, czy `.dockerignore` został użyty podczas builda,
-- [ ] `/zrodla/index.html` musi zwracać 404,
-- [ ] `/narzedzia/buduj-nowa.py` musi zwracać 404,
-- [ ] `/.well-known/security.txt` musi zwracać 200,
-- [ ] `/og-image.png` musi zwracać 200,
-- [ ] `/feed.xml` i `/llms.txt` muszą zwracać 200.
+- [x] `automatyzacjesklepow.pl` działa na nowej wersji,
+- [x] homepage jest pozycjonowany pod e-commerce: BaseLinker, Shoper, Allegro, hurtownie, faktury i KSeF,
+- [x] wszystkie 46 stron HTML nadal są dostępne dla użytkownika,
+- [x] 23 ogólne landingi wskazują canonical na `maciejgryziec.pl`,
+- [x] sitemap starej domeny zawiera 21 własnych, self-canonical URL-i,
+- [x] pełny redeploy aplikacji Static w Coolify zakończony,
+- [x] `/healthz` → 200,
+- [x] `/.well-known/security.txt` → 200,
+- [x] `/og-image.png`, `/feed.xml`, `/llms.txt`, `/sitemap.xml` → 200,
+- [x] `/zrodla/index.html`, `/narzedzia/buduj-nowa.py`, pliki repo/docs/deploy → 404,
+- [x] własny 404 zachowuje HTTP 404,
+- [x] sprawdzarka subdomena → 200,
+- [x] sprawdzarka ma retencję 30 dni i nie zbiera zbędnego e-maila,
+- [x] sprawdzarka `/healthz` → 200 i `noindex`,
+- [x] Swagger / Redoc / OpenAPI → 404,
+- [x] `python3 narzedzia/sprawdz-live.py` → `PRODUKCJA OK`.
 
-Po deployu:
+## 3. Nginx / Coolify — stan produkcyjny
 
-```bash
-python3 narzedzia/sprawdz-live.py
-```
-
-## 3. Nginx / Coolify — do wdrożenia razem z release
-
-Obecnie:
-- `http://` → `https://` działa,
-- `www` NIE przekierowuje na apex,
-- brak HSTS,
-- brak `X-Content-Type-Options`,
-- brak `Referrer-Policy`,
-- brak `Permissions-Policy`.
-
-Do zrobienia:
-- [ ] wkleić przygotowaną konfigurację nginx z README do Coolify,
-- [ ] `www.automatyzacjesklepow.pl/*` → 301 do `https://automatyzacjesklepow.pl/*`,
-- [ ] HSTS,
-- [ ] nosniff,
-- [ ] Referrer-Policy,
-- [ ] Permissions-Policy,
-- [ ] Content-Security-Policy,
-- [ ] gzip dla zasobów tekstowych,
-- [ ] cache statycznych assetów (CSS/JS immutable dzięki hashom),
-- [ ] blokady źródeł/dotfiles także na poziomie nginx,
-- [ ] 301 `index.html → /` i extensionless → kanoniczne `.html`,
-- [ ] własne 404 i 50x.
+- [x] `http://` → `https://`,
+- [x] `www.automatyzacjesklepow.pl/*` → 301 do apex,
+- [x] HSTS,
+- [x] `X-Content-Type-Options: nosniff`,
+- [x] `X-Frame-Options: DENY`,
+- [x] `Cross-Origin-Opener-Policy: same-origin`,
+- [x] `Referrer-Policy: strict-origin-when-cross-origin`,
+- [x] `Permissions-Policy`,
+- [x] Content-Security-Policy,
+- [x] CSP pozwala na self-hosted Umami i formularz sprawdzarki,
+- [x] gzip dla HTML/CSS/JS,
+- [x] cache CSS/JS i obrazów,
+- [x] HTML rewalidowany przez `no-cache`,
+- [x] ETag,
+- [x] blokady źródeł/dotfiles,
+- [x] `index.html → /`,
+- [x] extensionless → kanoniczne `.html`,
+- [x] własne 404 / 50x.
 
 ## 4. TLS — stan dobry
 
@@ -114,16 +104,18 @@ Przed zmianą DMARC/SPF:
 
 Nie zmieniać tych rekordów „dla lepszego wyniku” bez powyższej weryfikacji — można przypadkiem pogorszyć dostarczalność poczty.
 
-## 6. Google po deployu
+## 6. Google Search Console
 
-Domena ma już rekord `google-site-verification`, więc Search Console była co najmniej przygotowana / zweryfikowana DNS-em.
+- [x] własność domenowa jest zweryfikowana,
+- [x] `https://automatyzacjesklepow.pl/sitemap.xml` została ponownie przesłana 2026-10-06,
+- [x] Search Console przyjęło sitemapę komunikatem „Mapa witryny została przesłana pomyślnie”,
+- [x] status obecnego wpisu w Search Console: `Sukces`,
+- [x] produkcyjna sitemap zawiera 21 własnych URL-i,
+- [ ] Google pokazuje jeszcze 18 wykrytych stron z poprzedniego odczytu z 28.09.2026; poczekać na ponowny crawl po zgłoszeniu z 06.10.2026,
+- [ ] po ponownym odczycie potwierdzić, że Search Console widzi nowe 21 URL-i,
+- [ ] po 2–4 tygodniach sprawdzić zapytania, CTR i strony z wyświetleniami.
 
-Po deployu:
-- [ ] otworzyć Search Console,
-- [ ] zgłosić / ponownie przesłać `https://automatyzacjesklepow.pl/sitemap.xml`,
-- [ ] sprawdzić indeksowanie nowych głównych URL-i,
-- [ ] po 2–4 tygodniach sprawdzić zapytania, CTR i strony z wyświetleniami,
-- [ ] nie oceniać SEO po 1–2 dniach.
+Nie dodawać ponownie ogólnych landingów do sitemap `automatyzacjesklepow.pl`; pozostają dostępne dla użytkownika, ale ich canonical prowadzi do `maciejgryziec.pl`.
 
 ## 7. Dane firmy / prawne — potrzebne dane właściciela
 
@@ -146,4 +138,4 @@ Zgodnie z decyzją z 2026-10-06 nie prowadzimy teraz zmian profilu ani publikacj
 ## Dane formalne do potwierdzenia przed publikacją
 
 - [ ] potwierdzić, czy administratorem/usługodawcą ma być publicznie `Maciej Gryziec`, czy pełna zarejestrowana nazwa działalności; jeśli działalność ma obowiązkowe dane identyfikacyjne, uzupełnić je w polityce/footerze bez zgadywania,
-- [ ] po stabilnym deployu strony wykonać osobny Etap L z `DEPLOY-PLAN.md` dla Umami; nie łączyć upgrade'u analityki z tym samym wdrożeniem.
+- [x] Umami starej domeny pozostaje osobne: website ID `426e2d75-f696-4c0a-ab60-79e76cf1d73c`; nie mieszać z witryną `maciejgryziec.pl`.

@@ -95,3 +95,16 @@ Dopiero potem:
 - `git diff --cached --check`,
 - przegląd `git status`,
 - commit/push zgodnie z `DEPLOY-PLAN.md`.
+
+## Stan produkcyjny po deployu 2026-10-06
+
+- commit produkcyjny: `a9d78ac` — `Separate ecommerce SEO from maciejgryziec.pl`,
+- pełny smoke-test live: `PRODUKCJA OK`,
+- 46 stron HTML pozostaje dostępnych,
+- sitemap indeksuje 21 własnych URL-i e-commerce / hub / kontakt / realizacje,
+- 23 ogólne landingi mają cross-domain canonical do `maciejgryziec.pl`,
+- homepage jest pozycjonowany osobno pod automatyzacje e-commerce,
+- Search Console przyjęło nową sitemapę; status `Sukces`,
+- aktualnie Google pokazuje jeszcze 18 wykrytych stron z poprzedniego odczytu 28.09.2026 — oczekiwany jest ponowny crawl po zgłoszeniu 06.10.2026,
+- Umami starej domeny pozostaje osobne: `426e2d75-f696-4c0a-ab60-79e76cf1d73c`,
+- LinkedIn jest poza zakresem obecnych prac.
