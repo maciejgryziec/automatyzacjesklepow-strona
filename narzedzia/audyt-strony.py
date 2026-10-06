@@ -13,6 +13,20 @@ from collections import defaultdict, deque
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "zrodla"
 DOMAIN = "https://automatyzacjesklepow.pl"
+MACIEJ_DOMAIN = "https://maciejgryziec.pl"
+CANONICAL_TO_MACIEJ = {
+    "ai-w-automatyzacji-firmy", "aplikacje-webowe-dla-firm",
+    "automatyzacja-dokumentow-w-firmie", "automatyzacja-procesow-w-firmie",
+    "crm-na-zamowienie", "dedykowane-oprogramowanie-dla-firm",
+    "gotowy-system-czy-dedykowane-oprogramowanie", "ile-kosztuje-aplikacja-dla-firmy",
+    "integracje-api-dla-firm", "jak-pracuje", "jak-przygotowac-brief-aplikacji",
+    "kalkulator-konfigurator-dla-klientow", "kalkulator-kosztu-recznej-pracy",
+    "ksef-dla-jdg-terminy", "panel-klienta-b2b", "program-dla-wypozyczalni",
+    "system-dla-firmy-uslugowej", "system-dla-produkcji-na-zamowienie",
+    "system-dla-serwisu-technicznego", "system-do-obslugi-zlecen",
+    "system-do-wycen-i-ofert", "system-rezerwacji-dla-firm",
+    "system-zamiast-excela",
+}
 BOOTSTRAP_JS = 'document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");'
 BOOTSTRAP_HASH = "'sha256-9h4+QNjOt3CgNFpdn6iqbeII0Hyi4PqjGT1QhTZFYlc='"
 errors = []
@@ -56,8 +70,13 @@ for path in pages:
         err(name, f"długość title={len(title)}")
     if not (70 <= len(desc) <= 175):
         err(name, f"długość description={len(desc)}")
-    if not canonical.startswith(DOMAIN):
-        err(name, "brak lub błędny canonical")
+    slug = path.stem
+    expected_canonical = (
+        f"{MACIEJ_DOMAIN}/{name}" if slug in CANONICAL_TO_MACIEJ
+        else (DOMAIN + "/" if name == "index.html" else f"{DOMAIN}/{name}")
+    )
+    if canonical != expected_canonical:
+        err(name, f"canonical {canonical!r}, oczekiwano {expected_canonical!r}")
 
     for required in (
         'property="og:title"', 'property="og:description"', 'property="og:url"',
@@ -574,7 +593,8 @@ except Exception as exc:
 
 expected_urls = {
     DOMAIN if p.name == "index.html" else f"{DOMAIN}/{p.name}"
-    for p in pages if p.name not in {"404.html", "50x.html"}
+    for p in pages
+    if p.name not in {"404.html", "50x.html"} and p.stem not in CANONICAL_TO_MACIEJ
 }
 image_ns = {"i": "http://www.google.com/schemas/sitemap-image/1.1"}
 try:
@@ -620,11 +640,15 @@ else:
         feed_tree = ET.parse(feed_path)
         feed_ns = {"a": "http://www.w3.org/2005/Atom"}
         entries = feed_tree.getroot().findall("a:entry", feed_ns)
-        article_sources = [SOURCE / f"{slug}.html" for slug in (
-            "system-zamiast-excela", "gotowy-system-czy-dedykowane-oprogramowanie",
-            "ile-kosztuje-aplikacja-dla-firmy", "jak-przygotowac-brief-aplikacji",
-            "ai-w-automatyzacji-firmy", "wtyczka-czy-integracja", "ksef-dla-jdg-terminy"
-        ) if (SOURCE / f"{slug}.html").exists()]
+        article_sources = [
+            SOURCE / f"{slug}.html"
+            for slug in (
+                "system-zamiast-excela", "gotowy-system-czy-dedykowane-oprogramowanie",
+                "ile-kosztuje-aplikacja-dla-firmy", "jak-przygotowac-brief-aplikacji",
+                "ai-w-automatyzacji-firmy", "wtyczka-czy-integracja", "ksef-dla-jdg-terminy"
+            )
+            if slug not in CANONICAL_TO_MACIEJ and (SOURCE / f"{slug}.html").exists()
+        ]
         if len(entries) != len(article_sources):
             err("feed.xml", f"liczba wpisów={len(entries)}, oczekiwano={len(article_sources)}")
     except Exception as exc:

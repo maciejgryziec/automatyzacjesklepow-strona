@@ -1261,6 +1261,23 @@ USLUGI = {
   "system-do-obslugi-zlecen", "system-rezerwacji-dla-firm", "jak-pracuje",
 }
 
+# Ogolne landingi zostaja dostepne na automatyzacjesklepow.pl, ale ich
+# wersja kanoniczna jest na maciejgryziec.pl. Stara domena indeksuje
+# przede wszystkim wlasne tresci i narzedzia e-commerce.
+CANONICAL_TO_MACIEJ = {
+  "ai-w-automatyzacji-firmy", "aplikacje-webowe-dla-firm",
+  "automatyzacja-dokumentow-w-firmie", "automatyzacja-procesow-w-firmie",
+  "crm-na-zamowienie", "dedykowane-oprogramowanie-dla-firm",
+  "gotowy-system-czy-dedykowane-oprogramowanie", "ile-kosztuje-aplikacja-dla-firmy",
+  "integracje-api-dla-firm", "jak-pracuje", "jak-przygotowac-brief-aplikacji",
+  "kalkulator-konfigurator-dla-klientow", "kalkulator-kosztu-recznej-pracy",
+  "ksef-dla-jdg-terminy", "panel-klienta-b2b", "program-dla-wypozyczalni",
+  "system-dla-firmy-uslugowej", "system-dla-produkcji-na-zamowienie",
+  "system-dla-serwisu-technicznego", "system-do-obslugi-zlecen",
+  "system-do-wycen-i-ofert", "system-rezerwacji-dla-firm",
+  "system-zamiast-excela",
+}
+
 POWIAZANE = {
   "dedykowane-oprogramowanie-dla-firm": [
     ("Jak pracuję", "jak-pracuje.html", "Zobacz, jak dzielę projekt na małe, działające etapy."),
@@ -1502,7 +1519,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
                    'imagesrcset="zdjecia/photonroof-wymiary-800.webp 800w, zdjecia/photonroof-wymiary.webp 1600w" '
                    'imagesizes="(max-width: 820px) calc(100vw - 44px), 720px" '
                    'type="image/webp" fetchpriority="high">')
-    og_image, og_w, og_h, og_alt = OG_MEDIA.get(nazwa, ("https://automatyzacjesklepow.pl/og-image.png", 1200, 630, "Aplikacje, które pracują tak jak firma — Automatyzacje dla firm"))
+    og_image, og_w, og_h, og_alt = OG_MEDIA.get(nazwa, ("https://automatyzacjesklepow.pl/og-image.png", 1200, 630, "Aplikacje, które pracują tak jak firma — Automatyzacje Sklepów"))
     og_mime = "image/png" if og_image.lower().endswith(".png") else "image/jpeg"
     page_type = "ContactPage" if nazwa == "opisz-projekt" else ("CollectionPage" if nazwa in ("poradniki","realizacje") else "WebPage")
     graph = [{
@@ -1613,7 +1630,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <meta name="description" content="{opis}">
 <meta property="og:type" content="{og_type}">
 <meta property="og:locale" content="pl_PL">{article_tags}
-<meta property="og:site_name" content="Automatyzacje dla firm">
+<meta property="og:site_name" content="Automatyzacje Sklepów">
 <meta property="og:title" content="{tytul}">
 <meta property="og:description" content="{opis}">
 <meta property="og:url" content="{kanon}">
@@ -1628,7 +1645,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <meta name="twitter:image" content="{og_image}">
 <meta name="twitter:image:alt" content="{og_alt}">
 <link rel="canonical" href="{kanon}">
-<link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje dla firm" href="feed.xml">{PRELOAD}
+<link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje Sklepów" href="feed.xml">{PRELOAD}
 <link rel="stylesheet" href="list.css?v={ASSET_VERSION}">{PAL}
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
 <link rel="icon" href="favicon.ico?w=3" sizes="48x48">
@@ -1642,7 +1659,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <body{nav_attr}>
 <a class="skip-link" href="#main-content">Przejdź do treści</a>
 <header class="gora"><div class="w">
-  <a class="znak" href="/" aria-label="Maciej Gryziec — aplikacje i automatyzacje dla firm"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje dla firm</span></a>
+  <a class="znak" href="/" aria-label="Automatyzacje Sklepów — integracje i narzędzia e-commerce"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
   <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="{mobile_href}">Opisz projekt</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
   <nav id="nav-main" aria-label="Główna nawigacja">{nav_html}</nav>
 </div></header>
@@ -1652,7 +1669,7 @@ STOPKA = f"""
   <div class="stopka-grid">
     <div class="stopka-brand">
       <strong>Maciej Gryziec</strong>
-      <p>Aplikacje, systemy i automatyzacje dla firm. Pracuję zdalnie z firmami w całej Polsce.</p>
+      <p>Automatyzacje i integracje dla sklepów internetowych oraz dedykowane narzędzia dla firm. Pracuję zdalnie w całej Polsce.</p>
       <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz projekt →</a></p>
       <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a><br><a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
     </div>
@@ -1774,6 +1791,8 @@ def podstrona(plik):
     tytul = re.search(r"<title>(.*?)</title>", h, re.S).group(1).strip()
     opis = re.search(r'name="description" content="([^"]*)"', h).group(1)
     kanon = re.search(r'rel="canonical" href="([^"]*)"', h).group(1)
+    if nazwa in CANONICAL_TO_MACIEJ:
+        kanon = f"https://maciejgryziec.pl/{nazwa}.html"
     body = h[h.find("</header>")+9 : h.find("<footer")]
     body = body.replace('<div class="pasek-gorny"></div>', '')
     # tytul strony
@@ -1914,6 +1933,8 @@ for pth in sorted(glob.glob(CEL + "/*.html")):
     fn = os.path.basename(pth)
     if fn in ("404.html","50x.html"):
         continue
+    if fn.endswith(".html") and fn[:-5] in CANONICAL_TO_MACIEJ:
+        continue
     url = "https://automatyzacjesklepow.pl/" if fn == "index.html" else "https://automatyzacjesklepow.pl/" + fn
     pr = priorytet.get(fn, "0.7")
     zrodlo_daty = os.path.join(ZR, fn)
@@ -1930,7 +1951,7 @@ open(CEL + "/sitemap.xml", "w", encoding="utf-8").write(chr(10).join(linie) + ch
 
 # Atom feed dla stron poradnikowych.
 artykuly_feed=[]
-for nazwa in sorted(ARTYKULY):
+for nazwa in sorted(ARTYKULY - CANONICAL_TO_MACIEJ):
     src_path=os.path.join(ZR,nazwa+".html")
     if not os.path.exists(src_path):
         continue
@@ -1948,7 +1969,7 @@ for nazwa in sorted(ARTYKULY):
     })
 feed_updated=max((a["modified"] for a in artykuly_feed),default=date.today().isoformat())
 feed=['<?xml version="1.0" encoding="UTF-8"?>','<feed xmlns="http://www.w3.org/2005/Atom">',
-      '<title>Poradniki — Automatyzacje dla firm</title>',
+      '<title>Poradniki — Automatyzacje Sklepów</title>',
       '<id>https://automatyzacjesklepow.pl/feed.xml</id>',
       '<link href="https://automatyzacjesklepow.pl/feed.xml" rel="self"/>',
       '<link href="https://automatyzacjesklepow.pl/poradniki.html"/>',

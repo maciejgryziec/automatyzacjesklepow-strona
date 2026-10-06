@@ -1,18 +1,20 @@
 # Checklist produkcyjny — automatyzacjesklepow.pl
 
-Stan audytu: 2026-10-03.
+Stan audytu: 2026-10-06.
 
 ## 1. Kod i build — gotowe lokalnie
 
 - [x] generator jest przenośny i nie używa ścieżki konkretnego Maca,
 - [x] build jest idempotentny,
-- [x] 46 stron HTML; sitemap zawiera 44 indeksowane URL-e (404/50x wykluczone),
+- [x] 46 stron HTML; wszystkie pozostają dostępne dla użytkownika; sitemap zawiera 21 własnych, self-canonical URL-i,
 - [x] statyczny audyt przechodzi,
 - [x] lokalny audyt Chrome przechodzi (0 błędów),
 - [x] zewnętrzne linki urzędowe przechodzą audyt,
 - [x] mobile bez horizontal overflow,
 - [x] 404 i 50x mają `noindex`,
 - [x] sitemap wyklucza strony błędów,
+- [x] 23 ogólne landingi mają canonical do maciejgryziec.pl i nie są duplikowane w sitemapie automatyzacjesklepow.pl,
+- [x] homepage automatyzacjesklepow.pl jest pozycjonowany osobno pod integracje i automatyzacje e-commerce,
 - [x] Open Graph / Twitter / JSON-LD / breadcrumbs,
 - [x] responsive WebP + fallback JPG/PNG,
 - [x] hashowane URL-e CSS/JS,
@@ -137,14 +139,9 @@ Przed traktowaniem strony jako finalnej strony działalności należy potwierdzi
 
 Tych informacji nie wolno zgadywać.
 
-## 8. LinkedIn — następny etap
+## 8. LinkedIn — poza zakresem obecnych prac
 
-Po poprawnym deployu i zielonym `sprawdz-live.py`:
-- [ ] zaktualizować link w profilu LinkedIn,
-- [ ] przygotować serię postów opartych o Photonroof, panel wypożyczalni i budowę własnego systemu,
-- [ ] linkować posty do konkretnych landingów, nie zawsze do homepage,
-- [ ] używać UTM, np. `?utm_source=linkedin&utm_medium=social&utm_campaign=case_photonroof`,
-- [ ] porównywać w Umami wejścia → kwalifikator → brief-start → CTA.
+Zgodnie z decyzją z 2026-10-06 nie prowadzimy teraz zmian profilu ani publikacji na LinkedIn. Priorytetem są obie strony i ich poprawne rozdzielenie SEO.
 
 ## Dane formalne do potwierdzenia przed publikacją
 

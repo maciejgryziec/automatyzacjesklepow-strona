@@ -1,6 +1,6 @@
 # Release scope — główna strona
 
-Ten release jest jednym spójnym przebudowaniem serwisu z pozycji „automatyzacje sklepów” w stronę sprzedażową **aplikacji, systemów, integracji i automatyzacji dla firm**, z zachowaniem klastra e-commerce.
+Serwis **automatyzacjesklepow.pl** pozostaje kompletną stroną z pełną ofertą, ale jego główną rolą jest e-commerce: integracje sklepów, marketplace, BaseLinker, hurtownie, faktury, KSeF i Sprawdzarka. Ogólne aplikacje i systemy są nadal dostępne, natomiast ich wersją kanoniczną dla Google jest **maciejgryziec.pl**.
 
 ## Zakres funkcjonalny
 
@@ -28,12 +28,14 @@ Ten release jest jednym spójnym przebudowaniem serwisu z pozycji „automatyzac
 ## Zakres jakości / SEO
 
 - 46 wygenerowanych stron HTML,
-- 44 indeksowane URL-e w sitemapie,
+- 21 własnych URL-i indeksowanych w sitemapie automatyzacjesklepow.pl,
 - 14 obrazów w image sitemap,
 - brak stron-sierot,
 - maks. 3 kliknięcia od homepage,
 - audyt kanibalizacji treści,
 - audyt canonical / OG / schema,
+- 23 ogólne landingi zachowane funkcjonalnie, ale z cross-domain canonical do maciejgryziec.pl,
+- homepage automatyzacjesklepow.pl ma własne pozycjonowanie e-commerce,
 - pełny Chrome runtime crawl wszystkich stron,
 - budżet assetów w CI + lokalny performance gate,
 - performance gate: cold 4G + 4×CPU, LCP ≤ 3,2 s, CLS ≤ 0,10, transfer ≤ 200 KB,
