@@ -316,7 +316,7 @@
       fallback.hidden=false;
       fallback.focus();
       fallback.select();
-      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@automatyzacjesklepow.pl.";
+      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@maciejgryziec.pl.";
     }
 
     function brief(){
@@ -361,7 +361,7 @@
         info.textContent=copied?"Brief został też skopiowany do schowka jako kopia zapasowa.":"Otwieram program pocztowy z przygotowanym briefem.";
       }
       siteTrack("brief-mailto-ready",{typ:value(fd,"typ")});
-      location.href="mailto:kontakt@automatyzacjesklepow.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
+      location.href="mailto:kontakt@maciejgryziec.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
     });
 
     if(copy)copy.addEventListener("click",async function(){
@@ -370,7 +370,7 @@
       try{
         await navigator.clipboard.writeText(message);
         fallback.hidden=true;
-        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@automatyzacjesklepow.pl.";
+        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@maciejgryziec.pl.";
       }catch(e){showFallback(message);}
     });
 
