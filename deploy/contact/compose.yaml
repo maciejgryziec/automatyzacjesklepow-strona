@@ -1,0 +1,37 @@
+services:
+  automatyzacjesklepow-contact:
+    build: .
+    image: automatyzacjesklepow-contact:20261011-v1
+    container_name: automatyzacjesklepow-contact
+    restart: unless-stopped
+    user: "10001:10001"
+    read_only: true
+    init: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 192m
+    cpus: 0.5
+    pids_limit: 64
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    volumes:
+      - ./data:/data
+      - ./secrets/signing.key:/run/contact/signing.key:ro
+      - /opt/maciejgryziec-contact/secrets/smtp.json:/run/contact/smtp.json:ro
+    ports:
+      - "127.0.0.1:18182:8080"
+    networks:
+      - coolify
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "1m"
+        max-file: "2"
+networks:
+  coolify:
+    external: true

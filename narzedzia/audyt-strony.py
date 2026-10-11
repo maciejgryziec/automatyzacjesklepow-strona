@@ -470,7 +470,7 @@ for pth in pages:
         if href.startswith("opisz-projekt.html") and event != "klik-opisz-projekt":
             err(pth.name,f"CTA brief bez klik-opisz-projekt: {event!r}")
         if href.startswith("opisz-projekt.html"):
-            query=parse_qs(urlsplit(href).query)
+            query=parse_qs(urlsplit(html.unescape(href)).query)
             if not query.get("zrodlo"):
                 err(pth.name,f"CTA brief bez parametru zrodlo: {href}")
         if href.startswith("sprawdzarka.html") and event != "klik-sprawdzarka":
@@ -819,7 +819,15 @@ for original in sorted((ROOT / "zdjecia").iterdir()):
 
 # Formularz leadowy i prywatność.
 brief = (ROOT / "opisz-projekt.html").read_text(encoding="utf-8")
-if 'id="brief-form"' not in brief or "brief-przygotuj-email" not in brief:
+if 'id="as-contact-form"' in brief:
+    contact_js=(ROOT / "redesign.js").read_text(encoding="utf-8")
+    for token in ('name="imie"', 'name="email"', 'name="dzis"', 'name="problem"', 'name="website"', 'name="zgoda"'):
+        if token not in brief:
+            err("opisz-projekt.html", f"nowy formularz bez pola {token}")
+    for token in ('/api/contact/session', '/api/contact', "X-Contact-Form", "as-brief-sent", "request_id"):
+        if token not in contact_js:
+            err("redesign.js", f"brak wysyłki albo trackingu {token}")
+elif 'id="brief-form"' not in brief or "brief-przygotuj-email" not in brief:
     err("opisz-projekt.html", "brak formularza/trackingu briefu")
 for error_page in ("404.html", "50x.html"):
     if 'name="robots" content="noindex,follow"' not in (ROOT / error_page).read_text(encoding="utf-8"):

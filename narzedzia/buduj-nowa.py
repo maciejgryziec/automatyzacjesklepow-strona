@@ -1237,9 +1237,10 @@ def ekrany():
     return '<div class="ekrany"><div class="ekran a"><img src="zdjecia/photonroof-kreator3d.jpg" alt="" fetchpriority="high" decoding="async"></div><div class="ekran b" aria-hidden="true"><span class="screen-bg"></span></div></div>'
 
 ASSET_VERSION = hashlib.sha256((CSS + "\n" + JS).encode("utf-8")).hexdigest()[:10]
+REDESIGN_VERSION = hashlib.sha256((open(os.path.join(REPO, "redesign.css"), encoding="utf-8").read() + open(os.path.join(REPO, "redesign.js"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
 
 # ---------------------------------------------------------------- szkielet
-NAV = '<a href="dedykowane-oprogramowanie-dla-firm.html">Dla firm</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a href="sprawdzarka.html">Dla sklepów</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz projekt</a>'
+NAV = '<a href="uslugi-automatyzacji.html">Usługi</a><a href="/#integracje">Integracje</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz problem ↗</a>' 
 ARTYKULY = {
   "system-zamiast-excela", "gotowy-system-czy-dedykowane-oprogramowanie",
   "ile-kosztuje-aplikacja-dla-firmy", "jak-przygotowac-brief-aplikacji",
@@ -1623,7 +1624,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>
-<meta name="theme-color" content="#194586">
+<meta name="theme-color" content="#0a1018">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <title>{tytul}</title>
@@ -1647,6 +1648,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <link rel="canonical" href="{kanon}">
 <link rel="alternate" type="application/atom+xml" title="Poradniki — Automatyzacje Sklepów" href="feed.xml">{PRELOAD}
 <link rel="stylesheet" href="list.css?v={ASSET_VERSION}">{PAL}
+<link rel="stylesheet" href="redesign.css?v={REDESIGN_VERSION}">
 <link rel="icon" type="image/svg+xml" href="ikona.svg?w=3">
 <link rel="icon" href="favicon.ico?w=3" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="ikona-96.png?w=3">
@@ -1660,52 +1662,49 @@ def glowa(tytul, opis, kanon, nazwa=None):
 <a class="skip-link" href="#main-content">Przejdź do treści</a>
 <header class="gora"><div class="w">
   <a class="znak" href="/" aria-label="Automatyzacje Sklepów — integracje i narzędzia e-commerce"><img class="c" src="znak.svg" alt=""><img class="b" src="znak-bialy.svg" alt=""><span>Automatyzacje Sklepów</span></a>
-  <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="{mobile_href}">Opisz projekt</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
+  <div class="mobile-actions"><a class="mobile-cta" data-umami-event="klik-opisz-projekt-mobile" href="{mobile_href}">Porozmawiajmy</a><button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-controls="nav-main" aria-expanded="false"><i></i></button></div>
   <nav id="nav-main" aria-label="Główna nawigacja">{nav_html}</nav>
 </div></header>
 '''
 STOPKA = f"""
 <footer class="stopka">
-  <div class="stopka-grid">
-    <div class="stopka-brand">
-      <strong>Maciej Gryziec</strong>
-      <p>Automatyzacje i integracje dla sklepów internetowych oraz dedykowane narzędzia dla firm. Pracuję zdalnie w całej Polsce.</p>
-      <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz projekt →</a></p>
-      <p><a data-umami-event="klik-mail" href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a><br><a data-umami-event="klik-telefon" href="tel:+48570427127">570 427 127</a></p>
-    </div>
-    <div>
-      <strong>Rozwiązania</strong>
-      <a href="dedykowane-oprogramowanie-dla-firm.html">Oprogramowanie na zamówienie</a>
-      <a href="crm-na-zamowienie.html">CRM na zamówienie</a>
-      <a href="system-do-wycen-i-ofert.html">Wyceny i oferty</a>
-      <a href="system-do-obslugi-zlecen.html">Obsługa zleceń</a>
-      <a href="integracje-api-dla-firm.html">Integracje API</a>
-      <a href="aplikacje-webowe-dla-firm.html">Aplikacje webowe</a>
-    </div>
-    <div>
-      <strong>Zastosowania</strong>
-      <a href="system-zamiast-excela.html">System zamiast Excela</a>
-      <a href="panel-klienta-b2b.html">Panel klienta B2B</a>
-      <a href="system-rezerwacji-dla-firm.html">System rezerwacji</a>
-      <a href="automatyzacja-dokumentow-w-firmie.html">Automatyzacja dokumentów</a>
-      <a href="sprawdzarka.html">Automatyzacje e-commerce</a>
-    </div>
-    <div>
-      <strong>Firma i wiedza</strong>
-      <a href="realizacje.html">Realizacje</a>
-      <a href="cennik.html">Cennik</a>
-      <a href="jak-pracuje.html">Jak pracuję</a>
-      <a href="o-mnie.html">O mnie</a>
-      <a href="poradniki.html">Poradniki</a>
-    </div>
+ <div class="stopka-grid">
+  <div class="stopka-brand">
+   <strong>Automatyzacje Sklepów</strong>
+   <p>Łączę sklep, marketplace, magazyn i księgowość. Własne moduły buduję tam, gdzie gotowe integracje nie wystarczają.</p>
+   <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz swój problem ↗</a></p>
+   <p><a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a></p>
   </div>
-  <div class="stopka-dol">
-    <span>© 2026 Maciej Gryziec</span>
-    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
-    <a href=".well-known/security.txt">Zgłoszenia bezpieczeństwa</a>
+  <div><strong>Automatyzacje</strong>
+   <a href="automatyzacja-allegro.html">Zamówienia i Allegro</a>
+   <a href="integracja-baselinker.html">BaseLinker</a>
+   <a href="integracja-sklepu-z-hurtownia.html">Stany i hurtownie</a>
+   <a href="integracja-sklepu-z-fakturownia.html">Fakturownia</a>
+   <a href="ksef-dla-sklepu-internetowego.html">KSeF i księgowość</a>
   </div>
+  <div><strong>Rozwiązania</strong>
+   <a href="uslugi-automatyzacji.html">Wszystkie usługi</a>
+   <a href="system-do-wycen-i-ofert.html">Systemy wycen</a>
+   <a href="kalkulator-konfigurator-dla-klientow.html">Konfiguratory</a>
+   <a href="sprawdzarka.html">Sprawdzarka sklepu</a>
+   <a href="realizacje.html">Realizacje</a>
+  </div>
+  <div><strong>Informacje</strong>
+   <a href="cennik.html">Cennik</a>
+   <a href="jak-pracuje.html">Jak pracuję</a>
+   <a href="o-mnie.html">O mnie</a>
+   <a href="poradniki.html">Poradniki</a>
+   <a href="opisz-projekt.html">Kontakt</a>
+  </div>
+ </div>
+ <div class="stopka-dol">
+  <span>© 2026 Automatyzacje Sklepów / Maciej Gryziec</span>
+  <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+  <a href=".well-known/security.txt">Bezpieczeństwo</a>
+ </div>
 </footer>
 <script src="list.js?v={ASSET_VERSION}"></script>
+<script src="redesign.js?v={REDESIGN_VERSION}"></script>
 </body>
 </html>
 """
@@ -1741,6 +1740,8 @@ def index():
     s = uzupelnij_wymiary_obrazow(s)
     s = re.sub(r'href="list\.css\?[^"]*"', f'href="list.css?v={ASSET_VERSION}"', s)
     s = re.sub(r'src="list\.js\?[^"]*"', f'src="list.js?v={ASSET_VERSION}"', s)
+    s = re.sub(r'href="redesign\.css\?[^"]*"', f'href="redesign.css?v={REDESIGN_VERSION}"', s)
+    s = re.sub(r'src="redesign\.js\?[^"]*"', f'src="redesign.js?v={REDESIGN_VERSION}"', s)
     with open(CEL + "/index.html", "w", encoding="utf-8") as f:
         f.write(s)
 
@@ -1853,6 +1854,8 @@ def podstrona(plik):
         body = dodaj_spis_tresci(body)
     body += blok_powiazanych(nazwa)
     s += f'<div class="tresc{" cennik-tabela" if nazwa=="cennik" else ""}">{body}</div>\n'
+    if nazwa in ("opisz-projekt", "uslugi-automatyzacji"):
+        s = s.replace('<div class="tresc">', '<div class="tresc as-wide">', 1)
     if nazwa in ("404","50x"):
         s = s.replace('<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">', '<meta name="robots" content="noindex,follow">', 1)
         s += '</main>\n' + stopka_dla(nazwa)
