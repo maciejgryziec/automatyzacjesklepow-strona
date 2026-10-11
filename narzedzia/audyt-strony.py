@@ -817,6 +817,14 @@ for original in sorted((ROOT / "zdjecia").iterdir()):
     if not webp_800.exists():
         err("zdjecia", f"brak WebP 800 px dla {original.name}")
 
+# Nazwy projektów w meta i sitemap muszą być zgodne z publicznym portfolio.
+for fname in ("realizacje.html", "kalkulator-konfigurator-dla-klientow.html", "sitemap.xml"):
+    content=(ROOT / fname).read_text(encoding="utf-8")
+    if "Photonroof" in content:
+        err(fname, "stara nazwa projektu w danych publicznych/SEO; użyj RoofPVcalculator")
+    if "RoofPVcalculator" not in content:
+        err(fname, "brak aktualnej nazwy RoofPVcalculator")
+
 # Formularz leadowy i prywatność.
 brief = (ROOT / "opisz-projekt.html").read_text(encoding="utf-8")
 if 'id="as-contact-form"' in brief:

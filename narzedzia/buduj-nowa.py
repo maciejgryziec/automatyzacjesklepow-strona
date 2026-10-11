@@ -1222,7 +1222,7 @@ def ksiega():
     mosty = [("Formularz → CRM","nowa sprawa · 12:04",False,[6,7,5,8,7,9,8]),("Kalendarz → realizacja","termin · 12:04",False,[8,8,7,9,8,8,9]),("wFirma → KSeF","UPO · 12:04",False,[5,6,6,7,8,8,9]),("CRM → faktury","dokument · 12:04",True,[7,7,3,2,4,6,7]),("Faktury → KSeF","UPO · 12:04",False,[9,8,9,9,8,9,9]),("CRM → klient","e-mail · 12:04",False,[8,9,8,8,9,9,8])]
     kaf = ''.join(f'<div class="kafel{" uwaga" if u else ""}"><b>{n}</b><span>{o}</span><i>' + ''.join(f'<em style="height:{h*10}%"></em>' for h in sl) + '</i></div>' for n,o,u,sl in mosty)
     panel = f'<div class="panel"><div class="gora-p">Strażnik połączeń <small>wtorek 8.09 · sprawdzono 06:00</small></div><div class="kafle">{kaf}</div><div class="dol"><div><b>12</b>mostów</div><div><b>1</b>ostrzeżenie</div><div><b>0</b>awarii</div><div><b>14 dni</b>od ostatniej naprawy</div></div></div>'
-    karty = [("#5b6cff","Konfigurator","Photonroof",'<img src="zdjecia/photonroof-wymiary.jpg" alt="" fetchpriority="high" decoding="async">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
+    karty = [("#5b6cff","Konfigurator","RoofPVcalculator",'<img src="zdjecia/photonroof-wymiary.jpg" alt="" fetchpriority="high" decoding="async">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
              ("#e6982f","Panel firmy","<span style=\"font-size:.72em\">Wypożyczalnia</span>",'<img data-carousel-src="zdjecia/wypozyczalnia-flota-800.webp" data-carousel-srcset="zdjecia/wypozyczalnia-flota-800.webp 800w, zdjecia/wypozyczalnia-flota.webp 1440w" data-carousel-sizes="(max-width: 820px) calc(100vw - 44px), 720px" alt="" width="1440" height="900" fetchpriority="low" decoding="async">',"Panel wypożyczalni samochodowej","Flota, najmy, faktury i kalendarz, który sam wykrywa podwójną rezerwację. <span>Przykład systemu szytego pod jedną branżę.</span>","realizacje.html#wypozyczalnia"),
              ("#2f9e88","Narzędzie","Sprawdzarka",spr,"Sprawdzarka sklepu","Wpisujesz adres, dostajesz listę tego, co widać z zewnątrz: GPSR, Omnibus, EAN, mapa strony. <span>Bezpłatnie, działa dziś.</span>","sprawdzarka.html"),
              ("#c8473f","Abonament","Strażnik",panel,"Strażnik połączeń","Codziennie sprawdza, czy formularze, CRM, kalendarz, dokumenty i integracje nadal wymieniają dane. <span>Problem wychodzi w monitoringu, nie dopiero przy kliencie.</span>","cennik.html#straznik")]
@@ -1326,7 +1326,7 @@ POWIAZANE = {
     ("Opisz reguły rezerwacji", "opisz-projekt.html?typ=System%20rezerwacji", "Co poza terminem decyduje o dostępności?"),
   ],
   "kalkulator-konfigurator-dla-klientow": [
-    ("Realizacja Photonroof", "realizacje.html#photonroof", "Zobacz konfigurator oparty na parametrach klienta."),
+    ("Realizacja RoofPVcalculator", "realizacje.html#photonroof", "Zobacz konfigurator oparty na parametrach klienta."),
     ("System do wycen i ofert", "system-do-wycen-i-ofert.html", "Połącz dane klienta z wewnętrzną kalkulacją handlową i ofertą PDF."),
     ("Opisz logikę wyceny", "opisz-projekt.html?typ=Kalkulator%20lub%20konfigurator%20dla%20klientów", "Pokaż, co handlowiec dziś liczy ręcznie."),
   ],
@@ -1481,8 +1481,8 @@ def rodzic_dla(nazwa):
     return None
 
 OG_MEDIA = {
-  "realizacje": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D Photonroof — przykład aplikacji webowej"),
-  "kalkulator-konfigurator-dla-klientow": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D i kalkulator Photonroof"),
+  "realizacje": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D RoofPVcalculator — przykład aplikacji webowej"),
+  "kalkulator-konfigurator-dla-klientow": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D i kalkulator RoofPVcalculator"),
   "program-dla-wypozyczalni": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Kalendarz obłożenia w panelu wypożyczalni"),
   "system-rezerwacji-dla-firm": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Przykład kalendarza rezerwacji zasobów"),
 }
@@ -1878,18 +1878,18 @@ for plik in sorted(glob.glob(ZR + "/*.html")):
     zrobione.append(podstrona(plik))
 SITEMAP_IMAGES = {
   "realizacje.html": [
-    ("zdjecia/photonroof-tryby.png", "Photonroof — wybór trybu konfiguratora"),
-    ("zdjecia/photonroof-mapa.jpg", "Photonroof — konfiguracja dachu na mapie satelitarnej"),
-    ("zdjecia/photonroof-kreator3d.jpg", "Photonroof — kreator dachu 3D"),
-    ("zdjecia/photonroof-kopertowy.jpg", "Photonroof — model dachu kopertowego"),
-    ("zdjecia/photonroof-wymiary.jpg", "Photonroof — wymiary i wynik konfiguracji dachu"),
+    ("zdjecia/photonroof-tryby.png", "RoofPVcalculator — wybór trybu konfiguratora"),
+    ("zdjecia/photonroof-mapa.jpg", "RoofPVcalculator — konfiguracja dachu na mapie satelitarnej"),
+    ("zdjecia/photonroof-kreator3d.jpg", "RoofPVcalculator — kreator dachu 3D"),
+    ("zdjecia/photonroof-kopertowy.jpg", "RoofPVcalculator — model dachu kopertowego"),
+    ("zdjecia/photonroof-wymiary.jpg", "RoofPVcalculator — wymiary i wynik konfiguracji dachu"),
     ("zdjecia/wypozyczalnia-pulpit.png", "Panel wypożyczalni — pulpit"),
     ("zdjecia/wypozyczalnia-kalendarz.png", "Panel wypożyczalni — kalendarz obłożenia"),
     ("zdjecia/wypozyczalnia-flota.png", "Panel wypożyczalni — flota"),
     ("zdjecia/wypozyczalnia-faktury.png", "Panel wypożyczalni — faktury"),
   ],
   "kalkulator-konfigurator-dla-klientow.html": [
-    ("zdjecia/photonroof-kreator3d.jpg", "Przykład konfiguratora online — Photonroof"),
+    ("zdjecia/photonroof-kreator3d.jpg", "Przykład konfiguratora online — RoofPVcalculator"),
     ("zdjecia/photonroof-mapa.jpg", "Przykład kalkulatora opartego na parametrach klienta"),
   ],
   "program-dla-wypozyczalni.html": [
