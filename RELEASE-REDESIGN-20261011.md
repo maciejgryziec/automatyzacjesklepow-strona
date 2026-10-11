@@ -44,3 +44,10 @@ Backup stanu sprzed przebudowy:
 `/Users/maciej/Documents/GitHub/automatyzacjesklepow-backup-20261011.tar.gz`
 W Git bazowy commit `a9d78ac`; commit 3bfea37 zawiera przebudowę bez ostatnich poprawek mobilnych.
 Po wdrożeniu w Coolify porównać SHA obrazu i commit. W przypadku poważnej regresji wrócić do poprzedniego deploymentu przez Coolify (w historii aplikacji), a nie przez nadpisywanie plików kontenera na produkcji.
+
+## Uzupełnienie kontroli po publikacji (11.10.2026)
+- Rzeczywisty test formularza z publicznej strony: jeden test techniczny wysłany na własny adres kontakt@maciejgryziec.pl. Formularz pokazał „Wysłano”, SMTP potwierdził przyjęcie, a wyszukanie konkretnej testowej wiadomości przez IMAP potwierdziło jej odbiór. Nie kontaktowano się z klientami.
+- Sprawdzono publiczną stronę: 45/45 stron HTML, 200 OK, nowa wersja CSS/JS, przekierowania, sitemap i API.
+- Testy interakcji w odizolowanym Chrome: mobilne menu i Escape, przełączanie trzech schematów, pola/ważność formularza, katalog ośmiu usług. Nie wysłano wiadomości przy testach interakcji.
+- Nowy audyt kontrastu `narzedzia/audyt-kontrast-redesign.py` kontroluje 12 par kolorów tekstu nowego interfejsu, wszystkie >= 4.5:1. Poprawiono sześć drobnych etykiet o zbyt słabym kontraście.
+- Adres e-mail kontakt@automatyzacjesklepow.pl przeszedł kontrolę akceptacji odbiorcy przez SMTP OVH (250), ale **nie potwierdza to odbioru wiadomości przez tę konkretną skrzynkę ani forwardu**. Formularz na pewno doręcza do zweryfikowanego kontakt@maciejgryziec.pl.
