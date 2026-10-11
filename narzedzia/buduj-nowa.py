@@ -1240,7 +1240,7 @@ ASSET_VERSION = hashlib.sha256((CSS + "\n" + JS).encode("utf-8")).hexdigest()[:1
 REDESIGN_VERSION = hashlib.sha256((open(os.path.join(REPO, "redesign.css"), encoding="utf-8").read() + open(os.path.join(REPO, "redesign.js"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
 
 # ---------------------------------------------------------------- szkielet
-NAV = '<a href="uslugi-automatyzacji.html">Usługi</a><a href="/#integracje">Integracje</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz problem ↗</a>' 
+NAV = '<a href="uslugi-automatyzacji.html">Usługi</a><a href="/#integracje">Integracje</a><a href="realizacje.html">Realizacje</a><a href="cennik.html">Cennik</a><a href="poradniki.html">Poradniki</a><a class="nav-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz problem ↗</a>'
 ARTYKULY = {
   "system-zamiast-excela", "gotowy-system-czy-dedykowane-oprogramowanie",
   "ile-kosztuje-aplikacja-dla-firmy", "jak-przygotowac-brief-aplikacji",
