@@ -101,7 +101,7 @@ status, checker_headers, _ = request(CHECKER + "/sprawdz", method="OPTIONS")
 allow = checker_headers.get("Allow", "")
 check("sprawdzarka endpoint POST", status == 405 and "POST" in allow.upper(), f"HTTP {status}, Allow={allow or 'brak'}")
 status, checker_security_headers, checker_security_body = request(CHECKER + "/.well-known/security.txt")
-check("sprawdzarka security.txt", status == 200 and b"Contact: mailto:kontakt@automatyzacjesklepow.pl" in checker_security_body, f"HTTP {status}")
+check("sprawdzarka security.txt", status == 200 and b"Contact: mailto:kontakt@maciejgryziec.pl" in checker_security_body, f"HTTP {status}")
 for path in ("/docs", "/redoc", "/openapi.json"):
     status, _, _ = request(CHECKER + path)
     check("sprawdzarka ukryte API docs " + path, status == 404, f"HTTP {status}")

@@ -954,7 +954,7 @@ JS = r"""
       fallback.hidden=false;
       fallback.focus();
       fallback.select();
-      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@automatyzacjesklepow.pl.";
+      info.textContent="Przeglądarka nie pozwoliła skopiować automatycznie. Gotowy brief jest zaznaczony poniżej — skopiuj go ręcznie i wyślij na kontakt@maciejgryziec.pl.";
     }
 
     function brief(){
@@ -999,7 +999,7 @@ JS = r"""
         info.textContent=copied?"Brief został też skopiowany do schowka jako kopia zapasowa.":"Otwieram program pocztowy z przygotowanym briefem.";
       }
       siteTrack("brief-mailto-ready",{typ:value(fd,"typ")});
-      location.href="mailto:kontakt@automatyzacjesklepow.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
+      location.href="mailto:kontakt@maciejgryziec.pl?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(mailBody);
     });
 
     if(copy)copy.addEventListener("click",async function(){
@@ -1008,7 +1008,7 @@ JS = r"""
       try{
         await navigator.clipboard.writeText(message);
         fallback.hidden=true;
-        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@automatyzacjesklepow.pl.";
+        info.textContent="Brief skopiowany. Wklej go do wiadomości na kontakt@maciejgryziec.pl.";
       }catch(e){showFallback(message);}
     });
 
@@ -1551,7 +1551,7 @@ def glowa(tytul, opis, kanon, nazwa=None):
         graph.append({
             "@type":"Person","@id":"https://automatyzacjesklepow.pl/o-mnie.html#person",
             "name":"Maciej Gryziec","url":"https://automatyzacjesklepow.pl/o-mnie.html",
-            "email":"kontakt@automatyzacjesklepow.pl","telephone":"+48570427127"
+            "email":"kontakt@maciejgryziec.pl","telephone":"+48570427127"
         })
         graph.append({
             "@type":"ProfilePage","@id":kanon+"#profile","url":kanon,"name":tytul,
@@ -1673,7 +1673,7 @@ STOPKA = f"""
    <strong>Automatyzacje Sklepów</strong>
    <p>Łączę sklep, marketplace, magazyn i księgowość. Własne moduły buduję tam, gdzie gotowe integracje nie wystarczają.</p>
    <p><a class="stopka-cta" data-umami-event="klik-opisz-projekt" href="opisz-projekt.html">Opisz swój problem ↗</a></p>
-   <p><a href="mailto:kontakt@automatyzacjesklepow.pl">kontakt@automatyzacjesklepow.pl</a></p>
+   <p><a href="mailto:kontakt@maciejgryziec.pl">kontakt@maciejgryziec.pl</a></p>
   </div>
   <div><strong>Automatyzacje</strong>
    <a href="automatyzacja-allegro.html">Zamówienia i Allegro</a>
@@ -1842,7 +1842,7 @@ def podstrona(plik):
         s += f'<section id="tresc" class="rozdzial czolo pod ksiega-tlo ciemny" data-ciemna><div class="w"><div class="tekst wjazd">{tekst}</div>{obraz()}</div></section>\n'
     else:
         s += rozdzial(kl, tekst, obraz(), extra=' id="tresc"', ciemny=ciemny)
-    body = re.sub(r'(<a class="przycisk"[^>]*?)href="mailto:kontakt@automatyzacjesklepow\.pl"', r'\1href="opisz-projekt.html"', body)
+    body = re.sub(r'(<a class="przycisk"[^>]*?)href="mailto:kontakt@maciejgryziec\.pl"', r'\1href="opisz-projekt.html"', body)
     body = body.replace('data-umami-event="klik-mail" href="opisz-projekt.html"', 'data-umami-event="klik-opisz-projekt" href="opisz-projekt.html"')
     if nazwa not in ("opisz-projekt", "404", "50x"):
         body = body.replace('href="opisz-projekt.html"', f'href="opisz-projekt.html?zrodlo={nazwa}"')

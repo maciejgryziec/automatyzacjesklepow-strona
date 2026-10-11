@@ -51,3 +51,11 @@ Po wdrożeniu w Coolify porównać SHA obrazu i commit. W przypadku poważnej re
 - Testy interakcji w odizolowanym Chrome: mobilne menu i Escape, przełączanie trzech schematów, pola/ważność formularza, katalog ośmiu usług. Nie wysłano wiadomości przy testach interakcji.
 - Nowy audyt kontrastu `narzedzia/audyt-kontrast-redesign.py` kontroluje 12 par kolorów tekstu nowego interfejsu, wszystkie >= 4.5:1. Poprawiono sześć drobnych etykiet o zbyt słabym kontraście.
 - Adres e-mail kontakt@automatyzacjesklepow.pl przeszedł kontrolę akceptacji odbiorcy przez SMTP OVH (250), ale **nie potwierdza to odbioru wiadomości przez tę konkretną skrzynkę ani forwardu**. Formularz na pewno doręcza do zweryfikowanego kontakt@maciejgryziec.pl.
+
+## Korekta kontaktu na publicznej stronie (11.10.2026, późny wieczór)
+- Wysłano jeden test na kontakt@automatyzacjesklepow.pl. OVH przyjął wiadomość, ale test **nie pojawił się w potwierdzonej skrzynce** kontakt@maciejgryziec.pl; nie udało się potwierdzić przekierowania. Możliwa osobna skrzynka, którą trzeba sprawdzić w OVH.
+- Do czasu zweryfikowania aliasu wszystkie widoczne bezpośrednie adresy i linki mailto kierują na działające konto `kontakt@maciejgryziec.pl`.
+- Formularz nadal korzysta z tego samego bezpiecznego sidecara i zweryfikowanej wysyłki SMTP. Nie zmieniano danych logowania ani metody nadawania.
+- 24 główne CTA sprzedażowe w 45 publicznych stronach prowadzą do `opisz-projekt.html?zrodlo=...` zamiast mailto. Dzięki temu zachowują kontekst zlecenia.
+- `narzedzia/audyt-kontakt-links.py`: osobny regresyjny audyt 45 stron, bez niepotwierdzonego kontaktu i bez mailto w głównych CTA.
+- Dodatkowe szczegóły na pulpicie: `Podglad_automatyzacjesklepow_2026-10/ADRES_KONTAKTOWY_I_GSC_20261011.md`.

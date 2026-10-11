@@ -87,7 +87,7 @@ function uuid(){
 async function session(){
  var response=await fetch('/api/contact/session',{method:'GET',credentials:'same-origin',cache:'no-store',headers:{'Accept':'application/json'}});
  var result=await response.json();
- if(!response.ok||!result.ready||!result.token)throw new Error('Formularz jest chwilowo niedostępny. Napisz na kontakt@automatyzacjesklepow.pl.');
+ if(!response.ok||!result.ready||!result.token)throw new Error('Formularz jest chwilowo niedostępny. Napisz na kontakt@maciejgryziec.pl.');
  return result.token;
 }
 var queryType=new URLSearchParams(location.search).get('typ');
@@ -106,7 +106,7 @@ form.addEventListener('submit',async function(ev){
  uzytkownicy:'',budzet:clean(fd.get('budzet'),100),efekt:'',
  zrodlo:buildSource(),website:clean(fd.get('website'),100),request_id:uuid()
  };
- if(!data.request_id){status('Ta przeglądarka nie obsługuje bezpiecznego wysyłania. Napisz bezpośrednio na kontakt@automatyzacjesklepow.pl.',false);blocked=false;sendButton.disabled=false;sendButton.textContent='Wyślij zapytanie →';return;}
+ if(!data.request_id){status('Ta przeglądarka nie obsługuje bezpiecznego wysyłania. Napisz bezpośrednio na kontakt@maciejgryziec.pl.',false);blocked=false;sendButton.disabled=false;sendButton.textContent='Wyślij zapytanie →';return;}
  try{
   var t=await session();
   data.token=t;
@@ -121,7 +121,7 @@ form.addEventListener('submit',async function(ev){
   form.reset();sendButton.textContent='Wysłano';sendButton.disabled=true;
   return;
  }catch(e){
-  status(e.message||'Nie udało się potwierdzić wysyłki. Napisz bezpośrednio na kontakt@automatyzacjesklepow.pl.',false);
+  status(e.message||'Nie udało się potwierdzić wysyłki. Napisz bezpośrednio na kontakt@maciejgryziec.pl.',false);
   if(window.umami&&typeof window.umami.track==='function'){window.umami.track('as-brief-error');}
   sendButton.disabled=false;sendButton.textContent='Spróbuj wysłać ponownie';
   blocked=false;
