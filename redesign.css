@@ -284,3 +284,13 @@ body:not(.flow-home) .brief-info{color:#5c6e7b}
 .fh-hero-copy,.fh-demo,.fh-hero-main>*,.fh-end-grid>*{min-width:0}
 @media(max-width:920px){.fh-hero-main{grid-template-columns:minmax(0,1fr)}.fh-demo{width:100%;max-width:640px}}
 @media(max-width:480px){.fh-hero h1{overflow-wrap:break-word}.fh-hero-lead{max-width:100%;overflow-wrap:break-word}.fh-actions .fh-btn{white-space:normal;max-width:100%;text-align:center}.fh-corner{width:100%}.fh-demo-top{flex-wrap:wrap}}
+
+/* Responsive final QA: intrinsic SVG and long brand name must not widen mobile grid. */
+.fh-hero-main>*{min-width:0}
+.fh-demo,.fh-hero-copy,.fh-section-head>*,.fh-end-grid>*{min-width:0;max-width:100%}
+.fh-demo{overflow:hidden}
+.fh-flow-svg{max-width:100%;min-width:0;overflow:hidden}
+@media(max-width:920px){.fh-hero-main{grid-template-columns:minmax(0,1fr)}.fh-end-grid,.fh-method-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:840px){.gora .znak{min-width:0;flex-shrink:1}.gora .znak span{overflow:hidden;text-overflow:ellipsis}.mobile-actions{flex-shrink:0}}
+@media(max-width:530px){.gora .znak{gap:7px}.gora .znak img.b{width:27px;height:27px}.gora .znak span{font-size:13px;letter-spacing:-.055em}.mobile-cta{padding-inline:9px!important;font-size:11px!important}.fh-actions .fh-btn{white-space:normal;text-align:center}.fh-hero h1{overflow-wrap:break-word}.fh-clientstrip .fh-wrap{min-width:0}}
+@media(max-width:355px){.gora .znak span{font-size:11px}.gora .znak img.b{width:24px;height:24px}.mobile-cta{font-size:10px!important;padding:0 7px!important}}
