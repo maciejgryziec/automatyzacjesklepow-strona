@@ -1222,7 +1222,7 @@ def ksiega():
     mosty = [("Formularz → CRM","nowa sprawa · 12:04",False,[6,7,5,8,7,9,8]),("Kalendarz → realizacja","termin · 12:04",False,[8,8,7,9,8,8,9]),("wFirma → KSeF","UPO · 12:04",False,[5,6,6,7,8,8,9]),("CRM → faktury","dokument · 12:04",True,[7,7,3,2,4,6,7]),("Faktury → KSeF","UPO · 12:04",False,[9,8,9,9,8,9,9]),("CRM → klient","e-mail · 12:04",False,[8,9,8,8,9,9,8])]
     kaf = ''.join(f'<div class="kafel{" uwaga" if u else ""}"><b>{n}</b><span>{o}</span><i>' + ''.join(f'<em style="height:{h*10}%"></em>' for h in sl) + '</i></div>' for n,o,u,sl in mosty)
     panel = f'<div class="panel"><div class="gora-p">Strażnik połączeń <small>wtorek 8.09 · sprawdzono 06:00</small></div><div class="kafle">{kaf}</div><div class="dol"><div><b>12</b>mostów</div><div><b>1</b>ostrzeżenie</div><div><b>0</b>awarii</div><div><b>14 dni</b>od ostatniej naprawy</div></div></div>'
-    karty = [("#5b6cff","Konfigurator","RoofPVcalculator",'<img src="zdjecia/photonroof-wymiary.jpg" alt="" fetchpriority="high" decoding="async">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
+    karty = [("#5b6cff","Konfigurator","RoofPVcalculator",'<img src="zdjecia/photonroof-wymiary-20261105.jpg" alt="" fetchpriority="high" decoding="async">',"Konfigurator dachówek fotowoltaicznych","Klient sam rysuje dach, a wycena liczy się od razu w przeglądarce. <span>Wcześniej: telefon do handlowca i kilka dni czekania.</span>","realizacje.html#photonroof"),
              ("#e6982f","Panel firmy","<span style=\"font-size:.72em\">Wypożyczalnia</span>",'<img data-carousel-src="zdjecia/wypozyczalnia-flota-800.webp" data-carousel-srcset="zdjecia/wypozyczalnia-flota-800.webp 800w, zdjecia/wypozyczalnia-flota.webp 1440w" data-carousel-sizes="(max-width: 820px) calc(100vw - 44px), 720px" alt="" width="1440" height="900" fetchpriority="low" decoding="async">',"Panel wypożyczalni samochodowej","Flota, najmy, faktury i kalendarz, który sam wykrywa podwójną rezerwację. <span>Przykład systemu szytego pod jedną branżę.</span>","realizacje.html#wypozyczalnia"),
              ("#2f9e88","Narzędzie","Sprawdzarka",spr,"Sprawdzarka sklepu","Wpisujesz adres, dostajesz listę tego, co widać z zewnątrz: GPSR, Omnibus, EAN, mapa strony. <span>Bezpłatnie, działa dziś.</span>","sprawdzarka.html"),
              ("#c8473f","Abonament","Strażnik",panel,"Strażnik połączeń","Codziennie sprawdza, czy formularze, CRM, kalendarz, dokumenty i integracje nadal wymieniają dane. <span>Problem wychodzi w monitoringu, nie dopiero przy kliencie.</span>","cennik.html#straznik")]
@@ -1234,7 +1234,7 @@ def ksiega():
     return ('<div class="ksiega" role="region" tabindex="0" aria-label="Realizacje — użyj strzałek w lewo i w prawo" aria-roledescription="karuzela"><div class="karty">' + k + '</div>' + strz("lewa","M60 22 C40 10 24 12 6 22 M16 12 L6 22 L16 32") + strz("prawa","M4 22 C24 10 40 12 58 22 M48 12 L58 22 L48 32") + '<div class="kropy">' + ''.join(f'<button type="button" class="{"tu" if i==0 else ""}" aria-label="Karta {i+1}"></button>' for i in range(4)) + '</div></div>')
 
 def ekrany():
-    return '<div class="ekrany"><div class="ekran a"><img src="zdjecia/photonroof-kreator3d.jpg" alt="" fetchpriority="high" decoding="async"></div><div class="ekran b" aria-hidden="true"><span class="screen-bg"></span></div></div>'
+    return '<div class="ekrany"><div class="ekran a"><img src="zdjecia/photonroof-kreator3d-20261105.jpg" alt="" fetchpriority="high" decoding="async"></div><div class="ekran b" aria-hidden="true"><span class="screen-bg"></span></div></div>'
 
 ASSET_VERSION = hashlib.sha256((CSS + "\n" + JS).encode("utf-8")).hexdigest()[:10]
 REDESIGN_VERSION = hashlib.sha256((open(os.path.join(REPO, "redesign.css"), encoding="utf-8").read() + open(os.path.join(REPO, "redesign.js"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
@@ -1404,11 +1404,11 @@ def blok_autora(nazwa):
     </aside>'''
 
 WYMIARY_ZDJEC = {
-    "photonroof-kopertowy.jpg": (1600, 905),
-    "photonroof-kreator3d.jpg": (1600, 833),
-    "photonroof-mapa.jpg": (1600, 827),
-    "photonroof-tryby.png": (1280, 800),
-    "photonroof-wymiary.jpg": (1600, 914),
+    "photonroof-kopertowy-20261105.jpg": (1600, 905),
+    "photonroof-kreator3d-20261105.jpg": (1600, 833),
+    "photonroof-mapa-20261105.jpg": (1600, 827),
+    "photonroof-tryby-20261105.jpg": (1280, 800),
+    "photonroof-wymiary-20261105.jpg": (1600, 914),
     "wypozyczalnia-faktury.png": (1440, 900),
     "wypozyczalnia-flota.png": (1440, 900),
     "wypozyczalnia-kalendarz.png": (1440, 740),
@@ -1481,8 +1481,8 @@ def rodzic_dla(nazwa):
     return None
 
 OG_MEDIA = {
-  "realizacje": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D RoofPVcalculator — przykład aplikacji webowej"),
-  "kalkulator-konfigurator-dla-klientow": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d.jpg", 1600, 833, "Kreator 3D i kalkulator RoofPVcalculator"),
+  "realizacje": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d-20261105.jpg", 1600, 833, "Kreator 3D RoofPVcalculator — przykład aplikacji webowej"),
+  "kalkulator-konfigurator-dla-klientow": ("https://automatyzacjesklepow.pl/zdjecia/photonroof-kreator3d-20261105.jpg", 1600, 833, "Kreator 3D i kalkulator RoofPVcalculator"),
   "program-dla-wypozyczalni": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Kalendarz obłożenia w panelu wypożyczalni"),
   "system-rezerwacji-dla-firm": ("https://automatyzacjesklepow.pl/zdjecia/wypozyczalnia-kalendarz.png", 1440, 740, "Przykład kalendarza rezerwacji zasobów"),
 }
@@ -1516,8 +1516,8 @@ def glowa(tytul, opis, kanon, nazwa=None):
     PRELOAD = ''
     if nazwa == "realizacje":
         PRELOAD = ('\n<link rel="preload" as="image" '
-                   'href="zdjecia/photonroof-wymiary-800.webp" '
-                   'imagesrcset="zdjecia/photonroof-wymiary-800.webp 800w, zdjecia/photonroof-wymiary.webp 1600w" '
+                   'href="zdjecia/photonroof-wymiary-800-20261105.webp" '
+                   'imagesrcset="zdjecia/photonroof-wymiary-800-20261105.webp 800w, zdjecia/photonroof-wymiary-20261105.webp 1600w" '
                    'imagesizes="(max-width: 820px) calc(100vw - 44px), 720px" '
                    'type="image/webp" fetchpriority="high">')
     og_image, og_w, og_h, og_alt = OG_MEDIA.get(nazwa, ("https://automatyzacjesklepow.pl/og-image.png", 1200, 630, "Aplikacje, które pracują tak jak firma — Automatyzacje Sklepów"))
@@ -1878,19 +1878,19 @@ for plik in sorted(glob.glob(ZR + "/*.html")):
     zrobione.append(podstrona(plik))
 SITEMAP_IMAGES = {
   "realizacje.html": [
-    ("zdjecia/photonroof-tryby.png", "RoofPVcalculator — wybór trybu konfiguratora"),
-    ("zdjecia/photonroof-mapa.jpg", "RoofPVcalculator — konfiguracja dachu na mapie satelitarnej"),
-    ("zdjecia/photonroof-kreator3d.jpg", "RoofPVcalculator — kreator dachu 3D"),
-    ("zdjecia/photonroof-kopertowy.jpg", "RoofPVcalculator — model dachu kopertowego"),
-    ("zdjecia/photonroof-wymiary.jpg", "RoofPVcalculator — wymiary i wynik konfiguracji dachu"),
+    ("zdjecia/photonroof-tryby-20261105.jpg", "RoofPVcalculator — wybór trybu konfiguratora"),
+    ("zdjecia/photonroof-mapa-20261105.jpg", "RoofPVcalculator — konfiguracja dachu na mapie satelitarnej"),
+    ("zdjecia/photonroof-kreator3d-20261105.jpg", "RoofPVcalculator — kreator dachu 3D"),
+    ("zdjecia/photonroof-kopertowy-20261105.jpg", "RoofPVcalculator — dom z dobudówką"),
+    ("zdjecia/photonroof-wymiary-20261105.jpg", "RoofPVcalculator — wymiary i wynik konfiguracji dachu"),
     ("zdjecia/wypozyczalnia-pulpit.png", "Panel wypożyczalni — pulpit"),
     ("zdjecia/wypozyczalnia-kalendarz.png", "Panel wypożyczalni — kalendarz obłożenia"),
     ("zdjecia/wypozyczalnia-flota.png", "Panel wypożyczalni — flota"),
     ("zdjecia/wypozyczalnia-faktury.png", "Panel wypożyczalni — faktury"),
   ],
   "kalkulator-konfigurator-dla-klientow.html": [
-    ("zdjecia/photonroof-kreator3d.jpg", "Przykład konfiguratora online — RoofPVcalculator"),
-    ("zdjecia/photonroof-mapa.jpg", "Przykład kalkulatora opartego na parametrach klienta"),
+    ("zdjecia/photonroof-kreator3d-20261105.jpg", "Przykład konfiguratora online — RoofPVcalculator"),
+    ("zdjecia/photonroof-mapa-20261105.jpg", "Przykład kalkulatora opartego na parametrach klienta"),
   ],
   "program-dla-wypozyczalni.html": [
     ("zdjecia/wypozyczalnia-pulpit.png", "Przykład programu dla wypożyczalni — pulpit"),
